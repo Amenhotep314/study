@@ -1,4 +1,7 @@
+*.json
+*.sqlite
 .DS_Store
-
-venv
+.vscode
 __pycache__
+instance
+venv

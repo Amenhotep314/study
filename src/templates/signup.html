@@ -6,6 +6,13 @@
 
 {% block body %}
     <h1>Sign Up</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+            </div>
+        {% endif %}
+    {% endwith %}
     <form method="POST" action="/signup">
         <input type="email" name="email" placeholder="Email" autofocus="">
         <input type="text" name="firstname" placeholder="First Name" autofocus="">
