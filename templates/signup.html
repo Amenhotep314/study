@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Sign Up</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Sign Up</h1>
+    <form method="POST" action="/signup">
+        <input type="email" name="email" placeholder="Email" autofocus="">
+        <input type="text" name="firstname" placeholder="First Name" autofocus="">
+        <input type="text" name="lastname" placeholder="Last Name" autofocus="">
+        <input type="password" name="password" placeholder="Password">
+        <button >Sign Up</button>
+    </form>
+{% endblock %}
