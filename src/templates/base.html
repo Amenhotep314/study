@@ -4,9 +4,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-    {% block head %}{% endblock %}
+    {% block base_head %}{% endblock %}
 </head>
 
 <body>
-    {% block body %}{% endblock %}
+    {% block base_body %}{% endblock %}
 </body>

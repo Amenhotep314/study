@@ -1,4 +1,6 @@
 *.json
+*.pyc
+*.sql
 *.sqlite
 .DS_Store
 .vscode

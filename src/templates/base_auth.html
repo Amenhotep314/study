@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block base_head %}
+    {% block head %}{% endblock %}
+{% endblock %}
+
+{% block base_body %}
+    <div>
+        <ul>
+            <li>
+                <a href="{{ url_for('auth.front_page') }}">About Us</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.login') }}">Log In</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+            </li>
+        </ul>
+    </div>
+    {% block body %}{% endblock %}
+{% endblock %}
