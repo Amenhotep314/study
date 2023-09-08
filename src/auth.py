@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import db
-from .models import User
+from .models import *
 
 
 auth = Blueprint("auth", __name__)
@@ -59,3 +59,9 @@ def logout():
 
     logout_user()
     return redirect(url_for("auth.login"))
+
+
+@auth.route("/about")
+def front_page():
+
+    return render_template("front_page.html")
