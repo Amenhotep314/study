@@ -1,6 +1,13 @@
+# Useful links
+# Flask docs: https://flask.palletsprojects.com/en/2.3.x/
+# SQLAlchemy docs: https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/
+# Basic Flask tutorial: https://www.youtube.com/watch?v=Z1RJmh_OqeA and code: https://github.com/jakerieger/FlaskIntroduction
+# User authentication guide: https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
+
+
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 
 db = SQLAlchemy()

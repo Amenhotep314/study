@@ -1,0 +1,32 @@
+{% extends "base_main.py" %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ url_for('main.create_semester') }}">Add a Semester</a>
+    </div>
+    {% if semesters|length > 0 %}
+        <table>
+            <tr>
+                <strong>
+                    <th>Semester</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </strong>
+            </tr>
+            {% for semester in semesters %}
+                <tr>
+                    <td>{{ semester.name }}</td>
+                    <td>{{ semester.start_date.strftime("%Y-%m-%d") }}</td>
+                    <td>{{ semester.end_date.strftime("%Y-%m-%d") }}</td>
+                    <td>
+                        <a href="{{ url_for('main.edit_semester') }}/{{ semester.id }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
