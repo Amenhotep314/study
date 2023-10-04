@@ -45,7 +45,7 @@ def signup():
         flash("A user with that email address already exists.")
         return redirect(url_for('auth.signup'))
 
-    new_user = User(email=email, firstname=firstname, lastname=lastname, password=generate_password_hash(password, method='scryptselect * from semester;select * from semester;select * from semester;select * from semester;drop table semester;drop table semester;drop table semester;drop table semester;'))
+    new_user = User(email=email, firstname=firstname, lastname=lastname, password=generate_password_hash(password, method='scrypt'))
 
     db.session.add(new_user)
     db.session.commit()
