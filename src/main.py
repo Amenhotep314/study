@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
+from datetime import date
 
 from . import db
 from .models import *
+from .forms import *
 
 
 main = Blueprint("main", __name__)
@@ -23,20 +25,22 @@ def view_semesters():
     return render_template("view_semesters.html", semesters=semesters)
 
 
-@main.route("/semesters/new_semester", methods=['GET', 'POST'])
+@main.route("/semesters/create", methods=['GET', 'POST'])
 @login_required
 def create_semester():
 
-    if request.method == 'GET':
-        return render_template("new_semester.html")
+    form = SemesterForm()
 
-    name = request.form.get('name')
-    start_date = request.form.get('start_date')
-    end_date = request.form.get('end_date')
+    if form.validate_on_submit():
+        new_semester = Semester(
+            user_id = current_user.id,
+            name = form.name.data,
+            start_date = form.start_date.data,
+            end_date = form.end_date.data
+        )
+        db.session.add(new_semester)
+        db.session.commit()
+        return redirect(url_for('main.view_semesters'))
 
-    new_semester = Semester(name=name, start_date=start_date, end_date=end_date)
-    db.session.add(new_semester)
-    db.session.commit()
 
-    return redirect(url_for('main.index'))
-
+    return render_template("create_semester.html", form=form, methods=['GET', 'POST'])

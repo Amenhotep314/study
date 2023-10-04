@@ -1,9 +1,11 @@
-{% extends "base_main.py" %}
+{% extends "base_main.html" %}
 
 {% block head %}
+    <title>Semesters</title>
 {% endblock %}
 
 {% block body %}
+    <h1>View Semesters</h1>
     <div>
         <a href="{{ url_for('main.create_semester') }}">Add a Semester</a>
     </div>
@@ -23,6 +25,7 @@
                     <td>{{ semester.start_date.strftime("%Y-%m-%d") }}</td>
                     <td>{{ semester.end_date.strftime("%Y-%m-%d") }}</td>
                     <td>
+                        <a href="{{ url_for('main.view_semester') }}/{{ semester.id }}">View</a>
                         <a href="{{ url_for('main.edit_semester') }}/{{ semester.id }}">Edit</a>
                     </td>
                 </tr>

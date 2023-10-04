@@ -29,7 +29,7 @@ class NoSemesterOverlapFrom(object):
     def __call__(self, form, field):
         semesters = Semester.query.filter_by(user_id=current_user.id).all()
         date_ranges = [set(range((semester.get("start_date").toordinal(), semester.get("end_date").toordinal()))) for semester in semesters]
-        current_range = range(self.other.form.field.data.toordinal(), field.data.toordinal())
+        current_range = range(form[self.other].data.toordinal(), field.data.toordinal())
         for date_range in date_ranges:
             if current_range.intersection(date_range):
                 raise wtforms.ValidationError(message=self.message)

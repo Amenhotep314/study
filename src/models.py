@@ -1,4 +1,4 @@
-from flask_login import UserMixin, current_user
+from flask_login import UserMixin
 from datetime import datetime
 
 from . import db
@@ -19,9 +19,10 @@ class Semester(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, default=datetime.utcnow())
-    user_id = db.Column(db.Integer, default=current_user.id)
+
+    user_id = db.Column(db.Integer)
 
     name = db.Column(db.String(100))
-    start_date = db.Column(db.DateTime)
-    end_date = db.Column(db.DateTime)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
 
