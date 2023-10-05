@@ -42,5 +42,47 @@ def create_semester():
         db.session.commit()
         return redirect(url_for('main.view_semesters'))
 
-
     return render_template("create_semester.html", form=form, methods=['GET', 'POST'])
+
+
+@main.route("/semesters/<semester_id>")
+@login_required
+def view_semester(semester_id):
+
+    semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
+    return render_template("view_semester.html", semester=semester)
+
+
+@main.route("/semesters/edit/<semester_id>")
+@login_required
+def edit_semester(semester_id):
+
+    semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
+    form = SemesterForm()
+
+    if form.validate_on_submit():
+        semester.name = form.name.data
+        semester.start_date = form.start_date.data
+        semester.end_date = form.end_date.data
+
+        db.session.commit()
+        return redirect(url_for('main.view_semesters'))
+
+    form.name.data = semester.name
+    form.start_date.data = semester.start_date
+    form.end_date.data = semester.end_date
+
+    return render_template("edit_semester.html", form=form, semester=semester)
+
+
+@main.route("/semesters/delete/<semester_id>")
+@login_required
+def delete_semester(semester_id):
+
+    semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
+    db.session.delete(semester)
+    db.session.commit()
+
+    return redirect(url_for('main.view_semesters'))
+
+

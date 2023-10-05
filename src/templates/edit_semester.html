@@ -1,0 +1,24 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>Edit {{ form.name.data }}</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Edit <em>{{ form.name.data }}</em></h1>
+    <form method="POST" action="/semesters/create">
+        {{ form.csrf_token }}
+        {% for field in form %}
+            {% if field.type != 'CSRFTokenField' %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+                {{ field.label() }}
+                {{ field() }}
+            {% endif %}
+        {% endfor %}
+        <button type="submit">Save</button>
+    </form>
+    <br><br>
+    <a href="{{ url_for('main.delete_semester', semester_id=semester.id) }}"><button style="color: red;">Delete Semester</button></a>
+{% endblock %}

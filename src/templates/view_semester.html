@@ -1,0 +1,16 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>{{ semester.name }}</title>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ semester.name }}</h1>
+    <a href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
+    <p>Start Date: {{ semester.start_date.strftime("%Y-%m-%d") }}</p>
+    <p>End Date: {{ semester.end_date.strftime("%Y-%m-%d") }}</p>
+    <div>
+        <h2>Courses</h2>
+        <p>Someday, a list of courses in the semester and options pertaining to them will appear here.</p>
+    </div>
+{% endblock %}
