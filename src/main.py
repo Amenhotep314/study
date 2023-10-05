@@ -53,7 +53,7 @@ def view_semester(semester_id):
     return render_template("view_semester.html", semester=semester)
 
 
-@main.route("/semesters/edit/<semester_id>")
+@main.route("/semesters/edit/<semester_id>", methods=['GET', 'POST'])
 @login_required
 def edit_semester(semester_id):
 
@@ -72,10 +72,10 @@ def edit_semester(semester_id):
     form.start_date.data = semester.start_date
     form.end_date.data = semester.end_date
 
-    return render_template("edit_semester.html", form=form, semester=semester)
+    return render_template("edit_semester.html", form=form, semester=semester, methods=['GET', 'POST'])
 
 
-@main.route("/semesters/delete/<semester_id>")
+@main.route("/semesters/delete/<semester_id>", methods=['GET', 'POST'])
 @login_required
 def delete_semester(semester_id):
 

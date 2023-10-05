@@ -20,23 +20,8 @@ class After(object):
             raise wtforms.ValidationError(message=self.message)
 
 
-class NoSemesterOverlapFrom(object):
-
-    def __init__(self, other, message=None):
-        self.other = other
-        self.message = message if message else "Semesters cannot overlap."
-
-    def __call__(self, form, field):
-        semesters = Semester.query.filter_by(user_id=current_user.id).all()
-        date_ranges = [set(range(semester.start_date.toordinal(), semester.end_date.toordinal())) for semester in semesters]
-        current_range = set(range(form[self.other].data.toordinal(), field.data.toordinal()))
-        for date_range in date_ranges:
-            if current_range.intersection(date_range):
-                raise wtforms.ValidationError(message=self.message)
-
-
 class SemesterForm(FlaskForm):
 
     name = wtforms.StringField("Name", validators=[validators.InputRequired()])
     start_date = wtforms.DateField("Start Date", validators=[validators.InputRequired()])
-    end_date = wtforms.DateField("End Date", validators=[validators.InputRequired(), NoSemesterOverlapFrom("start_date"), After("start_date")])
+    end_date = wtforms.DateField("End Date", validators=[validators.InputRequired(), After("start_date")])

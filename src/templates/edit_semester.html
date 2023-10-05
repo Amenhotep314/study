@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>Edit <em>{{ form.name.data }}</em></h1>
-    <form method="POST" action="/semesters/create">
+    <form method="POST" action="/semesters/edit/{{ semester.id}}">
         {{ form.csrf_token }}
         {% for field in form %}
             {% if field.type != 'CSRFTokenField' %}
