@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, timezone
 
 from . import db
 
@@ -7,7 +7,7 @@ from . import db
 class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.now(timezone=timezone.utc))
 
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
@@ -18,7 +18,7 @@ class User(UserMixin, db.Model):
 class Semester(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.utcnow())
+    created = db.Column(db.DateTime, default=datetime.now(timezone=timezone.utc))
 
     user_id = db.Column(db.Integer)
 
