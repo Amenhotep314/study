@@ -5,6 +5,7 @@ from datetime import date
 from . import db
 from .models import *
 from .forms import *
+from .util import current_semester, invalidate_caches
 
 
 main = Blueprint("main", __name__)
@@ -40,6 +41,7 @@ def create_semester():
         )
         db.session.add(new_semester)
         db.session.commit()
+        invalidate_caches()
         return redirect(url_for('main.view_semesters'))
 
     return render_template("create_semester.html", form=form, methods=['GET', 'POST'])
@@ -66,6 +68,7 @@ def edit_semester(semester_id):
         semester.end_date = form.end_date.data
 
         db.session.commit()
+        invalidate_caches()
         return redirect(url_for('main.view_semesters'))
 
     form.name.data = semester.name
