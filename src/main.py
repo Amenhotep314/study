@@ -109,9 +109,6 @@ def create_course():
         db.session.commit()
         return redirect(url_for('main.view_semester', semester_id=form.semester.data))
 
-    for semester in Semester.query.filter_by(user_id=current_user.id).all():
-        print([semester.id, semester.name])
-
     form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     form.semester.data = current_semester().id
 
