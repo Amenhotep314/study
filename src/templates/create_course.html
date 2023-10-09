@@ -1,0 +1,22 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>New Course</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Create New Course</h1>
+    <form method="POST" action="/courses/create">
+        {{ form.csrf_token }}
+        {% for field in form %}
+            {% if field.type != 'CSRFTokenField' %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+                {{ field.label() }}
+                {{ field() }}
+            {% endif %}
+        {% endfor %}
+        <button type="submit">Create Course</button>
+    </form>
+{% endblock %}

@@ -89,3 +89,30 @@ def delete_semester(semester_id):
     return redirect(url_for('main.view_semesters'))
 
 
+@main.route("/courses/create", methods=['GET', 'POST'])
+@login_required
+def create_course():
+
+    form = CourseForm()
+    if not current_semester():
+        return redirect(url_for('main.create_semester'))
+
+    if form.validate_on_submit():
+        new_course = Course(
+            user_id = current_user.id,
+            semester_id = form.semester.data,
+            name = form.name.data,
+            short_name = form.short_name.data,
+            credits = form.credits.data
+        )
+        db.session.add(new_course)
+        db.session.commit()
+        return redirect(url_for('main.view_semester', semester_id=form.semester.data))
+
+    for semester in Semester.query.filter_by(user_id=current_user.id).all():
+        print([semester.id, semester.name])
+
+    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
+    form.semester.data = current_semester().id
+
+    return render_template("create_course.html", form=form, methods=['GET', 'POST'])

@@ -22,6 +22,14 @@ class After(object):
 
 class SemesterForm(FlaskForm):
 
-    name = wtforms.StringField("Name", validators=[validators.InputRequired()])
+    name = wtforms.StringField("Name", validators=[validators.InputRequired(), validators.Length(max=100)])
     start_date = wtforms.DateField("Start Date", validators=[validators.InputRequired()])
     end_date = wtforms.DateField("End Date", validators=[validators.InputRequired(), After("start_date")])
+
+
+class CourseForm(FlaskForm):
+
+    name = wtforms.StringField("Name", validators=[validators.InputRequired(), validators.Length(max=100)])
+    short_name = wtforms.StringField("Short Name", validators=[validators.Length(max=100)])
+    credits = wtforms.IntegerField("Credits", validators=[validators.InputRequired()])
+    semester = wtforms.SelectField("Semester", choices=[], coerce=int, validate_choice=False, validators=[validators.InputRequired()])
