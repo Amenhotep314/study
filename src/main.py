@@ -5,7 +5,7 @@ from datetime import date
 from . import db
 from .models import *
 from .forms import *
-from .util import current_semester, invalidate_caches
+from .db_util import current_semester, invalidate_caches
 
 
 main = Blueprint("main", __name__)
@@ -113,3 +113,46 @@ def create_course():
     form.semester.data = current_semester().id
 
     return render_template("create_course.html", form=form, methods=['GET', 'POST'])
+
+
+@main.route("/courses/<course_id>")
+@login_required
+def view_course(course_id):
+
+    course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
+    return render_template("view_course.html", course=course)
+
+
+@main.route("/courses/edit/<course_id>", methods=['GET', 'POST'])
+@login_required
+def edit_course(course_id):
+
+    course = db.get_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
+    form = CourseForm()
+
+    if form.validate_on_submit():
+        course.semester_id = form.semester.data
+        course.name = form.name.data
+        course.short_name = form.short_name.data
+        course.credits = form.credits.data
+        db.session.commit()
+        return redirect(url_for('main.view_semester', semester_id=form.semester.data))
+
+    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
+    form.semester.data = course.semester_id
+    form.name.data = course.name
+    form.short_name.data = course.short_name
+    form.credits.data = course.credits
+
+    return render_template("edit_course.html", form=form, course=course, methods=['GET', 'POST'])
+
+
+@main.route("/courses/delete/<course_id>", methods=['GET', 'POST'])
+@login_required
+def delete_course(course_id):
+
+    course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
+    db.session.delete(course)
+    db.session.commit()
+
+    return redirect(url_for('main.index'))

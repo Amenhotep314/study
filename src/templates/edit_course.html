@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>Edit <em>{{ form.name.data }}</em></h1>
-    <form method="POST" action="/semesters/edit/{{ semester.id }}">
+    <form method="POST" action="/courses/edit/{{ course.id }}">
         {{ form.csrf_token }}
         {% for field in form %}
             {% if field.type != 'CSRFTokenField' %}
@@ -20,5 +20,5 @@
         <button type="submit">Save</button>
     </form>
     <br><br>
-    <a href="{{ url_for('main.delete_semester', semester_id=semester.id) }}"><button style="color: red;">Delete Semester</button></a>
+    <a href="{{ url_for('main.delete_course', course_id=course.id) }}"><button style="color: red;">Delete Course</button></a>
 {% endblock %}

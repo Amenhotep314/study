@@ -1,4 +1,3 @@
-
 from flask_login import current_user
 from datetime import date
 from functools import cache
