@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 from . import db
 from .models import *
+from .forms import *
 
 
 auth = Blueprint("auth", __name__)
@@ -12,45 +13,43 @@ auth = Blueprint("auth", __name__)
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
 
-    if request.method == 'GET':
-        return render_template("login.html")
+    form = LogIn()
 
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
+    if form.validate_on_submit():
+        email = form.email.data
+        remember = form.remember.data
 
-    user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(email=email).first()
+        login_user(user, remember=remember)
+        return redirect(url_for('main.index'))
 
-    if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
-        return redirect(url_for('auth.login'))
-
-    login_user(user, remember=remember)
-    return redirect(url_for('main.index'))
+    return render_template("login.html", form=form)
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
 
-    if request.method == 'GET':
-        return render_template("signup.html")
+    form = SignUp()
 
-    email = request.form.get('email')
-    firstname = request.form.get('firstname')
-    lastname = request.form.get('lastname')
-    password = request.form.get('password')
+    if form.validate_on_submit():
+        email = form.email.data
+        firstname = form.firstname.data
+        lastname = form.lastname.data
+        password = form.password.data
 
-    user = User.query.filter_by(email=email).first()
-    if user:
-        flash("A user with that email address already exists.")
-        return redirect(url_for('auth.signup'))
+        hashed_password = generate_password_hash(password, method='scrypt')
+        new_user = User(
+            email=email,
+            firstname=firstname,
+            lastname=lastname,
+            password=hashed_password
+        )
 
-    new_user = User(email=email, firstname=firstname, lastname=lastname, password=generate_password_hash(password, method='scrypt'))
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('auth.login'))
 
-    db.session.add(new_user)
-    db.session.commit()
-
-    return redirect(url_for('auth.login'))
+    return render_template("signup.html", form=form)
 
 
 @auth.route("/logout")
