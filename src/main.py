@@ -3,9 +3,9 @@ from flask_login import login_required, current_user
 from datetime import date
 
 from . import db
+from . import db_util
 from .models import *
 from .forms import *
-from .db_util import current_semester, invalidate_caches
 
 
 main = Blueprint("main", __name__)
@@ -41,7 +41,7 @@ def create_semester():
         )
         db.session.add(new_semester)
         db.session.commit()
-        invalidate_caches()
+        db_util.invalidate_caches()
         return redirect(url_for('main.view_semesters'))
 
     return render_template("create_semester.html", form=form, methods=['GET', 'POST'])
@@ -68,7 +68,7 @@ def edit_semester(semester_id):
         semester.end_date = form.end_date.data
 
         db.session.commit()
-        invalidate_caches()
+        db_util.invalidate_caches()
         return redirect(url_for('main.view_semesters'))
 
     form.name.data = semester.name
@@ -83,10 +83,13 @@ def edit_semester(semester_id):
 def delete_semester(semester_id):
 
     semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
-    db.session.delete(semester)
-    db.session.commit()
+    form = ConfirmDelete()
 
-    return redirect(url_for('main.view_semesters'))
+    if form.validate_on_submit():
+        db_util.deep_delete_semester(semester)
+        return redirect(url_for('main.view_semesters'))
+
+    return render_template("delete_semester.html", form=form, semester=semester, methods=['GET', 'POST'])
 
 
 @main.route("/courses/create", methods=['GET', 'POST'])
@@ -94,7 +97,7 @@ def delete_semester(semester_id):
 def create_course():
 
     form = CourseForm()
-    if not current_semester():
+    if not db_util.current_semester():
         return redirect(url_for('main.create_semester'))
 
     if form.validate_on_submit():
@@ -110,7 +113,7 @@ def create_course():
         return redirect(url_for('main.view_semester', semester_id=form.semester.data))
 
     form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
-    form.semester.data = current_semester().id
+    form.semester.data = db_util.current_semester().id
 
     return render_template("create_course.html", form=form, methods=['GET', 'POST'])
 
@@ -151,8 +154,11 @@ def edit_course(course_id):
 @login_required
 def delete_course(course_id):
 
-    course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
-    db.session.delete(course)
-    db.session.commit()
+    course = db.first_or_404(course.query.filter_by(user_id=current_user.id, id=course_id))
+    form = ConfirmDelete()
 
-    return redirect(url_for('main.index'))
+    if form.validate_on_submit():
+        db_util.deep_delete_course(course)
+        return redirect(url_for('main.index'))
+
+    return render_template("delete_course.html", form=form, course=course, methods=['GET', 'POST'])

@@ -33,3 +33,8 @@ class CourseForm(FlaskForm):
     short_name = wtforms.StringField("Short Name", validators=[validators.Length(max=100)])
     credits = wtforms.IntegerField("Credits", validators=[validators.InputRequired()])
     semester = wtforms.SelectField("Semester", choices=[], coerce=int, validate_choice=False, validators=[validators.InputRequired()])
+
+
+class ConfirmDelete(FlaskForm):
+
+    confirmation = wtforms.StringField("Confirmation", validators=[validators.InputRequired(), validators.AnyOf(["I understand."])])

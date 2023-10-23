@@ -22,6 +22,26 @@ def current_semester():
     return semesters[0]
 
 
+def deep_delete_semester(semester):
+
+    courses = Course.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
+    for course in courses:
+        deep_delete_course(course)
+
+    db.session.delete(semester)
+    db.session.commit()
+    invalidate_caches()
+
+
+def deep_delete_course(course):
+
+    # Once courses take on subsets, like assignments and study sessions, their delete functions
+    # must be called here as well.
+
+    db.session.delete(course)
+    db.session.commit()
+
+
 def invalidate_caches():
 
     cached_funcs = [
