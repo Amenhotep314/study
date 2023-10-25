@@ -1,12 +1,12 @@
-{% extends "base_auth.html" %}
+{% extends "base_main.html" %}
 
 {% block head %}
-    <title>Sign Up</title>
+    <title>Edit {{ form.name.data }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Sign Up</h1>
-    <form method="POST" action="/signup">
+    <h1>Edit <em>{{ form.name.data }}</em></h1>
+    <form method="POST" action="{{ action }}">
         {{ form.csrf_token }}
         {% for field in form %}
             {% if field.type != 'CSRFTokenField' %}
@@ -17,6 +17,8 @@
                 {{ field() }}
             {% endif %}
         {% endfor %}
-        <button type="submit">Sign Up</button>
+        <button type="submit">Save</button>
     </form>
+    <br><br>
+    <a href="{{ delete_action }}"><button style="color: red;">Delete {{ form.name.data }}</button></a>
 {% endblock %}

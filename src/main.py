@@ -44,7 +44,13 @@ def create_semester():
         db_util.invalidate_caches()
         return redirect(url_for('main.view_semesters'))
 
-    return render_template("create_semester.html", form=form, methods=['GET', 'POST'])
+    return render_template(
+        "create.html",
+        form=form,
+        title="Semester",
+        action=url_for('main.create_semester'),
+        methods=['GET', 'POST']
+    )
 
 
 @main.route("/semesters/<semester_id>")
@@ -75,7 +81,13 @@ def edit_semester(semester_id):
     form.start_date.data = semester.start_date
     form.end_date.data = semester.end_date
 
-    return render_template("edit_semester.html", form=form, semester=semester, methods=['GET', 'POST'])
+    return render_template(
+        "edit.html",
+        form=form,
+        action=url_for('main.edit_semester', semester_id=semester.id),
+        delete_action=url_for('main.delete_semester', semester_id=semester.id),
+        methods=['GET', 'POST']
+    )
 
 
 @main.route("/semesters/delete/<semester_id>", methods=['GET', 'POST'])
@@ -89,7 +101,13 @@ def delete_semester(semester_id):
         db_util.deep_delete_semester(semester)
         return redirect(url_for('main.view_semesters'))
 
-    return render_template("delete_semester.html", form=form, semester=semester, methods=['GET', 'POST'])
+    return render_template(
+        "delete.html",
+        form=form,
+        target=semester,
+        action=url_for('main.delete_semester', semester_id=semester.id),
+        methods=['GET', 'POST']
+    )
 
 
 @main.route("/courses/create", methods=['GET', 'POST'])
@@ -115,7 +133,13 @@ def create_course():
     form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     form.semester.data = db_util.current_semester().id
 
-    return render_template("create_course.html", form=form, methods=['GET', 'POST'])
+    return render_template(
+        "create.html",
+        form=form,
+        title="Course",
+        action=url_for('main.create_course'),
+        methods=['GET', 'POST']
+    )
 
 
 @main.route("/courses/<course_id>")
@@ -147,7 +171,13 @@ def edit_course(course_id):
     form.short_name.data = course.short_name
     form.credits.data = course.credits
 
-    return render_template("edit_course.html", form=form, course=course, methods=['GET', 'POST'])
+    return render_template(
+        "edit.html",
+        form=form,
+        action=url_for('main.edit_course', course_id=course.id),
+        delete_action=url_for('main.delete_course', course_id=course.id),
+        methods=['GET', 'POST']
+    )
 
 
 @main.route("/courses/delete/<course_id>", methods=['GET', 'POST'])
@@ -161,4 +191,10 @@ def delete_course(course_id):
         db_util.deep_delete_course(course)
         return redirect(url_for('main.index'))
 
-    return render_template("delete_course.html", form=form, course=course, methods=['GET', 'POST'])
+    return render_template(
+        "delete.html",
+        form=form,
+        target=course,
+        action=url_for('main.delete_course', course_id=course.id),
+        methods=['GET', 'POST']
+    )

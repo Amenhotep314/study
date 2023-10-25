@@ -23,7 +23,13 @@ def login():
         login_user(user, remember=remember)
         return redirect(url_for('main.index'))
 
-    return render_template("login.html", form=form)
+    return render_template(
+        "auth.html",
+        form=form,
+        title="Log In",
+        action=url_for('auth.login'),
+        methods=['GET', 'POST']
+    )
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -49,7 +55,13 @@ def signup():
         db.session.commit()
         return redirect(url_for('auth.login'))
 
-    return render_template("signup.html", form=form)
+    return render_template(
+        "auth.html",
+        form=form,
+        title="Sign Up",
+        action=url_for('auth.signup'),
+        methods=['GET', 'POST']
+    )
 
 
 @auth.route("/logout")

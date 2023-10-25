@@ -1,13 +1,12 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>Delete {{ course.name }}</title>
+    <title>New {{ title }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Delete <em>{{ course.name }}</em></h1>
-    <p>Deleting this course will also delete all assignments and other data associated with it. Type "I understand." below to continue.</p>
-    <form method="POST" action="/courses/delete/{{ course.id }}">
+    <h1>Create New {{ title }}</h1>
+    <form method="POST" action="{{ action }}">
         {{ form.csrf_token }}
         {% for field in form %}
             {% if field.type != 'CSRFTokenField' %}
@@ -18,7 +17,6 @@
                 {{ field() }}
             {% endif %}
         {% endfor %}
-        <button type="submit">Delete Course</button>
+        <button type="submit">Create {{ title }}</button>
     </form>
-    <a href="{{ url_for('main.index') }}">Cancel</a>
 {% endblock %}

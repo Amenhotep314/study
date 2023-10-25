@@ -1,13 +1,13 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>Delete {{ semester.name }}</title>
+    <title>Delete {{ target.name }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Delete <em>{{ semester.name }}</em></h1>
-    <p>Deleting this semester will also delete all courses, assignments, and other data associated with it. Type "I understand." below to continue.</p>
-    <form method="POST" action="/semesters/delete/{{ semester.id }}">
+    <h1>Delete <em>{{ target.name }}</em></h1>
+    <p>Deleting <em>{{ target.name }}</em> will also permanently delete all data associated with it. Type "I understand." below to continue.</p>
+    <form method="POST" action="{{ action }}">
         {{ form.csrf_token }}
         {% for field in form %}
             {% if field.type != 'CSRFTokenField' %}
@@ -18,7 +18,7 @@
                 {{ field() }}
             {% endif %}
         {% endfor %}
-        <button type="submit">Delete Semester</button>
+        <button type="submit">Delete {{ target.name }}</button>
     </form>
-    <a href="{{ url_for('main.view_semesters') }}">Cancel</a>
+    <a href="{{ url_for('main.index') }}">Cancel</a>
 {% endblock %}
