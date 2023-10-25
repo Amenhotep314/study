@@ -147,7 +147,7 @@ def create_course():
         )
         db.session.add(new_course)
         db.session.commit()
-        return redirect(url_for('main.view_semester', semester_id=form.semester.data))
+        return redirect(url_for('main.view_courses'))
 
     form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     form.semester.data = db_util.current_semester().id
@@ -203,12 +203,12 @@ def edit_course(course_id):
 @login_required
 def delete_course(course_id):
 
-    course = db.first_or_404(course.query.filter_by(user_id=current_user.id, id=course_id))
+    course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
     form = ConfirmDelete()
 
     if form.validate_on_submit():
         db_util.deep_delete_course(course)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.view_courses'))
 
     return render_template(
         "delete.html",
