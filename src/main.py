@@ -110,6 +110,25 @@ def delete_semester(semester_id):
     )
 
 
+@main.route("/courses")
+@login_required
+def view_courses():
+
+    current_semester = db_util.current_semester()
+    if current_semester:
+        courses = Course.query.filter_by(user_id=current_user.id, semester_id=current_semester.id).all()
+        title = current_semester.name
+    else:
+        courses = []
+        title = ""
+
+    return render_template(
+        "view_courses.html",
+        courses=courses,
+        title=title
+    )
+
+
 @main.route("/courses/create", methods=['GET', 'POST'])
 @login_required
 def create_course():
@@ -154,7 +173,7 @@ def view_course(course_id):
 @login_required
 def edit_course(course_id):
 
-    course = db.get_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
+    course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
     form = CourseForm()
 
     if form.validate_on_submit():
@@ -163,7 +182,7 @@ def edit_course(course_id):
         course.short_name = form.short_name.data
         course.credits = form.credits.data
         db.session.commit()
-        return redirect(url_for('main.view_semester', semester_id=form.semester.data))
+        return redirect(url_for('main.view_courses'))
 
     form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     form.semester.data = course.semester_id

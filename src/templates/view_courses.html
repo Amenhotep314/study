@@ -1,0 +1,36 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>Courses</title>
+{% endblock %}
+
+{% block body %}
+    <h1>View Courses</h1>
+    <h2>{{ title }}</h2>
+    <div>
+        <a href="{{ url_for('main.create_course') }}">Add a Course</a>
+    </div>
+    {% if courses|length > 0 %}
+        <table>
+            <tr>
+                <strong>
+                    <th>Course</th>
+                    <th>Name</th>
+                    <th>Credits</th>
+                    <th>Actions</th>
+                </strong>
+            </tr>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.short_name }}</td>
+                    <td>{{ course.credits }}</td>
+                    <td>
+                        <a href="{{ url_for('main.view_course', course_id=course.id) }}">View</a>
+                        <a href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
