@@ -8,6 +8,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 
 db = SQLAlchemy()
@@ -16,8 +17,7 @@ db = SQLAlchemy()
 def create_app():
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SECRET_KEY'] = '6ab96cd9c83a29c61e39480199c9341b274dfaa1da8fc1a8827d11a5332c1b3a'
+    app.config.from_file("config.json", load=json.load)
     db.init_app(app)
 
     login_manager = LoginManager()

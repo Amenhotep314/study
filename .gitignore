@@ -4,5 +4,6 @@
 .DS_Store
 .vscode
 __pycache__
+config.json
 instance
 venv
