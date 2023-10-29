@@ -41,7 +41,7 @@ def create_semester():
         )
         db.session.add(new_semester)
         db.session.commit()
-        db_util.invalidate_caches()
+        db_util.invalidate_caches("current_semester")
         return redirect(url_for('main.view_semesters'))
 
     return render_template(
@@ -74,7 +74,7 @@ def edit_semester(semester_id):
         semester.end_date = form.end_date.data
 
         db.session.commit()
-        db_util.invalidate_caches()
+        db_util.invalidate_caches("current_semester")
         return redirect(url_for('main.view_semesters'))
 
     form.name.data = semester.name

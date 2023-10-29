@@ -42,11 +42,15 @@ def deep_delete_course(course):
     db.session.commit()
 
 
-def invalidate_caches():
+def invalidate_caches(*args):
 
     cached_funcs = [
         current_semester
     ]
 
-    for func in cached_funcs:
-        func.cache_clear()
+    if args:
+        for func in args:
+            globals()[func].cache_clear()
+    else:
+        for func in cached_funcs:
+            func.cache_clear()
