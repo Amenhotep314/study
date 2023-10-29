@@ -38,3 +38,18 @@ class Course(db.Model):
     name = db.Column(db.String(100))
     short_name = db.Column(db.String(100))
     credits = db.Column(db.Integer)
+
+
+class Assignment(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    created = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    user_id = db.Column(db.Integer)
+    course_id = db.Column(db.Integer)
+
+    name = db.Column(db.String(100))
+    due_date = db.Column(db.Date)
+    # est_time = db.Column(db.Float)
+    # importance = db.Column(db.Integer)
+    completed = db.Column(db.Boolean)

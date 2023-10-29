@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash
 from .models import *
 
 
+# Custom Validators
 class EmailUnique(object):
 
     def __init__(self, message=None):
@@ -62,6 +63,33 @@ class DateAfter(object):
             raise wtforms.ValidationError(message=self.message)
 
 
+class GreaterThan(object):
+
+    def __init__(self, value, message=None):
+        self.value = value
+        self.message = message
+
+    def __call__(self, form, field):
+        if not (float(field.data) > self.value):
+            if not self.message:
+                self.message = field.gettext(field.label.text + " must be greater than " + str(self.value) + ".")
+            raise wtforms.ValidationError(message=self.message)
+
+
+class LessThan(object):
+
+    def __init__(self, value, message=None):
+        self.value = value
+        self.message = message
+
+    def __call__(self, form, field):
+        if not (float(field.data) < self.value):
+            if not self.message:
+                self.message = field.gettext(field.label.text + " must be less than " + str(self.value) + ".")
+            raise wtforms.ValidationError(message=self.message)
+
+
+# Forms
 class SignUp(FlaskForm):
 
     email = wtforms.EmailField("Email", validators=[InputRequired(), Email(), EmailUnique()])
@@ -91,6 +119,16 @@ class CourseForm(FlaskForm):
     short_name = wtforms.StringField("Short Name", validators=[Length(max=100)])
     credits = wtforms.IntegerField("Credits", validators=[InputRequired()])
     semester = wtforms.SelectField("Semester", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
+
+
+class AssignmentForm(FlaskForm):
+
+    name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
+    due_date = wtforms.DateField("Due Date", validators=[InputRequired()])
+    # est_time = wtforms.FloatField("Estimated time (hrs)", validators=[LessThan(600, message="Please enter a valid value."), GreaterThan(0, message="Please enter a valid value.")])
+    # importance = wtforms.IntegerRangeField("Importance (0-9)", validators=[GreaterThan(-1), LessThan(10)])
+    completed = wtforms.BooleanField("Completed")
+    course = wtforms.SelectField("Course", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
 
 
 class ConfirmDelete(FlaskForm):

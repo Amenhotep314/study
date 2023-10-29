@@ -35,10 +35,17 @@ def deep_delete_semester(semester):
 
 def deep_delete_course(course):
 
-    # Once courses take on subsets, like assignments and study sessions, their delete functions
-    # must be called here as well.
+    assignments = Assignment.query.filter_by(user_id=current_user.id, course_id=course.id)
+    for assignment in assignments:
+        deep_delete_assignment(assignment)
 
     db.session.delete(course)
+    db.session.commit()
+
+
+def deep_delete_assignment(assignment):
+
+    db.session.delete(assignment)
     db.session.commit()
 
 

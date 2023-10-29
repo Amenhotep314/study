@@ -217,3 +217,103 @@ def delete_course(course_id):
         action=url_for('main.delete_course', course_id=course.id),
         methods=['GET', 'POST']
     )
+
+
+@main.route("/assignments/create", methods=['GET', 'POST'])
+@login_required
+def create_assignment():
+
+    if not db_util.current_semester():
+        return redirect(url_for('main.create_semester'))
+    courses = Course.query.filter_by(user_id=current_user.id, semester_id=db_util.current_semester().id).all()
+    if not courses:
+        return redirect(url_for('main.create_course'))
+
+    form = AssignmentForm()
+
+    if form.validate_on_submit():
+        new_assignment = Assignment(
+            user_id = current_user.id,
+            course_id = form.course.data,
+            name = form.name.data,
+            due_date = form.due_date.data,
+            # est_time = form.est_time.data,
+            # importance = form.importance.data,
+            completed = form.completed.data
+        )
+        db.session.add(new_assignment)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+
+    form.course.choices = [(course.id, course.name) for course in courses]
+
+    return render_template(
+        "create.html",
+        form=form,
+        title="Assignment",
+        action=url_for('main.create_assignment'),
+        methods=['GET', 'POST']
+    )
+
+
+@main.route("/assignments/<assignment_id>")
+@login_required
+def view_assignment(assignment_id):
+
+    assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
+    return render_template("view_assignment.html", assignment=assignment)
+
+
+@main.route("/assignments/edit/<assignment_id>", methods=['GET', 'POST'])
+@login_required
+def edit_assignment(assignment_id):
+
+    assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
+    form = AssignmentForm()
+
+    if form.validate_on_submit():
+        assignment.course_id = form.course.data
+        assignment.name = form.name.data
+        assignment.due_date = form.due_date.data
+        # assignment.est_time = form.est_time.data
+        # assignment.importance = form.importance.data
+        assignment.completed = form.completed.data
+        db.session.commit()
+        return redirect(url_for('main.index'))
+
+    courses = Course.query.filter_by(user_id=current_user.id, semester_id=db_util.current_semester().id).all()
+    form.course.choices = [(course.id, course.name) for course in courses]
+    form.course.data = assignment.course_id
+    form.name.data = assignment.name
+    form.due_date.data = assignment.due_date
+    # form.est_time.data = assignment.est_time
+    # form.importance.data = assignment.importance
+    form.completed.data = assignment.completed
+
+    return render_template(
+        "edit.html",
+        form=form,
+        action=url_for('main.edit_assignment', assignment_id=assignment.id),
+        delete_action=url_for('main.delete_assignment', assignment_id=assignment.id),
+        methods=['GET', 'POST']
+    )
+
+
+@main.route("/assignments/delete/<assignment_id>", methods=['GET', 'POST'])
+@login_required
+def delete_assignment(assignment_id):
+
+    assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
+    form = ConfirmDelete()
+
+    if form.validate_on_submit():
+        db_util.deep_delete_assignment(assignment)
+        return redirect(url_for('main.index'))
+
+    return render_template(
+        "delete.html",
+        form=form,
+        target=assignment,
+        action=url_for('main.delete_assignment', assignment_id=assignment.id),
+        methods=['GET', 'POST']
+    )
