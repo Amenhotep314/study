@@ -1,5 +1,6 @@
 from flask_login import UserMixin
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz
 
 from . import db
 
@@ -7,18 +8,19 @@ from . import db
 class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created = db.Column(db.DateTime, default=datetime.now(pytz.utc))
 
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
+    timezone = db.Column(db.String(100), default="Canada/Eastern")
 
 
 class Semester(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created = db.Column(db.DateTime, default=datetime.now(pytz.utc))
 
     user_id = db.Column(db.Integer)
 
@@ -30,7 +32,7 @@ class Semester(db.Model):
 class Course(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created = db.Column(db.DateTime, default=datetime.now(pytz.utc))
 
     user_id = db.Column(db.Integer)
     semester_id = db.Column(db.Integer)
@@ -43,7 +45,7 @@ class Course(db.Model):
 class Assignment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created = db.Column(db.DateTime, default=datetime.now(pytz.utc))
 
     user_id = db.Column(db.Integer)
     course_id = db.Column(db.Integer)

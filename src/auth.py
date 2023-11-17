@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
+import pytz
 
 from . import db
 from .models import *
@@ -42,18 +43,23 @@ def signup():
         firstname = form.firstname.data
         lastname = form.lastname.data
         password = form.password.data
+        timezone = form.timezone.data
 
         hashed_password = generate_password_hash(password, method='scrypt')
         new_user = User(
             email=email,
             firstname=firstname,
             lastname=lastname,
-            password=hashed_password
+            password=hashed_password,
+            timezone=timezone
         )
 
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('auth.login'))
+
+    form.timezone.choices = [(timezone, timezone) for timezone in pytz.common_timezones]
+    form.timezone.data = "Canada/Eastern"
 
     return render_template(
         "auth.html",

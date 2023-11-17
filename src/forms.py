@@ -97,6 +97,7 @@ class SignUp(FlaskForm):
     lastname = wtforms.StringField("Last Name", validators=[InputRequired(), Length(max=100)])
     password = wtforms.PasswordField("Password", validators=[InputRequired(), Length(min=8, max=100)])
     password_confirm = wtforms.PasswordField("Confirm Password", validators=[InputRequired(), EqualTo('password')])
+    timezone = wtforms.SelectField("Timezone", validators=[InputRequired()])
 
 
 class LogIn(FlaskForm):
