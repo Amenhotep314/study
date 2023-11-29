@@ -8,6 +8,6 @@
     <h1>{{ assignment.name }}</h1>
     <a href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
     <p>Name: {{ assignment.name }}</p>
-    <p>Due Date: {{ assignment.due_date.strftime("%Y-%m-%d") }}</p>
+    <p>Due Date: {{ assignment.due_date.strftime("%Y-%m-%d %H:%M:%S") }}</p>
     <p>Completed: {{"Yes" if assignment.completed else "No"}}</p>
 {% endblock %}

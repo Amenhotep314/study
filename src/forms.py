@@ -126,6 +126,7 @@ class AssignmentForm(FlaskForm):
 
     name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
     due_date = wtforms.DateField("Due Date", validators=[InputRequired()])
+    due_time = wtforms.TimeField("Due Time")
     # est_time = wtforms.FloatField("Estimated time (hrs)", validators=[LessThan(600, message="Please enter a valid value."), GreaterThan(0, message="Please enter a valid value.")])
     # importance = wtforms.IntegerRangeField("Importance (0-9)", validators=[GreaterThan(-1), LessThan(10)])
     completed = wtforms.BooleanField("Completed")

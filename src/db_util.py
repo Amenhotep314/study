@@ -3,6 +3,7 @@ from datetime import date
 from functools import cache
 
 from . import db
+from . import util
 from .models import *
 
 
@@ -13,10 +14,10 @@ def current_semester():
     if not semesters:
         return None
 
-    now = date.today().toordinal()
+    now = datetime.now(tz=util.current_user_timezone()).date()
     semesters.sort(reverse=True, key = lambda x: x.end_date.toordinal())
     for semester in semesters:
-        if semester.start_date.toordinal() <= now <= semester.end_date.toordinal():
+        if semester.start_date.date().toordinal() <= now <= semester.end_date.date().toordinal():
             return semester
 
     return semesters[0]
@@ -30,7 +31,7 @@ def deep_delete_semester(semester):
 
     db.session.delete(semester)
     db.session.commit()
-    invalidate_caches()
+    invalidate_caches("current_semester")
 
 
 def deep_delete_course(course):
@@ -52,7 +53,7 @@ def deep_delete_assignment(assignment):
 def invalidate_caches(*args):
 
     cached_funcs = [
-        current_semester
+        current_semester,
     ]
 
     if args:

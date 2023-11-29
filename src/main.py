@@ -4,6 +4,7 @@ from datetime import date
 
 from . import db
 from . import db_util
+from . import util
 from .models import *
 from .forms import *
 
@@ -33,11 +34,15 @@ def create_semester():
     form = SemesterForm()
 
     if form.validate_on_submit():
+
+        start_datetime = util.aware_datetime_from_date(form.start_date.data, eod=False)
+        end_datetime = util.aware_datetime_from_date(form.end_date.data)
+
         new_semester = Semester(
             user_id = current_user.id,
             name = form.name.data,
-            start_date = form.start_date.data,
-            end_date = form.end_date.data
+            start_date = start_datetime,
+            end_date = end_datetime
         )
         db.session.add(new_semester)
         db.session.commit()
@@ -69,17 +74,21 @@ def edit_semester(semester_id):
     form = SemesterForm()
 
     if form.validate_on_submit():
+
+        start_datetime = util.aware_datetime_from_date(form.start_date.data, eod=False)
+        end_datetime = util.aware_datetime_from_date(form.end_date.data)
+
         semester.name = form.name.data
-        semester.start_date = form.start_date.data
-        semester.end_date = form.end_date.data
+        semester.start_date = start_datetime
+        semester.end_date = end_datetime
 
         db.session.commit()
         db_util.invalidate_caches("current_semester")
         return redirect(url_for('main.view_semesters'))
 
     form.name.data = semester.name
-    form.start_date.data = semester.start_date
-    form.end_date.data = semester.end_date
+    form.start_date.data = semester.start_date.date()
+    form.end_date.data = semester.end_date.date()
 
     return render_template(
         "edit.html",
@@ -232,11 +241,17 @@ def create_assignment():
     form = AssignmentForm()
 
     if form.validate_on_submit():
+
+        if form.due_time.data:
+            due_datetime = util.aware_datetime_from_date_time(form.due_date.data, form.due_time.data)
+        else:
+            due_datetime = util.aware_datetime_from_date(form.due_date.data)
+
         new_assignment = Assignment(
             user_id = current_user.id,
             course_id = form.course.data,
             name = form.name.data,
-            due_date = form.due_date.data,
+            due_date = due_datetime,
             # est_time = form.est_time.data,
             # importance = form.importance.data,
             completed = form.completed.data
@@ -272,9 +287,15 @@ def edit_assignment(assignment_id):
     form = AssignmentForm()
 
     if form.validate_on_submit():
+
+        if form.due_time.data:
+            due_datetime = util.aware_datetime_from_date_time(form.due_date.data, form.due_time.data)
+        else:
+            due_datetime = util.aware_datetime_from_date(form.due_date.data)
+
         assignment.course_id = form.course.data
         assignment.name = form.name.data
-        assignment.due_date = form.due_date.data
+        assignment.due_date = due_datetime
         # assignment.est_time = form.est_time.data
         # assignment.importance = form.importance.data
         assignment.completed = form.completed.data
@@ -285,7 +306,8 @@ def edit_assignment(assignment_id):
     form.course.choices = [(course.id, course.name) for course in courses]
     form.course.data = assignment.course_id
     form.name.data = assignment.name
-    form.due_date.data = assignment.due_date
+    form.due_date.data = assignment.due_date.date()
+    form.due_time.data = assignment.due_date.time()
     # form.est_time.data = assignment.est_time
     # form.importance.data = assignment.importance
     form.completed.data = assignment.completed

@@ -25,8 +25,8 @@ class Semester(db.Model):
     user_id = db.Column(db.Integer)
 
     name = db.Column(db.String(100))
-    start_date = db.Column(db.Date)
-    end_date = db.Column(db.Date)
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
 
 
 class Course(db.Model):
@@ -51,7 +51,7 @@ class Assignment(db.Model):
     course_id = db.Column(db.Integer)
 
     name = db.Column(db.String(100))
-    due_date = db.Column(db.Date)
+    due_datetime = db.Column(db.DateTime)
     # est_time = db.Column(db.Float)
     # importance = db.Column(db.Integer)
     completed = db.Column(db.Boolean)
