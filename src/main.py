@@ -143,6 +143,7 @@ def view_courses():
 def create_course():
 
     form = CourseForm()
+    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     if not db_util.current_semester():
         return redirect(url_for('main.create_semester'))
 
@@ -158,7 +159,6 @@ def create_course():
         db.session.commit()
         return redirect(url_for('main.view_courses'))
 
-    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     form.semester.data = db_util.current_semester().id
 
     return render_template(
@@ -184,6 +184,7 @@ def edit_course(course_id):
 
     course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
     form = CourseForm()
+    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
 
     if form.validate_on_submit():
         course.semester_id = form.semester.data
@@ -193,7 +194,6 @@ def edit_course(course_id):
         db.session.commit()
         return redirect(url_for('main.view_courses'))
 
-    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     form.semester.data = course.semester_id
     form.name.data = course.name
     form.short_name.data = course.short_name
@@ -239,6 +239,7 @@ def create_assignment():
         return redirect(url_for('main.create_course'))
 
     form = AssignmentForm()
+    form.course.choices = [(course.id, course.name) for course in courses]
 
     if form.validate_on_submit():
 
@@ -259,8 +260,6 @@ def create_assignment():
         db.session.add(new_assignment)
         db.session.commit()
         return redirect(url_for('main.index'))
-
-    form.course.choices = [(course.id, course.name) for course in courses]
 
     return render_template(
         "create.html",
@@ -285,6 +284,8 @@ def edit_assignment(assignment_id):
 
     assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
     form = AssignmentForm()
+    courses = Course.query.filter_by(user_id=current_user.id, semester_id=db_util.current_semester().id).all()
+    form.course.choices = [(course.id, course.name) for course in courses]
 
     if form.validate_on_submit():
 
@@ -302,8 +303,6 @@ def edit_assignment(assignment_id):
         db.session.commit()
         return redirect(url_for('main.index'))
 
-    courses = Course.query.filter_by(user_id=current_user.id, semester_id=db_util.current_semester().id).all()
-    form.course.choices = [(course.id, course.name) for course in courses]
     form.course.data = assignment.course_id
     form.name.data = assignment.name
     form.due_date.data = assignment.due_date.date()

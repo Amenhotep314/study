@@ -37,6 +37,7 @@ def login():
 def signup():
 
     form = SignUp()
+    form.timezone.choices = [(timezone, timezone) for timezone in pytz.common_timezones]
 
     if form.validate_on_submit():
         email = form.email.data
@@ -58,7 +59,6 @@ def signup():
         db.session.commit()
         return redirect(url_for('auth.login'))
 
-    form.timezone.choices = [(timezone, timezone) for timezone in pytz.common_timezones]
     form.timezone.data = "Canada/Eastern"
 
     return render_template(
