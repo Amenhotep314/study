@@ -23,6 +23,18 @@ def current_semester():
     return semesters[0]
 
 
+
+def deep_delete_current_user():
+
+    semesters = Semester.query.filter_by(user_id=current_user.id).all()
+    for semester in semesters:
+        deep_delete_semester(semester)
+
+    db.session.delete(current_user)
+    db.session.commit()
+    invalidate_caches()
+
+
 def deep_delete_semester(semester):
 
     courses = Course.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
@@ -52,13 +64,9 @@ def deep_delete_assignment(assignment):
 
 def invalidate_caches(*args):
 
-    cached_funcs = [
-        current_semester,
-    ]
-
-    if args:
-        for func in args:
+    names = args if args else globals().keys
+    for func in names:
+        try:
             globals()[func].cache_clear()
-    else:
-        for func in cached_funcs:
-            func.cache_clear()
+        except:
+            pass
