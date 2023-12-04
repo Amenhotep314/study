@@ -46,7 +46,7 @@ def create_semester():
         )
         db.session.add(new_semester)
         db.session.commit()
-        db_util.invalidate_caches("current_semester")
+        db_util.invalidate_caches("current_semester", "current_courses")
         return redirect(url_for('main.view_semesters'))
 
     return render_template(
@@ -83,7 +83,7 @@ def edit_semester(semester_id):
         semester.end_date = end_datetime
 
         db.session.commit()
-        db_util.invalidate_caches("current_semester")
+        db_util.invalidate_caches("current_semester", "current_courses")
         return redirect(url_for('main.view_semesters'))
 
     form.name.data = semester.name
@@ -125,7 +125,7 @@ def view_courses():
 
     current_semester = db_util.current_semester()
     if current_semester:
-        courses = Course.query.filter_by(user_id=current_user.id, semester_id=current_semester.id).all()
+        courses = db_util.current_courses()
         title = current_semester.name
     else:
         courses = []
@@ -157,6 +157,7 @@ def create_course():
         )
         db.session.add(new_course)
         db.session.commit()
+        db_util.invalidate_caches("current_courses")
         return redirect(url_for('main.view_courses'))
 
     form.semester.data = db_util.current_semester().id
@@ -192,6 +193,7 @@ def edit_course(course_id):
         course.short_name = form.short_name.data
         course.credits = form.credits.data
         db.session.commit()
+        db_util.invalidate_caches("current_courses")
         return redirect(url_for('main.view_courses'))
 
     form.semester.data = course.semester_id
@@ -234,7 +236,7 @@ def create_assignment():
 
     if not db_util.current_semester():
         return redirect(url_for('main.create_semester'))
-    courses = Course.query.filter_by(user_id=current_user.id, semester_id=db_util.current_semester().id).all()
+    courses = db_util.current_courses()
     if not courses:
         return redirect(url_for('main.create_course'))
 
@@ -284,7 +286,7 @@ def edit_assignment(assignment_id):
 
     assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
     form = AssignmentForm()
-    courses = Course.query.filter_by(user_id=current_user.id, semester_id=db_util.current_semester().id).all()
+    courses = db_util.current_courses()
     form.course.choices = [(course.id, course.name) for course in courses]
 
     if form.validate_on_submit():

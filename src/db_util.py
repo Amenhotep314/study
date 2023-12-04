@@ -23,6 +23,13 @@ def current_semester():
     return semesters[0]
 
 
+@cache
+def current_courses():
+
+    courses = Course.query.filter_by(user_id=current_user.id, semester_id=current_semester().id).all()
+    return courses
+
+
 
 def deep_delete_current_user():
 
@@ -54,6 +61,7 @@ def deep_delete_course(course):
 
     db.session.delete(course)
     db.session.commit()
+    invalidate_caches("current_courses")
 
 
 def deep_delete_assignment(assignment):
