@@ -1,5 +1,5 @@
 from flask_login import current_user
-from datetime import date
+from datetime import datetime
 from functools import cache
 
 from . import db
@@ -40,6 +40,7 @@ def current_assignments(*courses, past=False):
     else:
         assignments = Assignment.query.filter_by(user_id=current_user.id, completed=past).all()
 
+    assignments.sort(key=lambda x: x.due_datetime, reverse=True)
     return assignments
 
 
