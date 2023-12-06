@@ -261,6 +261,7 @@ def create_assignment():
         )
         db.session.add(new_assignment)
         db.session.commit()
+        db_util.invalidate_caches("current_assignments")
         return redirect(url_for('main.index'))
 
     return render_template(
@@ -303,6 +304,7 @@ def edit_assignment(assignment_id):
         # assignment.importance = form.importance.data
         assignment.completed = form.completed.data
         db.session.commit()
+        db_util.invalidate_caches("current_assignments")
         return redirect(url_for('main.index'))
 
     form.course.data = assignment.course_id

@@ -30,6 +30,45 @@ def current_courses():
     return courses
 
 
+@cache
+def current_assignments(*courses, past=False):
+
+    if courses:
+        assignments = []
+        for course in courses:
+            assignments.extend(Assignment.query.filter_by(user_id=current_user.id, course_id=course.id, completed=past).all())
+    else:
+        assignments = Assignment.query.filter_by(user_id=current_user.id, completed=past).all()
+
+    return assignments
+
+
+def active_assignments(*courses):
+
+    assignments = current_assignments(courses)
+    ans = []
+    now = datetime.now(tz=util.current_user_timezone())
+
+    for assignment in assignments:
+        if assignment.due_datetime <= now:
+            ans.append(assignment)
+
+    return assignments
+
+
+def overdue_assignments(*courses):
+
+    assignments = current_assignments(courses)
+    ans = []
+    now = datetime.now(tz=util.current_user_timezone())
+
+    for assignment in assignments:
+        if assignment.due_datetime > now:
+            ans.append(assignment)
+
+    return assignments
+
+
 
 def deep_delete_current_user():
 
