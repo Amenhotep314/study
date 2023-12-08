@@ -14,10 +14,10 @@ def current_semester():
     if not semesters:
         return None
 
-    now = datetime.now(tz=util.current_user_timezone()).date().toordinal()
-    semesters.sort(reverse=True, key = lambda x: x.end_date.toordinal())
+    now = datetime.now(tz=util.current_user_timezone())
+    semesters.sort(reverse=True, key = lambda x: x.start_date.toordinal())
     for semester in semesters:
-        if semester.start_date.date().toordinal() <= now <= semester.end_date.date().toordinal():
+        if (semester.start_date <= now) and (now <= semester.end_date):
             return semester
 
     return semesters[0]
