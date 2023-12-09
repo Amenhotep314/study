@@ -24,7 +24,9 @@ def index():
 def view_semesters():
 
     semesters = Semester.query.filter_by(user_id=current_user.id).all()
-    return render_template("view_semesters.html", semesters=semesters)
+    semester_dicts = util.local_dicts_from_naive_utc_queries(semesters)
+
+    return render_template("view_semesters.html", semesters=semester_dicts)
 
 
 @main.route("/semesters/create", methods=['GET', 'POST'])
@@ -35,8 +37,8 @@ def create_semester():
 
     if form.validate_on_submit():
 
-        start_datetime = util.aware_datetime_from_date(form.start_datetime.data, eod=False)
-        end_datetime = util.aware_datetime_from_date(form.end_datetime.data)
+        start_datetime = util.utc_datetime_from_naive_local_date(form.start_datetime.data, eod=False)
+        end_datetime = util.utc_datetime_from_naive_local_date(form.end_datetime.data)
 
         new_semester = Semester(
             user_id = current_user.id,
@@ -63,7 +65,9 @@ def create_semester():
 def view_semester(semester_id):
 
     semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
-    return render_template("view_semester.html", semester=semester)
+    semester_dict = util.local_dict_from_naive_utc_query(semester)
+
+    return render_template("view_semester.html", semester=semester_dict)
 
 
 @main.route("/semesters/edit/<semester_id>", methods=['GET', 'POST'])
@@ -75,8 +79,8 @@ def edit_semester(semester_id):
 
     if form.validate_on_submit():
 
-        start_datetime = util.aware_datetime_from_date(form.start_datetime.data, eod=False)
-        end_datetime = util.aware_datetime_from_date(form.end_datetime.data)
+        start_datetime = util.utc_datetime_from_naive_local_date(form.start_datetime.data, eod=False)
+        end_datetime = util.utc_datetime_from_naive_local_date(form.end_datetime.data)
 
         semester.name = form.name.data
         semester.start_datetime = start_datetime
@@ -87,8 +91,8 @@ def edit_semester(semester_id):
         return redirect(url_for('main.view_semesters'))
 
     form.name.data = semester.name
-    form.start_datetime.data = semester.start_datetime.date()
-    form.end_datetime.data = semester.end_datetime.date()
+    form.start_datetime.data = util.local_datetime_from_naive_utc_datetime(semester.start_datetime).date()
+    form.end_datetime.data = util.local_datetime_from_naive_utc_datetime(semester.end_datetime).date()
 
     return render_template(
         "edit.html",
@@ -246,9 +250,9 @@ def create_assignment():
     if form.validate_on_submit():
 
         if form.due_time.data:
-            due_datetime = util.aware_datetime_from_date_time(form.due_date.data, form.due_time.data)
+            due_datetime = util.utc_datetime_from_naive_local_date_time(form.due_date.data, form.due_time.data)
         else:
-            due_datetime = util.aware_datetime_from_date(form.due_date.data)
+            due_datetime = util.utc_datetime_from_naive_local_date(form.due_date.data)
 
         new_assignment = Assignment(
             user_id = current_user.id,
@@ -278,7 +282,9 @@ def create_assignment():
 def view_assignment(assignment_id):
 
     assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
-    return render_template("view_assignment.html", assignment=assignment)
+    assignment_dict = util.local_dict_from_naive_utc_query(assignment)
+
+    return render_template("view_assignment.html", assignment=assignment_dict)
 
 
 @main.route("/assignments/edit/<assignment_id>", methods=['GET', 'POST'])
@@ -293,9 +299,9 @@ def edit_assignment(assignment_id):
     if form.validate_on_submit():
 
         if form.due_time.data:
-            due_datetime = util.aware_datetime_from_date_time(form.due_date.data, form.due_time.data)
+            due_datetime = util.utc_datetime_from_naive_local_date_time(form.due_date.data, form.due_time.data)
         else:
-            due_datetime = util.aware_datetime_from_date(form.due_date.data)
+            due_datetime = util.utc_datetime_from_naive_local_date(form.due_date.data)
 
         assignment.course_id = form.course.data
         assignment.name = form.name.data
@@ -309,8 +315,8 @@ def edit_assignment(assignment_id):
 
     form.course.data = assignment.course_id
     form.name.data = assignment.name
-    form.due_date.data = assignment.due_date.date()
-    form.due_time.data = assignment.due_date.time()
+    form.due_date.data = util.local_datetime_from_naive_utc_datetime(assignment.due_date).date()
+    form.due_time.data = util.local_datetime_from_naive_utc_datetime(assignment.due_date).time()
     # form.est_time.data = assignment.est_time
     # form.importance.data = assignment.importance
     form.completed.data = assignment.completed

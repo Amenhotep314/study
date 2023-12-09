@@ -13,11 +13,13 @@ def current_semester():
     semesters = Semester.query.filter_by(user_id=current_user.id).all()
     if not semesters:
         return None
+    now = util.utc_now()
+    semesters.sort(reverse=True, key = lambda x: x.start_datetime)
 
-    now = datetime.now(tz=util.current_user_timezone())
-    semesters.sort(reverse=True, key = lambda x: x.start_datetime.toordinal())
     for semester in semesters:
-        if (semester.start_datetime(tz=util.current_user_timezone()) <= now) and (now <= semester.end_datetime(tz=util.current_user_timezone())):
+        start = util.utc_datetime_from_naive_utc_datetime(semester.start_datetime)
+        end = util.utc_datetime_from_naive_utc_datetime(semester.end_datetime)
+        if (start <= now) and (now <= end):
             return semester
 
     return semesters[0]
@@ -48,10 +50,10 @@ def active_assignments(*courses):
 
     assignments = current_assignments(courses)
     ans = []
-    now = datetime.now(tz=util.current_user_timezone())
+    now = util.utc_now()
 
     for assignment in assignments:
-        if assignment.due_datetime(tz=util.current_user_timezone()) <= now:
+        if util.utc_datetime_from_naive_utc_datetime(assignment.due_datetime) <= now:
             ans.append(assignment)
 
     return assignments
@@ -61,10 +63,10 @@ def overdue_assignments(*courses):
 
     assignments = current_assignments(courses)
     ans = []
-    now = datetime.now(tz=util.current_user_timezone())
+    now = util.utc_now()
 
     for assignment in assignments:
-        if assignment.due_datetime(tz=util.current_user_timezone()) > now:
+        if util.utc_datetime_from_naive_utc_datetime(assignment.due_datetime) > now:
             ans.append(assignment)
 
     return assignments
