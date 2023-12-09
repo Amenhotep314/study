@@ -1,5 +1,5 @@
 from flask_login import current_user
-from datetime import datetime
+import datetime
 import pytz
 
 
@@ -18,13 +18,13 @@ def current_user_timezone():
 
 def utc_now():
 
-    return datetime.now(tz=pytz.utc)
+    return datetime.datetime.now(tz=pytz.utc)
 
 
 def utc_datetime_from_naive_local_date_time(date, time):
 
     tz = current_user_timezone()
-    unaware = datetime.combine(date, time)
+    unaware = datetime.datetime.combine(date, time)
     local = tz.localize(unaware)
     utc = local.astimezone(pytz.utc)
 

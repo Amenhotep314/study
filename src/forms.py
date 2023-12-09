@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 import wtforms
 from wtforms.validators import *
-from flask_login import current_user
 from werkzeug.security import check_password_hash
 
 from .models import *

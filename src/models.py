@@ -1,6 +1,4 @@
 from flask_login import UserMixin
-from datetime import datetime
-import pytz
 
 from . import db
 from . import util
