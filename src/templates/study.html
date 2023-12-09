@@ -1,0 +1,14 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>Study {{ target.name }}</title>
+{% endblock %}
+
+{% block body %}
+    <script>$('#studyTimer').on("load", startStudyTimer())</script>
+    <h1>Study <em>{{ target.name }}</em></h1>
+    <p id="studyTimer">00:00:00</p>
+    {% for action_link in action_links %}
+        <a href="{{action_link[1]}}">{{action_link[0]}}</a>
+    {% endfor %}
+{% endblock %}

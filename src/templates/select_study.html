@@ -1,0 +1,22 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>New Study Session</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Choose What to Study</h1>
+    <form method="POST" action="{{ url_for('main.select_study') }}">
+        {{ form.csrf_token }}
+        {% for field in form %}
+            {% if field.type != 'CSRFTokenField' %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+                {{ field.label() }}
+                {{ field() }}
+            {% endif %}
+        {% endfor %}
+        <button type="submit">Start Studying</button>
+    </form>
+{% endblock %}

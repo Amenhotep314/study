@@ -315,8 +315,8 @@ def edit_assignment(assignment_id):
 
     form.course.data = assignment.course_id
     form.name.data = assignment.name
-    form.due_date.data = util.local_datetime_from_naive_utc_datetime(assignment.due_date).date()
-    form.due_time.data = util.local_datetime_from_naive_utc_datetime(assignment.due_date).time()
+    form.due_date.data = util.local_datetime_from_naive_utc_datetime(assignment.due_datetime).date()
+    form.due_time.data = util.local_datetime_from_naive_utc_datetime(assignment.due_datetime).time()
     # form.est_time.data = assignment.est_time
     # form.importance.data = assignment.importance
     form.completed.data = assignment.completed
@@ -348,3 +348,83 @@ def delete_assignment(assignment_id):
         action=url_for('main.delete_assignment', assignment_id=assignment.id),
         methods=['GET', 'POST']
     )
+
+
+@main.route("/select_study", methods=['GET', 'POST'])
+@login_required
+def select_study():
+
+    if not db_util.current_semester():
+        return redirect(url_for('main.create_semester'))
+    courses = db_util.current_courses()
+    if not courses:
+        return redirect(url_for("main.create_course"))
+
+    assignments = db_util.current_assignments()
+    if assignments:
+        max_id = 1 + max([assignment.id for assignment in assignments])
+    else:
+        max_id = 0
+    assignment_options = [(assignment.id, assignment.name) for assignment in assignments]
+    course_options = [(course.id+max_id, course.name) for course in courses]
+
+    form = SelectStudyForm()
+    form.choice.choices = assignment_options + course_options
+
+    if form.validate_on_submit():
+        choice = form.choice.data
+
+        if choice in [assignment.id for assignment in assignments]:
+            assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=choice))
+            course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=assignment.course_id))
+
+        else:
+            choice -= max_id
+            assignment = None
+            course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=choice))
+
+        db_util.start_study_session(course, assignment)
+        return redirect(url_for('main.study'))
+
+    return render_template("select_study.html", form=form)
+
+
+@main.route("/study")
+@login_required
+def study():
+
+    study_session = db_util.current_study_session()
+    if not study_session:
+        return redirect(url_for('main.select_study'))
+
+    action_links = [("Stop Studying", url_for('main.stop_study')),]
+    if study_session.assignment_id:
+        target = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=study_session.assignment_id))
+        action_links.append(("Assignment Completed", url_for('main.stop_study_complete_assignment')))
+    else:
+        target = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=study_session.assignment_id))
+
+    return render_template("study.html", target=target, action_links=action_links)
+
+
+@main.route("/stop_study")
+@login_required
+def stop_study():
+
+    db_util.stop_study_session()
+    return redirect(url_for('main.index'))
+
+
+@main.route("/stop_study_complete_assignment")
+@login_required
+def stop_study_complete_assignment():
+
+    study_session = db_util.current_study_session()
+    if study_session and study_session.assignment_id:
+        assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=study_session.assignment_id))
+        assignment.completed = True
+        db.session.commit()
+        db_util.invalidate_caches("current_assignments")
+
+    db_util.stop_study_session()
+    return redirect(url_for('main.index'))

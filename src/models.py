@@ -56,3 +56,17 @@ class Assignment(db.Model):
     # est_time = db.Column(db.Float)
     # importance = db.Column(db.Integer)
     completed = db.Column(db.Boolean)
+
+
+class StudySession(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    created = db.Column(db.DateTime, default=util.utc_now())
+
+    user_id = db.Column(db.Integer)
+    semester_id = db.Column(db.Integer)
+    course_id = db.Column(db.Integer)
+    assignment_id = db.Column(db.Integer, default=None)
+
+    start_datetime = db.Column(db.DateTime)
+    end_datetime = db.Column(db.DateTime, default=None)

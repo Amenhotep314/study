@@ -3,6 +3,7 @@ function startStudyTimer() {
     // https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
     let studyStartTime = Math.floor(Date.now() / 1000);
     localStorage.setItem("studyStartTime", studyStartTime);
+    console.log("Started timer.");
     updateStudyTimer();
 }
 
@@ -20,8 +21,8 @@ function updateStudyTimer() {
     minutes = addZeroes(minutes);
     seconds = addZeroes(seconds);
 
-    document.getElementById("studyTimer").innerHTML = hours + ":" + minutes + ":" + seconds;
-    setTimeout(startTimeCounter, 500);
+    $("#studyTimer").html(hours + ":" + minutes + ":" + seconds);
+    setTimeout(updateStudyTimer, 500);
 }
 
 

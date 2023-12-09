@@ -133,6 +133,11 @@ class AssignmentForm(FlaskForm):
     course = wtforms.SelectField("Course", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
 
 
+class SelectStudyForm(FlaskForm):
+
+    choice = wtforms.SelectField("Choice", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
+
+
 class ConfirmDelete(FlaskForm):
 
     confirmation = wtforms.StringField("Confirmation", validators=[InputRequired(), AnyOf(["I understand."])])

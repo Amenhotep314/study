@@ -72,6 +72,43 @@ def overdue_assignments(*courses):
     return assignments
 
 
+def start_study_session(course, assignment=None):
+
+    stop_study_session()
+    if assignment:
+        assignment_id = assignment.id
+    else:
+        assignment_id = None
+
+    new_study_session = StudySession(
+        user_id = current_user.id,
+        semester_id = current_semester().id,
+        course_id = course.id,
+        assignment_id=assignment_id,
+        start_datetime = util.utc_now()
+    )
+
+    db.session.add(new_study_session)
+    db.session.commit()
+
+
+def stop_study_session():
+
+    # There should never be more than one open at once, but let's be sure:
+    study_sessions = StudySession.query.filter_by(user_id=current_user.id, end_datetime=None).all()
+    for study_session in study_sessions:
+        study_session.end_datetime = util.utc_now()
+
+    db.session.commit()
+    invalidate_caches("current_study_session")
+
+
+@cache
+def current_study_session():
+
+    study_session = StudySession.query.filter_by(user_id=current_user.id, end_datetime=None).first()
+    return study_session
+
 
 def deep_delete_current_user():
 
@@ -89,6 +126,10 @@ def deep_delete_semester(semester):
     courses = Course.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
     for course in courses:
         deep_delete_course(course)
+
+    study_sessions = StudySession.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
+    for study_session in study_sessions:
+        deep_delete_study_session(study_session)
 
     db.session.delete(semester)
     db.session.commit()
@@ -110,6 +151,14 @@ def deep_delete_assignment(assignment):
 
     db.session.delete(assignment)
     db.session.commit()
+    invalidate_caches("current_assignments")
+
+
+def deep_delete_study_session(study_session):
+
+    db.session.delete(study_session)
+    db.session.commit()
+    invalidate_caches("current_study_session")
 
 
 def invalidate_caches(*args):
