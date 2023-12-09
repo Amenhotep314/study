@@ -15,9 +15,9 @@ def current_semester():
         return None
 
     now = datetime.now(tz=util.current_user_timezone())
-    semesters.sort(reverse=True, key = lambda x: x.start_date.toordinal())
+    semesters.sort(reverse=True, key = lambda x: x.start_datetime.toordinal())
     for semester in semesters:
-        if (semester.start_date <= now) and (now <= semester.end_date):
+        if (semester.start_datetime(tz=util.current_user_timezone()) <= now) and (now <= semester.end_datetime(tz=util.current_user_timezone())):
             return semester
 
     return semesters[0]
@@ -51,7 +51,7 @@ def active_assignments(*courses):
     now = datetime.now(tz=util.current_user_timezone())
 
     for assignment in assignments:
-        if assignment.due_datetime <= now:
+        if assignment.due_datetime(tz=util.current_user_timezone()) <= now:
             ans.append(assignment)
 
     return assignments
@@ -64,7 +64,7 @@ def overdue_assignments(*courses):
     now = datetime.now(tz=util.current_user_timezone())
 
     for assignment in assignments:
-        if assignment.due_datetime > now:
+        if assignment.due_datetime(tz=util.current_user_timezone()) > now:
             ans.append(assignment)
 
     return assignments

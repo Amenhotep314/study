@@ -22,8 +22,8 @@
             {% for semester in semesters %}
                 <tr>
                     <td>{{ semester.name }}</td>
-                    <td>{{ semester.start_date.strftime("%Y-%m-%d") }}</td>
-                    <td>{{ semester.end_date.strftime("%Y-%m-%d") }}</td>
+                    <td>{{ semester.start_datetime.strftime("%Y-%m-%d") }}</td>
+                    <td>{{ semester.end_datetime.strftime("%Y-%m-%d") }}</td>
                     <td>
                         <a href="{{ url_for('main.view_semester', semester_id=semester.id) }}">View</a>
                         <a href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>

@@ -110,8 +110,8 @@ class LogIn(FlaskForm):
 class SemesterForm(FlaskForm):
 
     name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
-    start_date = wtforms.DateField("Start Date", validators=[InputRequired()])
-    end_date = wtforms.DateField("End Date", validators=[InputRequired(), DateAfter("start_date")])
+    start_datetime = wtforms.DateField("Start Date", validators=[InputRequired()])
+    end_datetime = wtforms.DateField("End Date", validators=[InputRequired(), DateAfter("start_datetime")])
 
 
 class CourseForm(FlaskForm):

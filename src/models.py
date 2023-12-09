@@ -25,8 +25,8 @@ class Semester(db.Model):
     user_id = db.Column(db.Integer)
 
     name = db.Column(db.String(100))
-    start_date = db.Column(db.DateTime)
-    end_date = db.Column(db.DateTime)
+    start_datetime = db.Column(db.DateTime)
+    end_datetime = db.Column(db.DateTime)
 
 
 class Course(db.Model):
