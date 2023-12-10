@@ -47,7 +47,7 @@ def current_assignments(*courses, past=False):
 
 def active_assignments(*courses):
 
-    assignments = current_assignments(courses)
+    assignments = current_assignments(courses) if courses else current_assignments()
     ans = []
     now = util.utc_now()
 
@@ -60,7 +60,7 @@ def active_assignments(*courses):
 
 def overdue_assignments(*courses):
 
-    assignments = current_assignments(courses)
+    assignments = current_assignments(courses) if courses else current_assignments()
     ans = []
     now = util.utc_now()
 
