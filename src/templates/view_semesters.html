@@ -17,33 +17,12 @@
                         <h3>{{ semester['name'] }}</h3>
                         <p>From {{ semester['start_datetime'].strftime("%Y-%m-%d") }} to {{ semester['end_datetime'].strftime("%Y-%m-%d") }}</p>
                     </div>
-                    <div style="margin-left: auto;">
+                    <div style="margin-left: auto; display: flex;">
                         <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester['id']) }}">View</a>
                         <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester['id']) }}">Edit</a>
                     </div>
                 </div>
             {% endfor %}
         </div>
-        <!-- <table>
-            <tr>
-                <strong>
-                    <th>Semester</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Actions</th>
-                </strong>
-            </tr>
-            {% for semester in semesters %}
-                <tr>
-                    <td>{{ semester['name'] }}</td>
-                    <td>{{ semester['start_datetime'].strftime("%Y-%m-%d") }}</td>
-                    <td>{{ semester['end_datetime'].strftime("%Y-%m-%d") }}</td>
-                    <td>
-                        <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester['id']) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester['id']) }}">Edit</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table> -->
     {% endif %}
 {% endblock %}

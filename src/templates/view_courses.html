@@ -18,7 +18,7 @@
                         <p>{{ course.short_name }}</p>
                         <p>{{ course.credits }} credits</p>
                     </div>
-                    <div style="margin-left: auto;">
+                    <div style="margin-left: auto; display: flex;">
                         <a class="link-button" href="{{ url_for('main.view_course', course_id=course.id) }}">View</a>
                         <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
                     </div>

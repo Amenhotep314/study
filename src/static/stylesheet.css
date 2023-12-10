@@ -126,6 +126,10 @@ button:active, .link-button:active {
 }
 
 /* Form styles */
+form {
+    margin: auto;
+}
+
 form input, form select {
     display: block;
     margin-bottom: 8px;
