@@ -136,8 +136,7 @@ def view_courses():
 
     return render_template(
         "view_courses.html",
-        courses=courses,
-        title=title
+        courses=courses
     )
 
 

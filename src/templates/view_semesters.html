@@ -10,7 +10,21 @@
         <a class="link-button" href="{{ url_for('main.create_semester') }}">Add a Semester</a>
     </div>
     {% if semesters|length > 0 %}
-        <table>
+        <div class="subregion">
+            {% for semester in semesters %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <h3>{{ semester['name'] }}</h3>
+                        <p>From {{ semester['start_datetime'].strftime("%Y-%m-%d") }} to {{ semester['end_datetime'].strftime("%Y-%m-%d") }}</p>
+                    </div>
+                    <div style="margin-left: auto;">
+                        <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester['id']) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester['id']) }}">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- <table>
             <tr>
                 <strong>
                     <th>Semester</th>
@@ -30,6 +44,6 @@
                     </td>
                 </tr>
             {% endfor %}
-        </table>
+        </table> -->
     {% endif %}
 {% endblock %}
