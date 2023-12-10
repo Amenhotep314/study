@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>{{ course.name }}</h1>
-    <a href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
+    <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
     <p>Name: {{ course.short_name }}</p>
     <p>Credits: {{ course.credits }}</p>
 {% endblock %}

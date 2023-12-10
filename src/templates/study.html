@@ -9,6 +9,6 @@
     <h1>Study <em>{{ target.name }}</em></h1>
     <p id="studyTimer">00:00:00</p>
     {% for action_link in action_links %}
-        <a href="{{action_link[1]}}">{{action_link[0]}}</a>
+        <a class="link-button" href="{{action_link[1]}}">{{action_link[0]}}</a>
     {% endfor %}
 {% endblock %}
