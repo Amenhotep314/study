@@ -401,7 +401,7 @@ def study():
         target = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=study_session.assignment_id))
         action_links.append(("Assignment Completed", url_for('main.stop_study_complete_assignment')))
     else:
-        target = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=study_session.assignment_id))
+        target = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=study_session.course_id))
 
     return render_template("study.html", target=target, action_links=action_links)
 

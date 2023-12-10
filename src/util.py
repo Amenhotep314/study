@@ -60,7 +60,7 @@ def local_dict_from_naive_utc_query(query):
     query_dict = query.__dict__
 
     for key in query_dict:
-        if isinstance(query_dict[key], datetime):
+        if isinstance(query_dict[key], datetime.datetime):
             query_dict[key] = local_datetime_from_naive_utc_datetime(query_dict[key])
 
     return query_dict
