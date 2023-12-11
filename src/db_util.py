@@ -162,7 +162,8 @@ def deep_delete_study_session(study_session):
 
 def invalidate_caches(*args):
 
-    names = args if args else globals().keys
+    names = args if args else globals().keys()
+    print(names)
     for func in names:
         try:
             globals()[func].cache_clear()

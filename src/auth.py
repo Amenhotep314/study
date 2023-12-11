@@ -6,6 +6,7 @@ import pytz
 from . import db
 from .models import *
 from .forms import *
+from . import db_util
 
 
 auth = Blueprint("auth", __name__)
@@ -74,6 +75,7 @@ def signup():
 @login_required
 def logout():
 
+    db_util.invalidate_caches()
     logout_user()
     return redirect(url_for("auth.login"))
 
