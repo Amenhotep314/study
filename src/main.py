@@ -9,11 +9,14 @@ from .forms import *
 
 
 main = Blueprint("main", __name__)
+data = {"url": '/'}
 
 
 @main.route("/")
 @login_required
 def index():
+
+    data['url'] =  url_for('main.index')
 
     overdue_assignments = db_util.overdue_assignments()
     active_assignments = db_util.active_assignments()
@@ -22,15 +25,17 @@ def index():
 
     if db_util.current_semester() and db_util.current_courses():
         main_message = "Study Now"
+    elif db_util.current_semester():
+        main_message = "Create Your First Course"
     else:
-        main_message = "Get Started"
+        main_message = "Get Started Here"
 
     return render_template(
         "index.html",
         greeting=util.social_greeting(),
         main_message=main_message,
         overdue_assignments=overdue_assignment_dicts,
-        active_assignments=active_assignment_dicts,
+        active_assignments=active_assignment_dicts
     )
 
 
@@ -38,7 +43,10 @@ def index():
 @login_required
 def view_semesters():
 
+    data['url'] =  url_for('main.view_semesters')
+
     semesters = Semester.query.filter_by(user_id=current_user.id).all()
+    semesters.sort(key=lambda x: x.start_datetime, reverse=True)
     semester_dicts = util.local_dicts_from_naive_utc_queries(semesters)
 
     return render_template("view_semesters.html", semesters=semester_dicts)
@@ -64,7 +72,7 @@ def create_semester():
         db.session.add(new_semester)
         db.session.commit()
         db_util.invalidate_caches("current_semester", "current_courses")
-        return redirect(url_for('main.view_semesters'))
+        return redirect(data['url'])
 
     return render_template(
         "create.html",
@@ -78,6 +86,8 @@ def create_semester():
 @main.route("/semesters/<semester_id>")
 @login_required
 def view_semester(semester_id):
+
+    data['url'] =  url_for('main.view_semester', semester_id=semester_id)
 
     semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
     semester_dict = util.local_dict_from_naive_utc_query(semester)
@@ -103,7 +113,8 @@ def edit_semester(semester_id):
 
         db.session.commit()
         db_util.invalidate_caches("current_semester", "current_courses")
-        return redirect(url_for('main.view_semesters'))
+
+        return redirect(data['url'])
 
     form.name.data = semester.name
     form.start_datetime.data = util.local_datetime_from_naive_utc_datetime(semester.start_datetime).date()
@@ -129,6 +140,7 @@ def delete_semester(semester_id):
         db_util.deep_delete_semester(semester)
         return redirect(url_for('main.view_semesters'))
 
+
     return render_template(
         "delete.html",
         form=form,
@@ -141,6 +153,8 @@ def delete_semester(semester_id):
 @main.route("/courses")
 @login_required
 def view_courses():
+
+    data['url'] =  url_for('main.view_courses')
 
     current_semester = db_util.current_semester()
     if current_semester:
@@ -176,7 +190,7 @@ def create_course():
         db.session.add(new_course)
         db.session.commit()
         db_util.invalidate_caches("current_courses")
-        return redirect(url_for('main.view_courses'))
+        return redirect(data['url'])
 
     form.semester.data = db_util.current_semester().id
 
@@ -192,6 +206,8 @@ def create_course():
 @main.route("/courses/<course_id>")
 @login_required
 def view_course(course_id):
+
+    data['url'] =  url_for('main.view_course', course_id=course_id)
 
     course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
     return render_template("view_course.html", course=course)
@@ -212,7 +228,7 @@ def edit_course(course_id):
         course.credits = form.credits.data
         db.session.commit()
         db_util.invalidate_caches("current_courses")
-        return redirect(url_for('main.view_courses'))
+        return redirect(data['url'])
 
     form.semester.data = course.semester_id
     form.name.data = course.name
@@ -280,7 +296,7 @@ def create_assignment():
         db.session.add(new_assignment)
         db.session.commit()
         db_util.invalidate_caches("current_assignments")
-        return redirect(url_for('main.index'))
+        return redirect(data['url'])
 
     return render_template(
         "create.html",
@@ -294,6 +310,8 @@ def create_assignment():
 @main.route("/assignments/<assignment_id>")
 @login_required
 def view_assignment(assignment_id):
+
+    data['url'] =  url_for('main.view_assignment', assignment_id=assignment_id)
 
     assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
     assignment_dict = util.local_dict_from_naive_utc_query(assignment)
@@ -325,7 +343,7 @@ def edit_assignment(assignment_id):
         assignment.completed = form.completed.data
         db.session.commit()
         db_util.invalidate_caches("current_assignments")
-        return redirect(url_for('main.index'))
+        return redirect(data['url'])
 
     form.course.data = assignment.course_id
     form.name.data = assignment.name
@@ -372,7 +390,7 @@ def complete_assignment(assignment_id):
     assignment.completed = True
     db.session.commit()
     db_util.invalidate_caches("current_assignments")
-    return redirect(url_for('main.index'))
+    return redirect(data['url'])
 
 
 @main.route("/select_study", methods=['GET', 'POST'])
@@ -437,7 +455,7 @@ def study():
 def stop_study():
 
     db_util.stop_study_session()
-    return redirect(url_for('main.index'))
+    return redirect(data['url'])
 
 
 @main.route("/stop_study_complete_assignment")
@@ -452,4 +470,4 @@ def stop_study_complete_assignment():
         db_util.invalidate_caches("current_assignments")
 
     db_util.stop_study_session()
-    return redirect(url_for('main.index'))
+    return redirect(data['url'])
