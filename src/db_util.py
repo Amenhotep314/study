@@ -28,11 +28,12 @@ def current_semester():
 def current_courses():
 
     courses = Course.query.filter_by(user_id=current_user.id, semester_id=current_semester().id).all()
+    courses.sort(key=lambda x: x.name)
     return courses
 
 
 # @cache
-def current_assignments(*courses, past=False):
+def current_assignments(courses=None, past=False):
 
     if courses:
         assignments = []
@@ -41,13 +42,13 @@ def current_assignments(*courses, past=False):
     else:
         assignments = Assignment.query.filter_by(user_id=current_user.id, completed=past).all()
 
-    assignments.sort(key=lambda x: x.due_datetime, reverse=True)
+    assignments.sort(key=lambda x: x.due_datetime)
     return assignments
 
 
-def active_assignments(*courses):
+def active_assignments(courses=None):
 
-    assignments = current_assignments(courses) if courses else current_assignments()
+    assignments = current_assignments(courses)
     ans = []
     now = util.utc_now()
 
@@ -58,9 +59,9 @@ def active_assignments(*courses):
     return ans
 
 
-def overdue_assignments(*courses):
+def overdue_assignments(courses=None):
 
-    assignments = current_assignments(courses) if courses else current_assignments()
+    assignments = current_assignments(courses)
     ans = []
     now = util.utc_now()
 
