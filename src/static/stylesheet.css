@@ -120,11 +120,6 @@ button:active, .link-button:active {
     background-color: white;
 }
 
-.link-div {
-    display: block;
-    text-decoration: none;
-}
-
 /* Form styles */
 form {
     margin: auto;

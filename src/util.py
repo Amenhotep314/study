@@ -43,13 +43,18 @@ def utc_datetime_from_naive_local_date(date, eod=True):
 
 def utc_datetime_from_naive_utc_datetime(datetime):
 
-    return pytz.utc.localize(datetime)
+    try:
+        utc = pytz.utc.localize(datetime)
+    except:
+        utc = datetime
+
+    return utc
 
 
 def local_datetime_from_naive_utc_datetime(datetime):
 
     tz = current_user_timezone()
-    utc = pytz.utc.localize(datetime)
+    utc = utc_datetime_from_naive_utc_datetime(datetime)
     local = utc.astimezone(tz)
 
     return local
@@ -73,3 +78,24 @@ def local_dicts_from_naive_utc_queries(queries):
         query_dicts.append(local_dict_from_naive_utc_query(query))
 
     return query_dicts
+
+
+def social_greeting():
+
+    user_name = current_user.firstname
+    user_datetime = utc_now().astimezone(current_user_timezone())
+    user_time = user_datetime.time()
+    morning = datetime.time(6, 0)
+    afternoon = datetime.time(12, 0)
+    evening = datetime.time(18, 0)
+    night = datetime.time(23, 59)
+    print(user_time)
+
+    if morning <= user_time < afternoon:
+        return "Good morning, " + user_name + "."
+    elif afternoon <= user_time < evening:
+        return "Good afternoon, " + user_name + "."
+    elif evening <= user_time < night:
+        return "Good evening, " + user_name + "."
+    else:
+        return "Hello, " + user_name + "."

@@ -52,10 +52,10 @@ def active_assignments(*courses):
     now = util.utc_now()
 
     for assignment in assignments:
-        if util.utc_datetime_from_naive_utc_datetime(assignment.due_datetime) <= now:
+        if util.utc_datetime_from_naive_utc_datetime(assignment.due_datetime) > now:
             ans.append(assignment)
 
-    return assignments
+    return ans
 
 
 def overdue_assignments(*courses):
@@ -65,10 +65,10 @@ def overdue_assignments(*courses):
     now = util.utc_now()
 
     for assignment in assignments:
-        if util.utc_datetime_from_naive_utc_datetime(assignment.due_datetime) > now:
+        if util.utc_datetime_from_naive_utc_datetime(assignment.due_datetime) <= now:
             ans.append(assignment)
 
-    return assignments
+    return ans
 
 
 def start_study_session(course, assignment=None):
