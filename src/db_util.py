@@ -6,7 +6,7 @@ from . import util
 from .models import *
 
 
-@cache
+# @cache
 def current_semester():
 
     semesters = Semester.query.filter_by(user_id=current_user.id).all()
@@ -24,14 +24,14 @@ def current_semester():
     return semesters[0]
 
 
-@cache
+# @cache
 def current_courses():
 
     courses = Course.query.filter_by(user_id=current_user.id, semester_id=current_semester().id).all()
     return courses
 
 
-@cache
+# @cache
 def current_assignments(*courses, past=False):
 
     if courses:
@@ -102,7 +102,7 @@ def stop_study_session():
     invalidate_caches("current_study_session")
 
 
-@cache
+# @cache
 def current_study_session():
 
     study_session = StudySession.query.filter_by(user_id=current_user.id, end_datetime=None).first()
@@ -163,7 +163,6 @@ def deep_delete_study_session(study_session):
 def invalidate_caches(*args):
 
     names = args if args else globals().keys()
-    print(names)
     for func in names:
         try:
             globals()[func].cache_clear()
