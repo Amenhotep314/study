@@ -7,8 +7,13 @@
 {% block body %}
     <script>$('#studyTimer').on("load", startStudyTimer())</script>
     <h1>Study <em>{{ target.name }}</em></h1>
-    <p id="studyTimer">00:00:00</p>
-    {% for action_link in action_links %}
-        <a class="link-button" href="{{action_link[1]}}">{{action_link[0]}}</a>
-    {% endfor %}
+    <div class="subelement">
+        <h2 style="margin-left: auto; margin-right: auto;" id="studyTimer">00:00:00</h2>
+    </div>
+    <br><br>
+    <div style="display: inline; margin-left: auto; margin-right: auto; margin-top: 2%;">
+        {% for action_link in action_links %}
+            <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{action_link[1]}}">{{action_link[0]}}</a>
+        {% endfor %}
+    </div>
 {% endblock %}
