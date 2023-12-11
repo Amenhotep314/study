@@ -6,7 +6,63 @@
 
 {% block body %}
     <h1>{{ course.name }}</h1>
-    <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
-    <p>Name: {{ course.short_name }}</p>
-    <p>Credits: {{ course.credits }}</p>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
+    <p style="margin-left: auto; margin-right: auto;">{{ course.short_name }}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{ course.credits }} credits</p>
+    {% if (overdue_assignments|length > 0) or (active_assignments|length > 0) or (past_assignments|length > 0) %}
+        <h2>Assignments</h2>
+    {% endif %}
+    {% if (overdue_assignments|length > 0) %}
+        <div class="subregion">
+            <h3>Past Due</h3>
+            {% for assignment in overdue_assignments %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <strong>{{ assignment['name'] }}</strong>
+                        <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if (active_assignments|length > 0) %}
+        <div class="subregion">
+            <h3>Current</h3>
+            {% for assignment in active_assignments %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <strong>{{ assignment['name'] }}</strong>
+                        <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if (past_assignments|length > 0) %}
+        <div class="subregion">
+            <h3>Past</h3>
+            {% for assignment in past_assignments %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <strong>{{ assignment['name'] }}</strong>
+                        <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

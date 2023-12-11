@@ -42,7 +42,7 @@ def current_assignments(courses=None, past=False):
     else:
         assignments = Assignment.query.filter_by(user_id=current_user.id, completed=past).all()
 
-    assignments.sort(key=lambda x: x.due_datetime)
+    assignments.sort(key=lambda x: x.due_datetime, reverse=past)
     return assignments
 
 

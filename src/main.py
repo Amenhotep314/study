@@ -91,8 +91,14 @@ def view_semester(semester_id):
 
     semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
     semester_dict = util.local_dict_from_naive_utc_query(semester)
+    courses = Course.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
+    courses.sort(key=lambda x: x.name)
 
-    return render_template("view_semester.html", semester=semester_dict)
+    return render_template(
+        "view_semester.html",
+        semester=semester_dict,
+        courses=courses
+    )
 
 
 @main.route("/semesters/edit/<semester_id>", methods=['GET', 'POST'])
@@ -210,7 +216,20 @@ def view_course(course_id):
     data['url'] =  url_for('main.view_course', course_id=course_id)
 
     course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
-    return render_template("view_course.html", course=course)
+    overdue_assignments = db_util.overdue_assignments(courses=[course])
+    active_assignments = db_util.active_assignments(courses=[course])
+    past_assignments = db_util.current_assignments(courses=[course], past=True)
+    overdue_assignment_dicts = util.local_dicts_from_naive_utc_queries(overdue_assignments)
+    active_assignment_dicts = util.local_dicts_from_naive_utc_queries(active_assignments)
+    past_assignment_dicts = util.local_dicts_from_naive_utc_queries(past_assignments)
+
+    return render_template(
+        "view_course.html",
+        course=course,
+        overdue_assignments=overdue_assignment_dicts,
+        active_assignments=active_assignment_dicts,
+        past_assignments=past_assignment_dicts
+    )
 
 
 @main.route("/courses/edit/<course_id>", methods=['GET', 'POST'])

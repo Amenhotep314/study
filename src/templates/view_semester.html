@@ -6,11 +6,24 @@
 
 {% block body %}
     <h1>{{ semester.name }}</h1>
-    <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
-    <p>Start Date: {{ semester['start_datetime'].strftime("%Y-%m-%d") }}</p>
-    <p>End Date: {{ semester['end_datetime'].strftime("%Y-%m-%d") }}</p>
-    <div>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
+    <p style="margin-left: auto; margin-right: auto;">From {{ semester['start_datetime'].strftime("%Y-%m-%d") }} to {{ semester['end_datetime'].strftime("%Y-%m-%d") }}</p>
+    {% if courses|length > 0 %}
         <h2>Courses</h2>
-        <p>Someday, a list of courses in the semester and options pertaining to them will appear here.</p>
-    </div>
+        <div class="subregion">
+            {% for course in courses %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <h3>{{ course.name }}</h3>
+                        <p>{{ course.short_name }}</p>
+                        <p>{{ course.credits }} credits</p>
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_course', course_id=course.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
