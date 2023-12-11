@@ -15,7 +15,23 @@ main = Blueprint("main", __name__)
 @login_required
 def index():
 
-    return render_template("index.html")
+    overdue_assignments = db_util.overdue_assignments()
+    active_assignments = db_util.active_assignments()
+    overdue_assignment_dicts = util.local_dicts_from_naive_utc_queries(overdue_assignments)
+    active_assignment_dicts = util.local_dicts_from_naive_utc_queries(active_assignments)
+
+    if db_util.current_semester() and db_util.current_courses():
+        main_message = "Study Now"
+    else:
+        main_message = "Get Started"
+
+    return render_template(
+        "index.html",
+        greeting=util.social_greeting(),
+        main_message=main_message,
+        overdue_assignments=overdue_assignment_dicts,
+        active_assignments=active_assignment_dicts,
+    )
 
 
 @main.route("/semesters")
@@ -346,6 +362,17 @@ def delete_assignment(assignment_id):
         action=url_for('main.delete_assignment', assignment_id=assignment.id),
         methods=['GET', 'POST']
     )
+
+
+@main.route("/assignments/complete/<int:assignment_id>")
+@login_required
+def complete_assignment(assignment_id):
+
+    assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
+    assignment.completed = True
+    db.session.commit()
+    db_util.invalidate_caches("current_assignments")
+    return redirect(url_for('main.index'))
 
 
 @main.route("/select_study", methods=['GET', 'POST'])

@@ -5,5 +5,46 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Home</h1>
+    <h1>{{ greeting }}</h1>
+    <a class="link-button thick-button" style="margin: auto" href="{{ url_for('main.study') }}">{{ main_message }}</a>
+    {% if main_message == "Study Now" %}
+        <h2>Assignments</h2>
+        <a class="link-button" href="{{ url_for('main.create_assignment') }}">New Assignment</a>
+        {% if (overdue_assignments|length > 0) %}
+            <div class="subregion">
+                <h3>Past Due</h3>
+                {% for assignment in overdue_assignments %}
+                    <div class="subelement">
+                        <div style="display: block;">
+                            <strong>{{ assignment['name'] }}</strong>
+                            <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                        </div>
+                        <div style="margin-left: auto; display: flex;">
+                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
+                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
+                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if (active_assignments|length > 0) %}
+            <div class="subregion">
+                <h3>Current</h3>
+                {% for assignment in active_assignments %}
+                    <div class="subelement">
+                        <div style="display: block;">
+                            <strong>{{ assignment['name'] }}</strong>
+                            <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                        </div>
+                        <div style="margin-left: auto; display: flex;">
+                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
+                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
+                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
 {% endblock %}
