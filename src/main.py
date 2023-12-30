@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
+from flask_babel import _, lazy_gettext as _l
 from werkzeug.security import generate_password_hash
 import pytz
 import datetime
@@ -31,11 +32,11 @@ def index():
     active_todo_dicts = util.local_dicts_from_naive_utc_queries(active_todos)
 
     if db_util.current_semester() and db_util.current_courses():
-        main_message = "Study Now"
+        main_message = _("Study Now")
     elif db_util.current_semester():
-        main_message = "Create Your First Course"
+        main_message = _("Create Your First Course")
     else:
-        main_message = "Get Started Here"
+        main_message = _("Get Started Here")
 
     return render_template(
         "index.html",
@@ -52,8 +53,9 @@ def index():
 @login_required
 def view_self():
 
-    duration = util.utc_now() - pytz.utc.localize(current_user.created)
+    data['url'] =  url_for('main.view_self')
 
+    duration = util.utc_now() - pytz.utc.localize(current_user.created)
     study_time = datetime.timedelta(0)
     study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None))
     for session in study_sessions:
@@ -165,7 +167,7 @@ def create_todo():
     return render_template(
         "create.html",
         form=form,
-        title="To-Do",
+        title=_("To-Do"),
         action=url_for('main.create_todo'),
         methods=['GET', 'POST']
     )
@@ -291,7 +293,7 @@ def create_semester():
     return render_template(
         "create.html",
         form=form,
-        title="Semester",
+        title=_("Semester"),
         action=url_for('main.create_semester'),
         methods=['GET', 'POST']
     )
@@ -360,7 +362,6 @@ def delete_semester(semester_id):
         db_util.deep_delete_semester(semester)
         return redirect(url_for('main.view_semesters'))
 
-
     return render_template(
         "delete.html",
         form=form,
@@ -418,7 +419,7 @@ def create_course():
     return render_template(
         "create.html",
         form=form,
-        title="Course",
+        title=_("Course"),
         action=url_for('main.create_course'),
         methods=['GET', 'POST']
     )
@@ -536,7 +537,7 @@ def create_assignment():
     return render_template(
         "create.html",
         form=form,
-        title="Assignment",
+        title=_("Assignment"),
         action=url_for('main.create_assignment'),
         methods=['GET', 'POST']
     )
@@ -675,10 +676,10 @@ def study():
     if not study_session:
         return redirect(url_for('main.select_study'))
 
-    action_links = [("Stop Studying", url_for('main.stop_study')),]
+    action_links = [(_("Stop Studying"), url_for('main.stop_study')),]
     if study_session.assignment_id:
         target = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=study_session.assignment_id))
-        action_links.append(("Assignment Completed", url_for('main.stop_study_complete_assignment')))
+        action_links.append((_("Assignment Completed"), url_for('main.stop_study_complete_assignment')))
     else:
         target = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=study_session.course_id))
 

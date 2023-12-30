@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
+from flask_babel import _, lazy_gettext as _l
 import pytz
 
 from . import db
@@ -28,7 +29,7 @@ def login():
     return render_template(
         "auth.html",
         form=form,
-        title="Log In",
+        title=_("Log In"),
         action=url_for('auth.login'),
         methods=['GET', 'POST']
     )
@@ -66,7 +67,7 @@ def signup():
     return render_template(
         "auth.html",
         form=form,
-        title="Sign Up",
+        title=_("Sign Up"),
         action=url_for('auth.signup'),
         methods=['GET', 'POST']
     )

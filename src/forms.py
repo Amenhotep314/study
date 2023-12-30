@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
+from flask_babel import _, lazy_gettext as _l
 import wtforms
 from wtforms.validators import *
 from werkzeug.security import check_password_hash
@@ -18,7 +19,7 @@ class EmailUnique(object):
         user = User.query.filter_by(email=email).first()
         if user:
             if not self.message:
-                self.message = "A user with that email already exists."
+                self.message = _l("A user with that email already exists.")
             raise wtforms.ValidationError(message=self.message)
 
 
@@ -32,7 +33,7 @@ class EmailUniqueLoggedIn(object):
         user = User.query.filter_by(email=email).first()
         if user and user.email!=current_user.email:
             if not self.message:
-                self.message = "A user with that email already exists."
+                self.message = _l("A user with that email already exists.")
             raise wtforms.ValidationError(message=self.message)
 
 
@@ -45,7 +46,7 @@ class EmailExists(object):
         user = User.query.filter_by(email=email).first()
         if not user:
             if not self.message:
-                self.message = "Please check your email address and try again."
+                self.message = _l("Please check your email address and try again.")
             raise wtforms.ValidationError(message=self.message)
 
 
@@ -59,7 +60,7 @@ class PasswordValid(object):
         if user:
             if not check_password_hash(user.password, field.data):
                 if not self.message:
-                    self.message = "Invalid password. Please try again."
+                    self.message = _l("Invalid password. Please try again.")
                 raise wtforms.ValidationError(message=self.message)
 
 
@@ -73,7 +74,7 @@ class DateAfter(object):
         other = form[self.other]
         if not (field.data.toordinal() > other.data.toordinal()):
             if not self.message:
-                self.message = field.gettext(field.label.text + " must be later than " + other.label.text + ".")
+                self.message = _l("%(this_field)s must be later than %(other_field)s.", this_field=field.label.text, other_field=other.label.text)
             raise wtforms.ValidationError(message=self.message)
 
 
@@ -86,7 +87,7 @@ class GreaterThan(object):
     def __call__(self, form, field):
         if not (float(field.data) > self.value):
             if not self.message:
-                self.message = field.gettext(field.label.text + " must be greater than " + str(self.value) + ".")
+                self.message = _l("%(field)s must be greater than %(value)s.", field=field.label.text, value=str(self.value))
             raise wtforms.ValidationError(message=self.message)
 
 
@@ -99,81 +100,126 @@ class LessThan(object):
     def __call__(self, form, field):
         if not (float(field.data) < self.value):
             if not self.message:
-                self.message = field.gettext(field.label.text + " must be less than " + str(self.value) + ".")
+                self.message = _l("%(field)s must be less than %(value)s.", field=field.label.text, value=str(self.value))
             raise wtforms.ValidationError(message=self.message)
 
 
 # Forms
 class SignUp(FlaskForm):
 
-    email = wtforms.EmailField("Email", validators=[InputRequired(), Email(), EmailUnique()])
-    firstname = wtforms.StringField("First Name", validators=[InputRequired(), Length(max=100)])
-    lastname = wtforms.StringField("Last Name", validators=[InputRequired(), Length(max=100)])
-    password = wtforms.PasswordField("Password", validators=[InputRequired(), Length(min=8, max=100)])
-    password_confirm = wtforms.PasswordField("Confirm Password", validators=[InputRequired(), EqualTo('password')])
-    timezone = wtforms.SelectField("Timezone", validators=[InputRequired()])
+    email = wtforms.EmailField(_l("Email"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Email(_l("Please enter an email.")),
+        EmailUnique()
+    ])
+    firstname = wtforms.StringField(_l("First Name"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Length(max=100, message=_l("Please enter something shorter."))
+    ])
+    lastname = wtforms.StringField(_l("Last Name"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Length(max=100, message=_l("Please enter something shorter."))
+    ])
+    password = wtforms.PasswordField(_l("Password"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Length(min=8, max=100, message=_l("Please enter a value between %(min)d and %(max)d characters long."))
+    ])
+    password_confirm = wtforms.PasswordField(_l("Confirm Password"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        EqualTo('password', message=_l("Inputs must match."))
+    ])
+    timezone = wtforms.SelectField(_l("Timezone"), validators=[InputRequired(_l("Please fill out this field."))])
 
 
 class LogIn(FlaskForm):
 
-    email = wtforms.EmailField("Email", validators=[InputRequired(), EmailExists()])
-    password = wtforms.PasswordField("Password", validators=[InputRequired(), PasswordValid()])
-    remember = wtforms.BooleanField("Remember login?")
+    email = wtforms.EmailField(_l("Email"), validators=[InputRequired(_l("Please fill out this field.")), EmailExists()])
+    password = wtforms.PasswordField(_l("Password"), validators=[InputRequired("Please fill out this field."), PasswordValid()])
+    remember = wtforms.BooleanField(_l("Remember login?"))
 
 
 class SettingsForm(FlaskForm):
 
-    email = wtforms.EmailField("Email", validators=[InputRequired(), Email(), EmailUniqueLoggedIn()])
-    firstname = wtforms.StringField("First Name", validators=[InputRequired(), Length(max=100)])
-    lastname = wtforms.StringField("Last Name", validators=[InputRequired(), Length(max=100)])
-    timezone = wtforms.SelectField("Timezone", validators=[InputRequired()])
+    email = wtforms.EmailField(_l("Email"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Email(_l("Please enter an email.")),
+        EmailUniqueLoggedIn()
+    ])
+    firstname = wtforms.StringField(_l("First Name"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Length(max=100, message=_l("Please enter something shorter."))
+    ])
+    lastname = wtforms.StringField(_l("Last Name"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Length(max=100, message=_l("Please enter something shorter."))
+    ])
+    timezone = wtforms.SelectField(_l("Timezone"), validators=[InputRequired(_l("Please fill out this field."))])
 
 
 class ChangePasswordForm(FlaskForm):
 
-    password = wtforms.PasswordField("New Password", validators=[InputRequired(), Length(min=8, max=100)])
-    password_confirm = wtforms.PasswordField("Confirm New Password", validators=[InputRequired(), EqualTo('password')])
+    password = wtforms.PasswordField(_l("New Password"), validators=[
+        InputRequired(_l("Please fill out this field.")),
+        Length(min=8, max=100, message=_l("Please enter a value between %(min)d and %(max)d characters long."))
+    ])
+    password_confirm = wtforms.PasswordField(_l("Confirm New Password"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        EqualTo('password', message=_l('Inputs must match.'))
+    ])
 
 
 class ToDoForm(FlaskForm):
 
-    name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
-    description = wtforms.StringField("Description", validators=[Length(max=100)])
-    finish_datetime = wtforms.DateField("Finish by Date", validators=[Optional()])
-    completed = wtforms.BooleanField("Completed")
+    name = wtforms.StringField(_l("Name"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        Length(max=100, message=_l('Please enter something shorter.'))
+    ])
+    description = wtforms.StringField(_l("Description"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
+    finish_datetime = wtforms.DateField(_l("Finish by Date"), validators=[Optional()])
+    completed = wtforms.BooleanField(_l("Complete"))
 
 
 class SemesterForm(FlaskForm):
 
-    name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
-    start_datetime = wtforms.DateField("Start Date", validators=[InputRequired()])
-    end_datetime = wtforms.DateField("End Date", validators=[InputRequired(), DateAfter("start_datetime")])
+    name = wtforms.StringField(_l("Name"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        Length(max=100, message=_l('Please enter something shorter.'))
+    ])
+    start_datetime = wtforms.DateField(_l("Start Date"), validators=[InputRequired(_l('Please fill out this field.'))])
+    end_datetime = wtforms.DateField(_l("End Date"), validators=[InputRequired(_l('Please fill out this field.')), DateAfter("start_datetime")])
 
 
 class CourseForm(FlaskForm):
 
-    name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
-    short_name = wtforms.StringField("Short Name", validators=[Length(max=100)])
-    credits = wtforms.IntegerField("Credits", validators=[InputRequired()])
-    semester = wtforms.SelectField("Semester", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
+    name = wtforms.StringField(_l("Name"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        Length(max=100, message=_l('Please enter something shorter.'))
+    ])
+    short_name = wtforms.StringField(_l("Short Name"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
+    credits = wtforms.IntegerField(_l("Credits"), validators=[InputRequired(_l('Please fill out this field.'))])
+    semester = wtforms.SelectField(_l("Semester"), choices=[], coerce=int, validate_choice=False, validators=[InputRequired(_l('Please fill out this field.'))])
 
 
 class AssignmentForm(FlaskForm):
 
-    name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
-    due_date = wtforms.DateField("Due Date", validators=[InputRequired()])
-    due_time = wtforms.TimeField("Due Time", validators=[Optional()])
-    # est_time = wtforms.FloatField("Estimated time (hrs)", validators=[LessThan(600, message="Please enter a valid value."), GreaterThan(0, message="Please enter a valid value.")])
-    # importance = wtforms.IntegerRangeField("Importance (0-9)", validators=[GreaterThan(-1), LessThan(10)])
-    completed = wtforms.BooleanField("Completed")
-    course = wtforms.SelectField("Course", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
+    name = wtforms.StringField(_l("Name"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        Length(max=100, message=_l('Please enter something shorter.'))
+    ])
+    due_date = wtforms.DateField(_l("Due Date"), validators=[InputRequired(_l('Please fill out this field.'))])
+    due_time = wtforms.TimeField(_l("Due Time"), validators=[Optional()])
+    completed = wtforms.BooleanField(_l("Complete"))
+    course = wtforms.SelectField(_l("Course"), choices=[], coerce=int, validate_choice=False, validators=[InputRequired(_l('Please fill out this field.'))])
 
 
 class SelectStudyForm(FlaskForm):
 
-    choice = wtforms.SelectField("Choice", choices=[], coerce=int, validate_choice=False, validators=[InputRequired()])
+    choice = wtforms.SelectField(_l("Choice"), choices=[], coerce=int, validate_choice=False, validators=[InputRequired(_l('Please fill out this field.'))])
 
 
 class ConfirmDelete(FlaskForm):
 
-    confirmation = wtforms.StringField("Confirmation", validators=[InputRequired(), AnyOf(["I understand."])])
+    confirmation = wtforms.StringField(_l("Confirmation"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        AnyOf([_l("I understand.")], message=_l('You must enter "I understand." to proceed.'))
+    ])

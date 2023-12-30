@@ -1,4 +1,5 @@
 from flask_login import current_user
+from flask_babel import _, lazy_gettext as _l
 import datetime
 import pytz
 
@@ -92,10 +93,10 @@ def social_greeting():
     print(user_time)
 
     if morning <= user_time < afternoon:
-        return "Good morning, " + user_name + "."
+        return _l("Good morning, %(name)s.", name=user_name)
     elif afternoon <= user_time < evening:
-        return "Good afternoon, " + user_name + "."
+        return _l("Good afternoon, %(name)s.", name=user_name)
     elif evening <= user_time < night:
-        return "Good evening, " + user_name + "."
+        return _l("Good evening, %(name)s.", name=user_name)
     else:
-        return "Hello, " + user_name + "."
+        return _l("Hello, %(name)s.", name=user_name)
