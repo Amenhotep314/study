@@ -143,7 +143,7 @@ def create_todo():
     )
 
 
-@main.route("/todos/<todo_id>")
+@main.route("/todos/<int:todo_id>")
 @login_required
 def view_todo(todo_id):
 
@@ -158,7 +158,7 @@ def view_todo(todo_id):
     )
 
 
-@main.route("/todos/edit/<todo_id>", methods=['GET', 'POST'])
+@main.route("/todos/edit/<int:todo_id>", methods=['GET', 'POST'])
 @login_required
 def edit_todo(todo_id):
 
@@ -194,7 +194,7 @@ def edit_todo(todo_id):
     )
 
 
-@main.route("/todos/delete/<todo_id>", methods=['GET', 'POST'])
+@main.route("/todos/delete/<int:todo_id>", methods=['GET', 'POST'])
 @login_required
 def delete_todo(todo_id):
 
@@ -258,7 +258,7 @@ def create_semester():
     )
 
 
-@main.route("/semesters/<semester_id>")
+@main.route("/semesters/<int:semester_id>")
 @login_required
 def view_semester(semester_id):
 
@@ -276,7 +276,7 @@ def view_semester(semester_id):
     )
 
 
-@main.route("/semesters/edit/<semester_id>", methods=['GET', 'POST'])
+@main.route("/semesters/edit/<int:semester_id>", methods=['GET', 'POST'])
 @login_required
 def edit_semester(semester_id):
 
@@ -310,7 +310,7 @@ def edit_semester(semester_id):
     )
 
 
-@main.route("/semesters/delete/<semester_id>", methods=['GET', 'POST'])
+@main.route("/semesters/delete/<int:semester_id>", methods=['GET', 'POST'])
 @login_required
 def delete_semester(semester_id):
 
@@ -384,7 +384,7 @@ def create_course():
     )
 
 
-@main.route("/courses/<course_id>")
+@main.route("/courses/<int:course_id>")
 @login_required
 def view_course(course_id):
 
@@ -407,7 +407,7 @@ def view_course(course_id):
     )
 
 
-@main.route("/courses/edit/<course_id>", methods=['GET', 'POST'])
+@main.route("/courses/edit/<int:course_id>", methods=['GET', 'POST'])
 @login_required
 def edit_course(course_id):
 
@@ -438,7 +438,7 @@ def edit_course(course_id):
     )
 
 
-@main.route("/courses/delete/<course_id>", methods=['GET', 'POST'])
+@main.route("/courses/delete/<int:course_id>", methods=['GET', 'POST'])
 @login_required
 def delete_course(course_id):
 
@@ -501,7 +501,7 @@ def create_assignment():
     )
 
 
-@main.route("/assignments/<assignment_id>")
+@main.route("/assignments/<int:assignment_id>")
 @login_required
 def view_assignment(assignment_id):
 
@@ -513,7 +513,7 @@ def view_assignment(assignment_id):
     return render_template("view_assignment.html", assignment=assignment_dict)
 
 
-@main.route("/assignments/edit/<assignment_id>", methods=['GET', 'POST'])
+@main.route("/assignments/edit/<int:assignment_id>", methods=['GET', 'POST'])
 @login_required
 def edit_assignment(assignment_id):
 
@@ -556,7 +556,7 @@ def edit_assignment(assignment_id):
     )
 
 
-@main.route("/assignments/delete/<assignment_id>", methods=['GET', 'POST'])
+@main.route("/assignments/delete/<int:assignment_id>", methods=['GET', 'POST'])
 @login_required
 def delete_assignment(assignment_id):
 
