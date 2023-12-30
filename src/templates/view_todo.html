@@ -11,7 +11,7 @@
         <p style="margin-left: auto; margin-right: auto;">{{ todo.description }}</p>
     {% endif %}
     {% if todo.finish_datetime %}
-        <p style="margin-left: auto; margin-right: auto;">Complete by todo.finish_datetime.strftime("%Y-%m-%d")</p>
+        <p style="margin-left: auto; margin-right: auto;">Complete by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
     {% endif %}
-    <p style="margin-left: auto; margin-right: auto;">{{"Complete" if todo.completed else "Incomplete"}}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{ "Complete" if todo.completed else "Incomplete" }}</p>
 {% endblock %}

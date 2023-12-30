@@ -25,6 +25,10 @@ def index():
     active_assignments = db_util.active_assignments()
     overdue_assignment_dicts = util.local_dicts_from_naive_utc_queries(overdue_assignments)
     active_assignment_dicts = util.local_dicts_from_naive_utc_queries(active_assignments)
+    overdue_todos = db_util.overdue_todos()
+    active_todos = db_util.active_todos()
+    overdue_todo_dicts = util.local_dicts_from_naive_utc_queries(overdue_todos)
+    active_todo_dicts = util.local_dicts_from_naive_utc_queries(active_todos)
 
     if db_util.current_semester() and db_util.current_courses():
         main_message = "Study Now"
@@ -38,7 +42,9 @@ def index():
         greeting=util.social_greeting(),
         main_message=main_message,
         overdue_assignments=overdue_assignment_dicts,
-        active_assignments=active_assignment_dicts
+        active_assignments=active_assignment_dicts,
+        overdue_todos=overdue_todos,
+        active_todos=active_todos
     )
 
 
@@ -107,6 +113,27 @@ def edit_self_password():
     return render_template(
         "edit_self.html",
         form=form
+    )
+
+
+@main.route("/todos")
+@login_required
+def view_todos():
+
+    data['url'] =  url_for('main.view_todos')
+
+    overdue_todos = db_util.overdue_todos()
+    active_todos = db_util.active_todos()
+    past_todos = db_util.current_todos(past=True)
+    overdue_todo_dicts = util.local_dicts_from_naive_utc_queries(overdue_todos)
+    active_todo_dicts = util.local_dicts_from_naive_utc_queries(active_todos)
+    past_todo_dicts = util.local_dicts_from_naive_utc_queries(past_todos)
+
+    return render_template(
+        "view_todos.html",
+        overdue_todos=overdue_todo_dicts,
+        active_todos=active_todo_dicts,
+        past_todos=past_todo_dicts
     )
 
 
@@ -182,7 +209,7 @@ def edit_todo(todo_id):
     form.name.data = todo.name
     form.description.data = todo.description
     if todo.finish_datetime:
-        form.finish_datetime.data = util.local_datetime_from_naive_utc_datetime(todo.due_datetime).date()
+        form.finish_datetime.data = util.local_datetime_from_naive_utc_datetime(todo.finish_datetime).date()
     form.completed.data = todo.completed
 
     return render_template(
@@ -212,6 +239,16 @@ def delete_todo(todo_id):
         action=url_for('main.delete_todo', todo_id=todo.id),
         methods=['GET', 'POST']
     )
+
+
+@main.route("/todos/complete/<int:todo_id>")
+@login_required
+def complete_todo(todo_id):
+
+    todo = db.first_or_404(ToDo.query.filter_by(user_id=current_user.id, id=todo_id))
+    todo.completed = True
+    db.session.commit()
+    return redirect(data['url'])
 
 
 @main.route("/semesters")

@@ -1,0 +1,78 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>To-Dos</title>
+{% endblock %}
+
+{% block body %}
+    <h1>To-Dos</h1>
+    <a class="link-button" href="{{ url_for('main.create_todo') }}">New To-Do</a>
+
+    {% if (overdue_todos|length > 0) %}
+        <div class="subregion">
+            <h3>Past Due</h3>
+            {% for todo in overdue_todos %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <strong>{{ todo.name }}</strong>
+                        {% if todo.finish_datetime %}
+                            <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d) }}</p>
+                        {% endif %}
+                        {% if todo.description %}
+                            <p>{{ todo.description }}</p>
+                        {% endif %}
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">Done</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if (active_todos|length > 0) %}
+        <div class="subregion">
+            <h3>Current</h3>
+            {% for todo in active_todos %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <strong>{{ todo.name }}</strong>
+                        {% if todo.finish_datetime %}
+                            <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
+                        {% endif %}
+                        {% if todo.description %}
+                            <p>{{ todo.description }}</p>
+                        {% endif %}
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">Done</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if (past_todos|length > 0) %}
+        <div class="subregion">
+            <h3>Past</h3>
+            {% for todo in past_todos %}
+                <div class="subelement">
+                    <div style="display: block;">
+                        <strong>{{ todo.name }}</strong>
+                        {% if todo.description %}
+                            <p>{{ todo.description }}</p>
+                        {% endif %}
+                    </div>
+                    <div style="margin-left: auto; display: flex;">
+                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

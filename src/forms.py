@@ -139,7 +139,7 @@ class ToDoForm(FlaskForm):
 
     name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
     description = wtforms.StringField("Description", validators=[Length(max=100)])
-    finish_datetime = wtforms.DateField("Finish by Date")
+    finish_datetime = wtforms.DateField("Finish by Date", validators=[Optional()])
     completed = wtforms.BooleanField("Completed")
 
 

@@ -8,26 +8,29 @@
     <h1>{{ greeting }}</h1>
     <a class="link-button thick-button" style="margin: auto" href="{{ url_for('main.study') }}">{{ main_message }}</a>
     {% if main_message == "Study Now" %}
+
         <h2>Assignments</h2>
         <a class="link-button" href="{{ url_for('main.create_assignment') }}">New Assignment</a>
+
         {% if (overdue_assignments|length > 0) %}
             <div class="subregion">
                 <h3>Past Due</h3>
                 {% for assignment in overdue_assignments %}
                     <div class="subelement">
                         <div style="display: block;">
-                            <strong>{{ assignment['name'] }}</strong>
-                            <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                            <strong>{{ assignment.name }}</strong>
+                            <p>Due by {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
                         </div>
                         <div style="margin-left: auto; display: flex;">
-                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
-                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
-                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">View</a>
+                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
+                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">Done</a>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
+
         {% if (active_assignments|length > 0) %}
             <div class="subregion">
                 <h3>Current</h3>
@@ -35,12 +38,63 @@
                     <div class="subelement">
                         <div style="display: block;">
                             <strong>{{ assignment['name'] }}</strong>
-                            <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                            <p>Due by {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
                         </div>
                         <div style="margin-left: auto; display: flex;">
-                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
-                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
-                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">View</a>
+                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
+                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">Done</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2>To-Dos</h2>
+        <a class="link-button" href="{{ url_for('main.create_todo') }}">New To-Do</a>
+
+        {% if (overdue_todos|length > 0) %}
+            <div class="subregion">
+                <h3>Past Due</h3>
+                {% for todo in overdue_todos %}
+                    <div class="subelement">
+                        <div style="display: block;">
+                            <strong>{{ todo.name }}</strong>
+                            {% if todo.finish_datetime %}
+                                <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
+                            {% endif %}
+                            {% if todo.description %}
+                                <p>{{ todo.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div style="margin-left: auto; display: flex;">
+                            <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
+                            <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
+                            <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">Done</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if (active_todos|length > 0) %}
+            <div class="subregion">
+                <h3>Current</h3>
+                {% for todo in active_todos %}
+                    <div class="subelement">
+                        <div style="display: block;">
+                            <strong>{{ todo.name }}</strong>
+                            {% if todo.finish_datetime %}
+                                <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
+                            {% endif %}
+                            {% if todo.description %}
+                                <p>{{ todo.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div style="margin-left: auto; display: flex;">
+                            <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
+                            <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
+                            <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">Done</a>
                         </div>
                     </div>
                 {% endfor %}

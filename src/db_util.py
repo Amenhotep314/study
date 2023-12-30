@@ -6,6 +6,39 @@ from . import util
 from .models import *
 
 
+def current_todos(past=False):
+
+    todos = ToDo.query.filter_by(user_id=current_user.id, completed=past).all()
+    todos.sort(key=lambda x: x.finish_datetime if x.finish_datetime else x.created, reverse=past)
+    return todos
+
+
+def active_todos():
+
+    todos = current_todos()
+    ans = []
+    now = util.utc_now()
+
+    for todo in todos:
+        if (not todo.finish_datetime) or (util.utc_datetime_from_naive_utc_datetime(todo.finish_datetime) > now):
+            ans.append(todo)
+
+    return ans
+
+
+def overdue_todos():
+
+    todos = current_todos()
+    ans = []
+    now = util.utc_now()
+
+    for todo in todos:
+        if todo.finish_datetime and util.utc_datetime_from_naive_utc_datetime(todo.finish_datetime) <= now:
+            ans.append(todo)
+
+    return ans
+
+
 # @cache
 def current_semester():
 
