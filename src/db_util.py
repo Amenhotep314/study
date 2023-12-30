@@ -116,9 +116,19 @@ def deep_delete_current_user():
     for semester in semesters:
         deep_delete_semester(semester)
 
+    todos = ToDo.query.filter_by(user_id=current_user.id).all()
+    for todo in todos:
+        deep_delete_todo(todo)
+
     db.session.delete(current_user)
     db.session.commit()
     invalidate_caches()
+
+
+def deep_delete_todo(todo):
+
+    db.session.delete(todo)
+    db.session.commit()
 
 
 def deep_delete_semester(semester):
@@ -126,10 +136,6 @@ def deep_delete_semester(semester):
     courses = Course.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
     for course in courses:
         deep_delete_course(course)
-
-    study_sessions = StudySession.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
-    for study_session in study_sessions:
-        deep_delete_study_session(study_session)
 
     db.session.delete(semester)
     db.session.commit()
@@ -141,6 +147,10 @@ def deep_delete_course(course):
     assignments = Assignment.query.filter_by(user_id=current_user.id, course_id=course.id)
     for assignment in assignments:
         deep_delete_assignment(assignment)
+
+    study_sessions = StudySession.query.filter_by(user_id=current_user.id, course_id=course.id).all()
+    for study_session in study_sessions:
+        deep_delete_study_session(study_session)
 
     db.session.delete(course)
     db.session.commit()

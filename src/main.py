@@ -110,6 +110,110 @@ def edit_self_password():
     )
 
 
+@main.route("/create_todo", methods=['GET', 'POST'])
+@login_required
+def create_todo():
+
+    form = ToDoForm()
+
+    if form.validate_on_submit():
+
+        if form.finish_datetime.data:
+            finish_datetime = util.utc_datetime_from_naive_local_date(form.finish_datetime.data)
+        else:
+            finish_datetime = None
+
+        new_todo = ToDo(
+            user_id = current_user.id,
+            name = form.name.data,
+            description = form.description.data,
+            finish_datetime = finish_datetime,
+            completed = form.completed.data
+        )
+        db.session.add(new_todo)
+        db.session.commit()
+        return redirect(data['url'])
+
+    return render_template(
+        "create.html",
+        form=form,
+        title="To-Do",
+        action=url_for('main.create_todo'),
+        methods=['GET', 'POST']
+    )
+
+
+@main.route("/todos/<todo_id>")
+@login_required
+def view_todo(todo_id):
+
+    data['url'] =  url_for('main.view_todo', todo_id=todo_id)
+
+    todo = db.first_or_404(ToDo.query.filter_by(user_id=current_user.id, id=todo_id))
+    todo_dict = util.local_dict_from_naive_utc_query(todo)
+
+    return render_template(
+        "view_todo.html",
+        todo=todo_dict
+    )
+
+
+@main.route("/todos/edit/<todo_id>", methods=['GET', 'POST'])
+@login_required
+def edit_todo(todo_id):
+
+    todo = db.first_or_404(ToDo.query.filter_by(user_id=current_user.id, id=todo_id))
+    form = ToDoForm()
+
+    if form.validate_on_submit():
+
+        if form.finish_datetime.data:
+            finish_datetime = util.utc_datetime_from_naive_local_date(form.finish_datetime.data)
+        else:
+            finish_datetime = None
+
+        todo.name = form.name.data
+        todo.description = form.description.data
+        todo.finish_datetime = finish_datetime
+        todo.completed = form.completed.data
+        db.session.commit()
+        return redirect(data['url'])
+
+    form.name.data = todo.name
+    form.description.data = todo.description
+    if todo.finish_datetime:
+        form.finish_datetime.data = util.local_datetime_from_naive_utc_datetime(todo.due_datetime).date()
+    form.completed.data = todo.completed
+
+    return render_template(
+        "edit.html",
+        form=form,
+        action=url_for('main.edit_todo', todo_id=todo.id),
+        delete_action=url_for('main.delete_todo', todo_id=todo.id),
+        methods=['GET', 'POST']
+    )
+
+
+@main.route("/todos/delete/<todo_id>", methods=['GET', 'POST'])
+@login_required
+def delete_todo(todo_id):
+
+    todo = db.first_or_404(ToDo.query.filter_by(user_id=current_user.id, id=todo_id))
+    form = ConfirmDelete()
+
+    if form.validate_on_submit():
+        db_util.deep_delete_todo(todo)
+        return redirect(url_for('main.index'))
+
+    return render_template(
+        "delete.html",
+        form=form,
+        target=todo,
+        action=url_for('main.delete_todo', todo_id=todo.id),
+        methods=['GET', 'POST']
+    )
+
+
 @main.route("/semesters")
 @login_required
 def view_semesters():

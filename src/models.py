@@ -16,6 +16,19 @@ class User(UserMixin, db.Model):
     timezone = db.Column(db.String(100), default="Canada/Eastern")
 
 
+class ToDo(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    created = db.Column(db.DateTime, default=util.utc_now())
+
+    user_id = db.Column(db.Integer)
+
+    name = db.Column(db.String(100))
+    description = db.Column(db.String(100))
+    finish_datetime = db.Column(db.DateTime)
+    completed = db.Column(db.Boolean)
+
+
 class Semester(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)

@@ -135,6 +135,14 @@ class ChangePasswordForm(FlaskForm):
     password_confirm = wtforms.PasswordField("Confirm New Password", validators=[InputRequired(), EqualTo('password')])
 
 
+class ToDoForm(FlaskForm):
+
+    name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
+    description = wtforms.StringField("Description", validators=[Length(max=100)])
+    finish_datetime = wtforms.DateField("Finish by Date")
+    completed = wtforms.BooleanField("Completed")
+
+
 class SemesterForm(FlaskForm):
 
     name = wtforms.StringField("Name", validators=[InputRequired(), Length(max=100)])
