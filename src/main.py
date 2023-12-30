@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
+from werkzeug.security import generate_password_hash
+import pytz
+import datetime
 
 from . import db
 from . import db_util
@@ -36,6 +39,74 @@ def index():
         main_message=main_message,
         overdue_assignments=overdue_assignment_dicts,
         active_assignments=active_assignment_dicts
+    )
+
+
+@main.route("/my_account")
+@login_required
+def view_self():
+
+    duration = util.utc_now() - pytz.utc.localize(current_user.created)
+
+    study_time = datetime.timedelta(0)
+    study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None))
+    for session in study_sessions:
+        print(session.start_datetime, session.end_datetime, study_time)
+        study_time += session.end_datetime - session.start_datetime
+
+    return render_template(
+        "view_self.html",
+        user=current_user,
+        duration=duration.days,
+        hours = study_time
+    )
+
+
+@main.route("/settings", methods=['GET', 'POST'])
+@login_required
+def edit_self():
+
+    form = SettingsForm()
+    form.timezone.choices = [(timezone, timezone) for timezone in pytz.common_timezones]
+
+    if form.validate_on_submit():
+
+        current_user.email = form.email.data
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
+        current_user.timezone = form.timezone.data
+
+        db.session.commit()
+        return redirect(data['url'])
+
+    form.email.data = current_user.email
+    form.firstname.data = current_user.firstname
+    form.lastname.data = current_user.lastname
+    form.timezone.data = current_user.timezone
+
+    return render_template(
+        "edit_self.html",
+        form=form,
+    )
+
+
+@main.route("/change_password", methods=['GET', 'POST'])
+@login_required
+def edit_self_password():
+
+    form = ChangePasswordForm()
+
+    if form.validate_on_submit():
+        password = form.password.data
+        hashed_password = generate_password_hash(password, method='scrypt')
+        current_user.password = hashed_password
+
+        db.session.commit()
+        return redirect(data['url'])
+
+    return render_template(
+        "edit_self.html",
+        form=form
     )
 
 

@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_login import current_user
 import wtforms
 from wtforms.validators import *
 from werkzeug.security import check_password_hash
@@ -16,6 +17,20 @@ class EmailUnique(object):
         email = field.data
         user = User.query.filter_by(email=email).first()
         if user:
+            if not self.message:
+                self.message = "A user with that email already exists."
+            raise wtforms.ValidationError(message=self.message)
+
+
+class EmailUniqueLoggedIn(object):
+
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        email = field.data
+        user = User.query.filter_by(email=email).first()
+        if user and user.email!=current_user.email:
             if not self.message:
                 self.message = "A user with that email already exists."
             raise wtforms.ValidationError(message=self.message)
@@ -104,6 +119,20 @@ class LogIn(FlaskForm):
     email = wtforms.EmailField("Email", validators=[InputRequired(), EmailExists()])
     password = wtforms.PasswordField("Password", validators=[InputRequired(), PasswordValid()])
     remember = wtforms.BooleanField("Remember login?")
+
+
+class SettingsForm(FlaskForm):
+
+    email = wtforms.EmailField("Email", validators=[InputRequired(), Email(), EmailUniqueLoggedIn()])
+    firstname = wtforms.StringField("First Name", validators=[InputRequired(), Length(max=100)])
+    lastname = wtforms.StringField("Last Name", validators=[InputRequired(), Length(max=100)])
+    timezone = wtforms.SelectField("Timezone", validators=[InputRequired()])
+
+
+class ChangePasswordForm(FlaskForm):
+
+    password = wtforms.PasswordField("New Password", validators=[InputRequired(), Length(min=8, max=100)])
+    password_confirm = wtforms.PasswordField("Confirm New Password", validators=[InputRequired(), EqualTo('password')])
 
 
 class SemesterForm(FlaskForm):
