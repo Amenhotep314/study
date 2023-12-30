@@ -16,7 +16,7 @@
                     <div style="display: block;">
                         <strong>{{ todo.name }}</strong>
                         {% if todo.finish_datetime %}
-                            <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d) }}</p>
+                            <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
                         {% endif %}
                         {% if todo.description %}
                             <p>{{ todo.description }}</p>

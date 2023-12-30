@@ -7,7 +7,7 @@ from . import util
 class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=util.utc_now())
+    created = db.Column(db.DateTime)
 
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
 class ToDo(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=util.utc_now())
+    created = db.Column(db.DateTime)
 
     user_id = db.Column(db.Integer)
 
@@ -32,7 +32,7 @@ class ToDo(db.Model):
 class Semester(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=util.utc_now())
+    created = db.Column(db.DateTime)
 
     user_id = db.Column(db.Integer)
 
@@ -44,7 +44,7 @@ class Semester(db.Model):
 class Course(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=util.utc_now())
+    created = db.Column(db.DateTime)
 
     user_id = db.Column(db.Integer)
     semester_id = db.Column(db.Integer)
@@ -57,7 +57,7 @@ class Course(db.Model):
 class Assignment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=util.utc_now())
+    created = db.Column(db.DateTime)
 
     user_id = db.Column(db.Integer)
     course_id = db.Column(db.Integer)
@@ -72,7 +72,7 @@ class Assignment(db.Model):
 class StudySession(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=util.utc_now())
+    created = db.Column(db.DateTime)
 
     user_id = db.Column(db.Integer)
     semester_id = db.Column(db.Integer)

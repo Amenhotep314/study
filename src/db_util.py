@@ -9,8 +9,15 @@ from .models import *
 def current_todos(past=False):
 
     todos = ToDo.query.filter_by(user_id=current_user.id, completed=past).all()
-    todos.sort(key=lambda x: x.finish_datetime if x.finish_datetime else x.created, reverse=past)
-    return todos
+    if past:
+        todos.sort(key=lambda x: x.finish_datetime if x.finish_datetime else x.created, reverse=True)
+        return todos
+
+    dated = list(filter(lambda x: bool(x.finish_datetime), todos))
+    dated.sort(key=lambda x: x.finish_datetime)
+    undated = list(filter(lambda x: not bool(x.finish_datetime), todos))
+    undated.sort(key=lambda x: x.created)
+    return dated + undated
 
 
 def active_todos():
@@ -114,6 +121,7 @@ def start_study_session(course, assignment=None):
         assignment_id = None
 
     new_study_session = StudySession(
+        created = util.utc_now(),
         user_id = current_user.id,
         semester_id = current_semester().id,
         course_id = course.id,

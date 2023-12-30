@@ -49,6 +49,7 @@ def signup():
 
         hashed_password = generate_password_hash(password, method='scrypt')
         new_user = User(
+            created=util.utc_now(),
             email=email,
             firstname=firstname,
             lastname=lastname,

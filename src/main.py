@@ -151,6 +151,7 @@ def create_todo():
             finish_datetime = None
 
         new_todo = ToDo(
+            created = util.utc_now(),
             user_id = current_user.id,
             name = form.name.data,
             description = form.description.data,
@@ -276,6 +277,7 @@ def create_semester():
         end_datetime = util.utc_datetime_from_naive_local_date(form.end_datetime.data)
 
         new_semester = Semester(
+            created = util.utc_now(),
             user_id = current_user.id,
             name = form.name.data,
             start_datetime = start_datetime,
@@ -399,6 +401,7 @@ def create_course():
 
     if form.validate_on_submit():
         new_course = Course(
+            created = util.utc_now(),
             user_id = current_user.id,
             semester_id = form.semester.data,
             name = form.name.data,
@@ -516,6 +519,7 @@ def create_assignment():
             due_datetime = util.utc_datetime_from_naive_local_date(form.due_date.data)
 
         new_assignment = Assignment(
+            created = util.utc_now(),
             user_id = current_user.id,
             course_id = form.course.data,
             name = form.name.data,
