@@ -5,9 +5,10 @@
 # User authentication guide: https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
 
 
-from flask import Flask
+from flask import Flask, request
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_babel import Babel
 import json
 
 
@@ -18,6 +19,7 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_file("config.json", load=json.load)
+    app.config['LANGUAGES'] = ["en", "fr"]
     db.init_app(app)
 
     login_manager = LoginManager()
@@ -25,10 +27,13 @@ def create_app():
     login_manager.init_app(app)
 
     from .models import User
-
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    def get_locale():
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+    babel = Babel(app, locale_selector=get_locale)
 
     with app.app_context():
         db.create_all()
