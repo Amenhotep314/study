@@ -1,12 +1,12 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>{{ assignment['name'] }}</title>
+    <title>{{ assignment.name }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>{{ assignment['name'] }}</h1>
-    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
-    <p style="margin-left: auto; margin-right: auto;">Due {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
-    <p style="margin-left: auto; margin-right: auto;">{{"Complete" if assignment['completed'] else "Incomplete"}}</p>
+    <h1>{{ assignment.name }}</h1>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
+    <p style="margin-left: auto; margin-right: auto;">Due {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{"Complete" if assignment.completed else "Incomplete"}}</p>
 {% endblock %}

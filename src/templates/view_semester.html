@@ -1,13 +1,13 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>{{ semester['name'] }}</title>
+    <title>{{ semester.name }}</title>
 {% endblock %}
 
 {% block body %}
     <h1>{{ semester.name }}</h1>
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
-    <p style="margin-left: auto; margin-right: auto;">From {{ semester['start_datetime'].strftime("%Y-%m-%d") }} to {{ semester['end_datetime'].strftime("%Y-%m-%d") }}</p>
+    <p style="margin-left: auto; margin-right: auto;">From {{ semester.start_datetime.strftime("%Y-%m-%d") }} to {{ semester.end_datetime.strftime("%Y-%m-%d") }}</p>
     {% if courses|length > 0 %}
         <h2>Courses</h2>
         <div class="subregion">

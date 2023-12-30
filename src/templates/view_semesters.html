@@ -15,11 +15,11 @@
                 <div class="subelement">
                     <div style="display: block;">
                         <h3>{{ semester['name'] }}</h3>
-                        <p>From {{ semester['start_datetime'].strftime("%Y-%m-%d") }} to {{ semester['end_datetime'].strftime("%Y-%m-%d") }}</p>
+                        <p>From {{ semester.start_datetime.strftime("%Y-%m-%d") }} to {{ semester.end_datetime.strftime("%Y-%m-%d") }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester['id']) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester['id']) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
                     </div>
                 </div>
             {% endfor %}

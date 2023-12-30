@@ -18,13 +18,13 @@
             {% for assignment in overdue_assignments %}
                 <div class="subelement">
                     <div style="display: block;">
-                        <strong>{{ assignment['name'] }}</strong>
-                        <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                        <strong>{{ assignment.name }}</strong>
+                        <p>Due by {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
-                        <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">Done</a>
                     </div>
                 </div>
             {% endfor %}
@@ -36,13 +36,13 @@
             {% for assignment in active_assignments %}
                 <div class="subelement">
                     <div style="display: block;">
-                        <strong>{{ assignment['name'] }}</strong>
-                        <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                        <strong>{{ assignment.name }}</strong>
+                        <p>Due by {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
-                        <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment['id']) }}">Done</a>
+                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">Done</a>
                     </div>
                 </div>
             {% endfor %}
@@ -54,12 +54,12 @@
             {% for assignment in past_assignments %}
                 <div class="subelement">
                     <div style="display: block;">
-                        <strong>{{ assignment['name'] }}</strong>
-                        <p>Due by {{ assignment['due_datetime'].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+                        <strong>{{ assignment.name }}</strong>
+                        <p>Due by {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment['id']) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment['id']) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">View</a>
+                        <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
                     </div>
                 </div>
             {% endfor %}
