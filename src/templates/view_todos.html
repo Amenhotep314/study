@@ -1,31 +1,31 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>To-Dos</title>
+    <title>{{ _('To-Dos') }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>To-Dos</h1>
-    <a class="link-button" href="{{ url_for('main.create_todo') }}">New To-Do</a>
+    <h1>{{ _('To-Dos') }}</h1>
+    <a class="link-button" href="{{ url_for('main.create_todo') }}">{{ _('New To-Do') }}</a>
 
     {% if (overdue_todos|length > 0) %}
         <div class="subregion">
-            <h3>Past Due</h3>
+            <h3>{{ _('Past Due') }}</h3>
             {% for todo in overdue_todos %}
                 <div class="subelement">
                     <div style="display: block;">
                         <strong>{{ todo.name }}</strong>
                         {% if todo.finish_datetime %}
-                            <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
+                            <p>{{ _('Finish by %(finish)s', finish=todo.finish_datetime.strftime("%Y-%m-%d")) }}</p>
                         {% endif %}
                         {% if todo.description %}
                             <p>{{ todo.description }}</p>
                         {% endif %}
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
-                        <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">Done</a>
+                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
+                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
+                        <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">{{ _('Done') }}</a>
                     </div>
                 </div>
             {% endfor %}
@@ -34,22 +34,22 @@
 
     {% if (active_todos|length > 0) %}
         <div class="subregion">
-            <h3>Current</h3>
+            <h3>{{ _('Current') }}</h3>
             {% for todo in active_todos %}
                 <div class="subelement">
                     <div style="display: block;">
                         <strong>{{ todo.name }}</strong>
                         {% if todo.finish_datetime %}
-                            <p>Finish by {{ todo.finish_datetime.strftime("%Y-%m-%d") }}</p>
+                            <p>{{ _('Finish by %(finish)s', finish=todo.finish_datetime.strftime("%Y-%m-%d")) }}</p>
                         {% endif %}
                         {% if todo.description %}
                             <p>{{ todo.description }}</p>
                         {% endif %}
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
-                        <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">Done</a>
+                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
+                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
+                        <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">{{ _('Done') }}</a>
                     </div>
                 </div>
             {% endfor %}
@@ -58,7 +58,7 @@
 
     {% if (past_todos|length > 0) %}
         <div class="subregion">
-            <h3>Past</h3>
+            <h3>{{ _('Past') }}</h3>
             {% for todo in past_todos %}
                 <div class="subelement">
                     <div style="display: block;">
@@ -68,8 +68,8 @@
                         {% endif %}
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
+                        <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
                     </div>
                 </div>
             {% endfor %}

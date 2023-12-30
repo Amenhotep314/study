@@ -9,12 +9,12 @@
 {% block base_body %}
     <nav>
         <ul>
-            <li><a href="{{ url_for('main.index') }}">Home</a></li>
-            <li><a href="{{ url_for('main.view_courses') }}">Courses</a></li>
-            <li><a href="{{ url_for('main.view_todos') }}">To-Dos</a></li>
-            <li><a href="{{ url_for('main.view_semesters') }}">Semesters</a></li>
-            <li style="float: right;"><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
-            <li style="float: right;"><a href="{{ url_for('main.view_self') }}">My Account</a></li>
+            <li><a href="{{ url_for('main.index') }}">{{ _('Home') }}</a></li>
+            <li><a href="{{ url_for('main.view_courses') }}">{{ _('Courses') }}</a></li>
+            <li><a href="{{ url_for('main.view_todos') }}">{{ _('To-Dos') }}</a></li>
+            <li><a href="{{ url_for('main.view_semesters') }}">{{ _('Semesters') }}</a></li>
+            <li style="float: right;"><a href="{{ url_for('auth.logout') }}">{{ _('Log Out') }}</a></li>
+            <li style="float: right;"><a href="{{ url_for('main.view_self') }}">{{ _('My Account') }}</a></li>
         </ul>
     </nav>
     <div class="contents">

@@ -1,12 +1,12 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>Delete {{ target.name }}</title>
+    <title>{{ _('Delete %(name)s', name=target.name) }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Delete <em>{{ target.name }}</em></h1>
-    <p>Deleting <em>{{ target.name }}</em> will also permanently delete all data associated with it. Type "I understand." below to continue.</p>
+    <h1>{{ _('Delete %(name)s', name=target.name) }}</h1>
+    <p>{{ _('Deleting %(name)s will also permanently delete all data associated with it. Type "I understand." below to continue.', name=target.name) }}</p>
     <form method="POST" action="{{ action }}">
         {{ form.csrf_token }}
         {% for field in form %}
@@ -18,7 +18,7 @@
                 {{ field() }}
             {% endif %}
         {% endfor %}
-        <button class="fear-button" type="submit">Delete {{ target.name }}</button>
+        <button class="fear-button" type="submit">{{ _('Delete %(name)s', name=target.name) }}</button>
     </form>
-    <a class="link-button" href="{{ url_for('main.index') }}">Cancel</a>
+    <a class="link-button" href="{{ url_for('main.index') }}">{{ _('Cancel') }}</a>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>My Account</title>
+    <title>{{ _('My Account') }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>My Account</h1>
+    <h1>{{ _('My Account') }}</h1>
     <p style="margin-left: auto; margin-right: auto;">{{ user.firstname }} {{ user.lastname }}</p>
-    <p style="margin-left: auto; margin-right: auto;">Member for {{ duration }} days.</p>
-    <p style="margin-left: auto; margin-right: auto;">{{ hours }} total study time.</p>
-    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self') }}">Settings</a>
-    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self_password') }}">Change Password</a>
+    <p style="margin-left: auto; margin-right: auto;">{{ _('Member for %(num_days)s days.', num_days=duration) }}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{ _('%(total_time)s total study time.', total_time=hours) }}</p>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self') }}">{{ _('Settings') }}</a>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self_password') }}">{{ _('Change Password') }}</a>
 {% endblock %}

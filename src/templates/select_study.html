@@ -1,11 +1,11 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>New Study Session</title>
+    <title>{{ _('New Study Session') }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Choose What to Study</h1>
+    <h1>{{ _('Choose What to Study') }}</h1>
     <form method="POST" action="{{ url_for('main.select_study') }}">
         {{ form.csrf_token }}
         {% for field in form %}
@@ -17,6 +17,6 @@
                 {{ field() }}
             {% endif %}
         {% endfor %}
-        <button type="submit">Start Studying</button>
+        <button type="submit">{{ _('Start Studying') }}</button>
     </form>
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>New {{ title }}</title>
+    <title>{{ _('New %(title)s', title=title) }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Create New {{ title }}</h1>
+    <h1>{{ _('Create New %(title)s', title=title) }}</h1>
     <form method="POST" action="{{ action }}">
         {{ form.csrf_token }}
         {% for field in form %}
@@ -17,6 +17,6 @@
                 {{ field() }}
             {% endif %}
         {% endfor %}
-        <button type="submit">Create {{ title }}</button>
+        <button type="submit">{{ _('Create %(title)s', title=title) }}</button>
     </form>
 {% endblock %}

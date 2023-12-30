@@ -1,13 +1,13 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>Courses</title>
+    <title>{{ _('Courses') }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Current Courses</h1>
+    <h1>{{ _('Current Courses') }}</h1>
     <div>
-        <a class="link-button" href="{{ url_for('main.create_course') }}">Add a Course</a>
+        <a class="link-button" href="{{ url_for('main.create_course') }}">{{ _('Add a Course') }}</a>
     </div>
     {% if courses|length > 0 %}
         <div class="subregion">
@@ -16,11 +16,11 @@
                     <div style="display: block;">
                         <h3>{{ course.name }}</h3>
                         <p>{{ course.short_name }}</p>
-                        <p>{{ course.credits }} credits</p>
+                        <p>{{ _('%(credits)s credits', credits=course.credits) }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_course', course_id=course.id) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.view_course', course_id=course.id) }}">{{ _('View') }}</a>
+                        <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">{{ _('Edit') }}</a>
                     </div>
                 </div>
             {% endfor %}

@@ -9,9 +9,9 @@
 {% block base_body %}
     <nav>
         <ul>
-            <li><a href="{{ url_for('auth.front_page') }}">About Us</a></li>
-            <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
-            <li><a href="{{ url_for('auth.signup') }}">Sign Up</a></li>
+            <li><a href="{{ url_for('auth.front_page') }}">{{ _('About Us') }}</a></li>
+            <li><a href="{{ url_for('auth.login') }}">{{ _('Log In') }}</a></li>
+            <li><a href="{{ url_for('auth.signup') }}">{{ _('Sign Up') }}</a></li>
         </ul>
     </nav>
     <div class="contents">

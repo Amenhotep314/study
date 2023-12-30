@@ -6,21 +6,21 @@
 
 {% block body %}
     <h1>{{ semester.name }}</h1>
-    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
-    <p style="margin-left: auto; margin-right: auto;">From {{ semester.start_datetime.strftime("%Y-%m-%d") }} to {{ semester.end_datetime.strftime("%Y-%m-%d") }}</p>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">{{ _('Edit') }}</a>
+    <p style="margin-left: auto; margin-right: auto;">{{ _('From %(start)s to %(finish)s', start=semester.start_datetime.strftime("%Y-%m-%d"), finish=semester.end_datetime.strftime("%Y-%m-%d")) }}</p>
     {% if courses|length > 0 %}
-        <h2>Courses</h2>
+        <h2>{{ _('Courses') }}</h2>
         <div class="subregion">
             {% for course in courses %}
                 <div class="subelement">
                     <div style="display: block;">
                         <h3>{{ course.name }}</h3>
                         <p>{{ course.short_name }}</p>
-                        <p>{{ course.credits }} credits</p>
+                        <p>{{ _('%(credits)s credits', credits=course.credits) }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_course', course_id=course.id) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.view_course', course_id=course.id) }}">{{ _('View') }}</a>
+                        <a class="link-button" href="{{ url_for('main.edit_course', course_id=course.id) }}">{{ _('Edit') }}</a>
                     </div>
                 </div>
             {% endfor %}

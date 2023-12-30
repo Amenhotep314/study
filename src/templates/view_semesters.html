@@ -1,25 +1,25 @@
 {% extends "base_main.html" %}
 
 {% block head %}
-    <title>Semesters</title>
+    <title>{{ _('Semesters') }}</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Semesters</h1>
+    <h1>{{ _('Semesters') }}</h1>
     <div>
-        <a class="link-button" href="{{ url_for('main.create_semester') }}">Add a Semester</a>
+        <a class="link-button" href="{{ url_for('main.create_semester') }}">{{ _('Add a Semester') }}</a>
     </div>
     {% if semesters|length > 0 %}
         <div class="subregion">
             {% for semester in semesters %}
                 <div class="subelement">
                     <div style="display: block;">
-                        <h3>{{ semester['name'] }}</h3>
-                        <p>From {{ semester.start_datetime.strftime("%Y-%m-%d") }} to {{ semester.end_datetime.strftime("%Y-%m-%d") }}</p>
+                        <h3>{{ semester.name }}</h3>
+                        <p>{{ _('From %(start)s to %(finish)s', start=semester.start_datetime.strftime("%Y-%m-%d"), finish=semester.end_datetime.strftime("%Y-%m-%d")) }}</p>
                     </div>
                     <div style="margin-left: auto; display: flex;">
-                        <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester.id) }}">View</a>
-                        <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">Edit</a>
+                        <a class="link-button" href="{{ url_for('main.view_semester', semester_id=semester.id) }}">{{ _('View') }}</a>
+                        <a class="link-button" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">{{ _('Edit') }}</a>
                     </div>
                 </div>
             {% endfor %}

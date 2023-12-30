@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>{{ assignment.name }}</h1>
-    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">Edit</a>
-    <p style="margin-left: auto; margin-right: auto;">Due {{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</p>
-    <p style="margin-left: auto; margin-right: auto;">{{"Complete" if assignment.completed else "Incomplete"}}</p>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">{{ _('Edit') }}</a>
+    <p style="margin-left: auto; margin-right: auto;">{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{ _("Complete") if assignment.completed else _("Incomplete") }}</p>
 {% endblock %}
