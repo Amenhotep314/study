@@ -1,1 +1,1 @@
-web: flask db upgrade; pybabel compile -d src/translations; gunicorn src:app
+web: pybabel compile -d src/translations; gunicorn src:app
