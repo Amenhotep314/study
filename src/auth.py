@@ -59,7 +59,8 @@ def signup():
             lastname=lastname,
             password=hashed_password,
             timezone=timezone,
-            language=language
+            language=language,
+            theme = "greensboro_winter"
         )
 
         db.session.add(new_user)

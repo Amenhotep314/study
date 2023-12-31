@@ -1,0 +1,19 @@
+body {
+    --primary-color: #eae7dc;
+    --secondary-color: #d8c3a5;
+    --text-color: #373736;
+    --accent-color: #e98074;
+}
+
+@media (prefers-color-scheme: dark){
+    body {
+        --primary-color: #373736;
+        --secondary-color: #745b41;
+        --text-color: #eae7dc;
+        --accent-color: #e98074;
+    }
+}
+
+.subelement {
+    color: var(--text-color);
+}

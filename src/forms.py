@@ -156,6 +156,7 @@ class SettingsForm(FlaskForm):
     ])
     timezone = wtforms.SelectField(_l("Timezone"), validators=[InputRequired(_l("Please fill out this field."))])
     language = wtforms.SelectField(_l("Language"), validators=[InputRequired(_l("Please fill out this field."))])
+    theme = wtforms.SelectField(_l("Theme"), validators=[InputRequired(_l("Please fill out this field."))])
 
 
 class ChangePasswordForm(FlaskForm):

@@ -108,3 +108,11 @@ def language_options():
         ("en", "English"),
         ("fr", "Français")
     ]
+
+
+def theme_options():
+
+    return [
+        ("greensboro_winter", _l("Greensboro Winter")),
+        ("serenity_now", _l("Serenity Now!"))
+    ]
