@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-30 20:41-0500\n"
+"POT-Creation-Date: 2023-12-30 21:59-0500\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Log In"
 msgstr "Se connecter"
 
-#: src/auth.py:75 src/templates/base_auth.html:14
+#: src/auth.py:76 src/templates/base_auth.html:14
 msgid "Sign Up"
 msgstr "S'inscrire"
 
@@ -60,10 +60,10 @@ msgstr "Adresse Email"
 #: src/forms.py:111 src/forms.py:116 src/forms.py:120 src/forms.py:124
 #: src/forms.py:128 src/forms.py:131 src/forms.py:132 src/forms.py:137
 #: src/forms.py:145 src/forms.py:150 src/forms.py:154 src/forms.py:157
-#: src/forms.py:158 src/forms.py:164 src/forms.py:168 src/forms.py:176
-#: src/forms.py:187 src/forms.py:190 src/forms.py:191 src/forms.py:197
-#: src/forms.py:201 src/forms.py:202 src/forms.py:208 src/forms.py:211
-#: src/forms.py:214 src/forms.py:219 src/forms.py:225
+#: src/forms.py:158 src/forms.py:159 src/forms.py:165 src/forms.py:169
+#: src/forms.py:177 src/forms.py:188 src/forms.py:191 src/forms.py:192
+#: src/forms.py:198 src/forms.py:202 src/forms.py:203 src/forms.py:209
+#: src/forms.py:212 src/forms.py:215 src/forms.py:220 src/forms.py:226
 msgid "Please fill out this field."
 msgstr "Merci de remplir ce champ."
 
@@ -76,8 +76,8 @@ msgid "First Name"
 msgstr "Prénom"
 
 #: src/forms.py:117 src/forms.py:121 src/forms.py:151 src/forms.py:155
-#: src/forms.py:177 src/forms.py:179 src/forms.py:188 src/forms.py:198
-#: src/forms.py:200 src/forms.py:209
+#: src/forms.py:178 src/forms.py:180 src/forms.py:189 src/forms.py:199
+#: src/forms.py:201 src/forms.py:210
 msgid "Please enter something shorter."
 msgstr "Merce de saisir quelque chose de plus court."
 
@@ -89,7 +89,7 @@ msgstr "Nom"
 msgid "Password"
 msgstr "Mot de passe"
 
-#: src/forms.py:125 src/forms.py:165
+#: src/forms.py:125 src/forms.py:166
 #, python-format
 msgid "Please enter a value between %(min)d and %(max)d characters long."
 msgstr "Merce de saisir une expression entre %(min)d et %(max)d caractère de long."
@@ -98,7 +98,7 @@ msgstr "Merce de saisir une expression entre %(min)d et %(max)d caractère de lo
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-#: src/forms.py:129 src/forms.py:169
+#: src/forms.py:129 src/forms.py:170
 msgid "Inputs must match."
 msgstr "Les données doivent correspondre."
 
@@ -114,76 +114,80 @@ msgstr "Langue"
 msgid "Remember login?"
 msgstr "Garder la sesion?"
 
-#: src/forms.py:163
+#: src/forms.py:159
+msgid "Theme"
+msgstr "Thème"
+
+#: src/forms.py:164
 msgid "New Password"
 msgstr "Nouveau mot de passe"
 
-#: src/forms.py:167
+#: src/forms.py:168
 msgid "Confirm New Password"
 msgstr "Confirmer le nouveau mot de passe"
 
-#: src/forms.py:175 src/forms.py:186 src/forms.py:196 src/forms.py:207
+#: src/forms.py:176 src/forms.py:187 src/forms.py:197 src/forms.py:208
 msgid "Name"
 msgstr "Nom"
 
-#: src/forms.py:179
+#: src/forms.py:180
 msgid "Description"
 msgstr "Description"
 
-#: src/forms.py:180
+#: src/forms.py:181
 msgid "Finish by Date"
 msgstr "Finir d'ici à"
 
-#: src/forms.py:181 src/forms.py:213 src/templates/view_assignment.html:11
+#: src/forms.py:182 src/forms.py:214 src/templates/view_assignment.html:11
 #: src/templates/view_todo.html:16
 msgid "Complete"
 msgstr "Fini"
 
-#: src/forms.py:190
+#: src/forms.py:191
 msgid "Start Date"
 msgstr "Date de commencer"
 
-#: src/forms.py:191
+#: src/forms.py:192
 msgid "End Date"
 msgstr "Date de fin"
 
-#: src/forms.py:200
+#: src/forms.py:201
 msgid "Short Name"
 msgstr "Diminutif"
 
-#: src/forms.py:201
+#: src/forms.py:202
 msgid "Credits"
 msgstr "Unités de valeur"
 
-#: src/forms.py:202 src/main.py:300
+#: src/forms.py:203 src/main.py:304
 msgid "Semester"
 msgstr "Semestre"
 
-#: src/forms.py:211
+#: src/forms.py:212
 msgid "Due Date"
 msgstr "Date limite"
 
-#: src/forms.py:212
+#: src/forms.py:213
 msgid "Due Time"
 msgstr "Heure limite"
 
-#: src/forms.py:214 src/main.py:426
+#: src/forms.py:215 src/main.py:430
 msgid "Course"
 msgstr "Cours"
 
-#: src/forms.py:219
+#: src/forms.py:220
 msgid "Choice"
 msgstr "Choix"
 
-#: src/forms.py:224
+#: src/forms.py:225
 msgid "Confirmation"
 msgstr "Confirmation"
 
-#: src/forms.py:226
+#: src/forms.py:227
 msgid "I understand."
 msgstr "Je comprends."
 
-#: src/forms.py:226
+#: src/forms.py:227
 msgid "You must enter \"I understand.\" to proceed."
 msgstr "Vous devez saisir \"Je comprends.\" pour continuer."
 
@@ -199,19 +203,19 @@ msgstr "Créer votre premier cours"
 msgid "Get Started Here"
 msgstr "Commencer ici"
 
-#: src/main.py:174
+#: src/main.py:178
 msgid "To-Do"
 msgstr "Tâche"
 
-#: src/main.py:544
+#: src/main.py:548
 msgid "Assignment"
 msgstr "Devoir"
 
-#: src/main.py:683
+#: src/main.py:687
 msgid "Stop Studying"
 msgstr "Arrêter étudier"
 
-#: src/main.py:686
+#: src/main.py:690
 msgid "Assignment Completed"
 msgstr "Devoir fini"
 
@@ -234,6 +238,14 @@ msgstr "Bonsoir, %(name)s."
 #, python-format
 msgid "Hello, %(name)s."
 msgstr "Salut, %(name)s."
+
+#: src/util.py:116
+msgid "Greensboro Winter"
+msgstr "L'hiver à Greensboro"
+
+#: src/util.py:117
+msgid "Serenity Now!"
+msgstr "La Sérénité Maintenant!"
 
 #: src/templates/base_auth.html:12
 msgid "About Us"
@@ -457,7 +469,6 @@ msgid "Add a Semester"
 msgstr "Ajouter un semestre"
 
 #: src/templates/view_todo.html:14
-#, fuzzy
 msgid "Complete by %(finish)"
 msgstr "À finir d'ici le %(finish)s"
 

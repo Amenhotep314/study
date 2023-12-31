@@ -114,5 +114,5 @@ def theme_options():
 
     return [
         ("greensboro_winter", _l("Greensboro Winter")),
-        ("serenity_now", _l("Serenity Now!"))
+        ("serenity_now", _l("Serenity Now!")),
     ]
