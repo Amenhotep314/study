@@ -9,19 +9,27 @@ from flask import Flask, request
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
-from jinja2 import Environment, FileSystemLoader
 import json
+import os
 from . import util
 
 
 db = SQLAlchemy()
 
 
-def create_app():
+class Config(object):
+
+    LANGUAGES = [item[0] for item in util.language_options()]
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
+
+
+def create_app(config_class=Config):
 
     app = Flask(__name__)
-    app.config.from_file("config.json", load=json.load)
-    app.config['LANGUAGES'] = ["en", "fr"]
+    try:
+        app.config.from_file("config.json", load=json.load)
+    except:
+        pass
     db.init_app(app)
 
     login_manager = LoginManager()

@@ -1,0 +1,1 @@
+web: flask db upgrade; pybabel compile -d src/translations; gunicorn fluxstudy:src
