@@ -1,4 +1,6 @@
 *.json
+*.mo
+*.pot
 *.pyc
 *.sqlite
 *.xml
