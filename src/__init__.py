@@ -10,6 +10,7 @@ from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 import json
+import secrets
 import os
 from . import util
 
@@ -20,10 +21,8 @@ db = SQLAlchemy()
 def create_app():
 
     app = Flask(__name__)
-    try:
-        app.config.from_file("config.json", load=json.load)
-    except:
-        pass
+    app.config['SECRET_KEY'] = secrets.token_hex(32)
+    # app.config.from_file("config.json", load=json.load)
     app.config['LANGUAGES'] = [item[0] for item in util.language_options()]
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
     db.init_app(app)
