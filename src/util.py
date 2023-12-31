@@ -100,3 +100,11 @@ def social_greeting():
         return _l("Good evening, %(name)s.", name=user_name)
     else:
         return _l("Hello, %(name)s.", name=user_name)
+
+
+def language_options():
+
+    return [
+        ("en", "English"),
+        ("fr", "Français")
+    ]

@@ -76,6 +76,8 @@ def edit_self():
 
     form = SettingsForm()
     form.timezone.choices = [(timezone, timezone) for timezone in pytz.common_timezones]
+    languages = util.language_options()
+    form.language.choices = languages
 
     if form.validate_on_submit():
 
@@ -83,6 +85,7 @@ def edit_self():
         current_user.firstname = form.firstname.data
         current_user.lastname = form.lastname.data
         current_user.timezone = form.timezone.data
+        current_user.language = form.language.data
 
         db.session.commit()
         return redirect(data['url'])
@@ -91,6 +94,7 @@ def edit_self():
     form.firstname.data = current_user.firstname
     form.lastname.data = current_user.lastname
     form.timezone.data = current_user.timezone
+    form.language.data = current_user.language
 
     return render_template(
         "edit_self.html",

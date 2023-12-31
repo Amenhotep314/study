@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
     timezone = db.Column(db.String(100), default="Canada/Eastern")
+    language = db.Column(db.String(2), default="en")
 
 
 class ToDo(db.Model):

@@ -6,7 +6,7 @@
 
 
 from flask import Flask, request
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 import json
@@ -31,12 +31,14 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    def get_locale():
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
-    babel = Babel(app, locale_selector=get_locale)
-
     with app.app_context():
         db.create_all()
+
+    def get_locale():
+        if current_user.is_authenticated:
+            return current_user.language
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+    babel = Babel(app, locale_selector=get_locale)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

@@ -129,6 +129,7 @@ class SignUp(FlaskForm):
         EqualTo('password', message=_l("Inputs must match."))
     ])
     timezone = wtforms.SelectField(_l("Timezone"), validators=[InputRequired(_l("Please fill out this field."))])
+    language = wtforms.SelectField(_l("Language"), validators=[InputRequired(_l("Please fill out this field."))])
 
 
 class LogIn(FlaskForm):
@@ -154,6 +155,7 @@ class SettingsForm(FlaskForm):
         Length(max=100, message=_l("Please enter something shorter."))
     ])
     timezone = wtforms.SelectField(_l("Timezone"), validators=[InputRequired(_l("Please fill out this field."))])
+    language = wtforms.SelectField(_l("Language"), validators=[InputRequired(_l("Please fill out this field."))])
 
 
 class ChangePasswordForm(FlaskForm):

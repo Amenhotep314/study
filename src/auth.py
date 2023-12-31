@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
 from flask_babel import _, lazy_gettext as _l
@@ -40,6 +40,8 @@ def signup():
 
     form = SignUp()
     form.timezone.choices = [(timezone, timezone) for timezone in pytz.common_timezones]
+    languages = util.language_options()
+    form.language.choices = languages
 
     if form.validate_on_submit():
         email = form.email.data
@@ -47,6 +49,7 @@ def signup():
         lastname = form.lastname.data
         password = form.password.data
         timezone = form.timezone.data
+        language = form.language.data
 
         hashed_password = generate_password_hash(password, method='scrypt')
         new_user = User(
@@ -55,7 +58,8 @@ def signup():
             firstname=firstname,
             lastname=lastname,
             password=hashed_password,
-            timezone=timezone
+            timezone=timezone,
+            language=language
         )
 
         db.session.add(new_user)
@@ -63,6 +67,7 @@ def signup():
         return redirect(url_for('auth.login'))
 
     form.timezone.data = "Canada/Eastern"
+    form.language.data = request.accept_languages.best_match([item[0] for item in languages])
 
     return render_template(
         "auth.html",
