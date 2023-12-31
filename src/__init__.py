@@ -17,19 +17,15 @@ from . import util
 db = SQLAlchemy()
 
 
-class Config(object):
-
-    LANGUAGES = [item[0] for item in util.language_options()]
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
-
-
-def create_app(config_class=Config):
+def create_app():
 
     app = Flask(__name__)
     try:
         app.config.from_file("config.json", load=json.load)
     except:
         pass
+    app.config['LANGUAGES'] = [item[0] for item in util.language_options()]
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
     db.init_app(app)
 
     login_manager = LoginManager()
