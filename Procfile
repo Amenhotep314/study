@@ -1,1 +1,1 @@
-web: pybabel compile -d src/translations; gunicorn src:app
+web: pybabel compile -d src/translations; gunicorn "src:create_app()"
