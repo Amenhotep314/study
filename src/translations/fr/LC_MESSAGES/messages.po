@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-30 21:59-0500\n"
+"POT-Creation-Date: 2023-12-30 23:43-0500\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: src/auth.py:32 src/templates/base_auth.html:13
+#: src/auth.py:32 src/templates/base_auth.html:11
 msgid "Log In"
 msgstr "Se connecter"
 
-#: src/auth.py:76 src/templates/base_auth.html:14
+#: src/auth.py:76 src/templates/base_auth.html:12
 msgid "Sign Up"
 msgstr "S'inscrire"
 
@@ -247,34 +247,34 @@ msgstr "L'hiver à Greensboro"
 msgid "Serenity Now!"
 msgstr "La Sérénité Maintenant!"
 
-#: src/templates/base_auth.html:12
+#: src/templates/base_auth.html:10
 msgid "About Us"
 msgstr "À propos de nous"
 
-#: src/templates/base_main.html:13
+#: src/templates/base_main.html:12
 msgid "Home"
 msgstr "Accueil"
 
-#: src/templates/base_main.html:14 src/templates/view_courses.html:4
+#: src/templates/base_main.html:13 src/templates/view_courses.html:4
 #: src/templates/view_semester.html:12
 msgid "Courses"
 msgstr "Les cours"
 
-#: src/templates/base_main.html:15 src/templates/index.html:53
+#: src/templates/base_main.html:14 src/templates/index.html:53
 #: src/templates/view_todos.html:4 src/templates/view_todos.html:8
 msgid "To-Dos"
 msgstr "Tâches"
 
-#: src/templates/base_main.html:16 src/templates/view_semesters.html:4
+#: src/templates/base_main.html:15 src/templates/view_semesters.html:4
 #: src/templates/view_semesters.html:8
 msgid "Semesters"
 msgstr "Semestres"
 
-#: src/templates/base_main.html:17
+#: src/templates/base_main.html:16
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: src/templates/base_main.html:18 src/templates/view_self.html:4
+#: src/templates/base_main.html:17 src/templates/view_self.html:4
 #: src/templates/view_self.html:8
 msgid "My Account"
 msgstr "Mon compte"
@@ -328,20 +328,26 @@ msgid "Settings"
 msgstr "Réglages"
 
 #: src/templates/front_page.html:4 src/templates/index.html:4
-msgid "Study: Learn Differently"
-msgstr "Étudier: Apprendrez Différemment"
+msgid "FluxStudy: Learn Differently"
+msgstr "FluxStudy: Apprendrez Différemment"
 
 #: src/templates/front_page.html:8
-msgid "Front Page"
-msgstr "Couverture"
+msgid "Welcome to FluxStudy."
+msgstr "Bienvenue à FluxStudy."
 
-#: src/templates/front_page.html:9
+#: src/templates/front_page.html:10
 msgid ""
-"At some point, dandy promotional content will go here. Right now, there's"
-" nothing."
+"Nobody likes wasted time. FluxStudy is a simple, elegant tool to help you"
+" manage your workload, so you can succeed in style and find more time for"
+" the things you love."
 msgstr ""
-"Un jour, le contenu promotionnel génial sera ici. Maintenant, il n'y a "
-"rien."
+"Personne n'aime les temps perdu. FluxStudy est un outil simple et élégant pour "
+"aider vous gérer votre travail, pour que vous pouvez réussir avec style et "
+"trouvez plus de temps pour les choses que vous aimez."
+
+#: src/templates/front_page.html:11
+msgid "Join Today"
+msgstr "S'inscrire aujourd'hui"
 
 #: src/templates/index.html:12 src/templates/view_course.html:13
 msgid "Assignments"
@@ -476,4 +482,16 @@ msgstr "À finir d'ici le %(finish)s"
 #, python-format
 msgid "Finish by %(finish)s"
 msgstr "À finir d'ici le %(finish)s"
+
+#~ msgid "Front Page"
+#~ msgstr "Couverture"
+
+#~ msgid ""
+#~ "At some point, dandy promotional content"
+#~ " will go here. Right now, there's "
+#~ "nothing."
+#~ msgstr ""
+#~ "Un jour, le contenu promotionnel génial"
+#~ " sera ici. Maintenant, il n'y a "
+#~ "rien."
 

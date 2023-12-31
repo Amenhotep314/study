@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ _('Front Page') }}</h1>
-    <p>{{ _("At some point, dandy promotional content will go here. Right now, there's nothing.") }}</p>
+    <h1>{{ _('Welcome to FluxStudy.') }}</h1>
+    <!-- <img style="background-color: var(--text-color); border-radius: 20px; margin-left: auto; margin-right: auto;" src="{{ url_for('static', filename='icon.png') }}" width="512" height="512"> -->
+    <p style="text-align: center;">{{ _("Nobody likes wasted time. FluxStudy is a simple, elegant tool to help you manage your workload, so you can succeed in style and find more time for the things you love.") }}</p>
+    <a style="margin-left: auto; margin-right: auto;" class="link-button thick-button" href="{{ url_for('auth.signup') }}">{{ _("Join Today") }}</a>
 {% endblock %}

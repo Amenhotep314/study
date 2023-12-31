@@ -88,7 +88,7 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
-@auth.route("/about")
+@auth.route("/")
 def front_page():
 
     return render_template("front_page.html")

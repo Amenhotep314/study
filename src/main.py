@@ -16,7 +16,7 @@ main = Blueprint("main", __name__)
 data = {"url": '/'}
 
 
-@main.route("/")
+@main.route("/home")
 @login_required
 def index():
 
