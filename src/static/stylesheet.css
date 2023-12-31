@@ -83,6 +83,42 @@ nav a:hover {
     color: var(--primary-color);
 }
 
+/* Mobile nav bar styles */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.mobile-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    border-top: 1px solid var(--text-color);
+}
+
+.mobile-nav li {
+    float: left;
+    width: 20%;
+}
+
+.mobile-nav a {
+    color: var(--text-color);
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.movile-nav a:active {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+}
+
 /* Text styles */
 h1 {
     text-align: center;
@@ -145,4 +181,28 @@ form input, form select {
 
 form label, form button {
     display: block;
+}
+
+/* Media Queries */
+@media (pointer:coarse) {
+    nav {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: inline;
+    }
+
+    .contents {
+        width: clamp(30ch, 85%, 90%);
+        margin-bottom: 60px;
+    }
+
+    h1 {
+        position: sticky;
+        top: 0;
+        background-color: var(--primary-color);
+        width: 100%;
+        border-bottom: 1px solid var(--text-color);
+    }
 }

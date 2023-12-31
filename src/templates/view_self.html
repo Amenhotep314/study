@@ -11,4 +11,6 @@
     <p style="margin-left: auto; margin-right: auto;">{{ _('%(total_time)s total study time.', total_time=hours) }}</p>
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self') }}">{{ _('Settings') }}</a>
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self_password') }}">{{ _('Change Password') }}</a>
+    <br><br>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('auth.logout') }}">{{ _('Log Out') }}</a>
 {% endblock %}

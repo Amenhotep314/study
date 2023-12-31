@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-31 00:32-0500\n"
+"POT-Creation-Date: 2023-12-31 14:57-0500\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,10 +19,12 @@ msgstr ""
 "Generated-By: Babel 2.14.0\n"
 
 #: src/auth.py:32 src/templates/base_auth.html:11
+#: src/templates/base_auth.html:19
 msgid "Log In"
 msgstr "Se connecter"
 
 #: src/auth.py:76 src/templates/base_auth.html:12
+#: src/templates/base_auth.html:20
 msgid "Sign Up"
 msgstr "S'inscrire"
 
@@ -247,22 +249,21 @@ msgstr "L'hiver à Greensboro"
 msgid "Serenity Now!"
 msgstr "La Sérénité Maintenant!"
 
-#: src/templates/base_auth.html:10
+#: src/templates/base_auth.html:10 src/templates/base_auth.html:18
 msgid "About Us"
 msgstr "À propos de nous"
 
-#: src/templates/base_main.html:12 src/templates/base_main.html:24
+#: src/templates/base_main.html:12
 msgid "Home"
 msgstr "Accueil"
 
-#: src/templates/base_main.html:13 src/templates/base_main.html:25
-#: src/templates/view_courses.html:4 src/templates/view_semester.html:12
+#: src/templates/base_main.html:13 src/templates/view_courses.html:4
+#: src/templates/view_semester.html:12
 msgid "Courses"
 msgstr "Les cours"
 
-#: src/templates/base_main.html:14 src/templates/base_main.html:26
-#: src/templates/index.html:53 src/templates/view_todos.html:4
-#: src/templates/view_todos.html:8
+#: src/templates/base_main.html:14 src/templates/index.html:53
+#: src/templates/view_todos.html:4 src/templates/view_todos.html:8
 msgid "To-Dos"
 msgstr "Tâches"
 
@@ -271,12 +272,12 @@ msgstr "Tâches"
 msgid "Semesters"
 msgstr "Semestres"
 
-#: src/templates/base_main.html:16
+#: src/templates/base_main.html:16 src/templates/view_self.html:15
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: src/templates/base_main.html:17 src/templates/base_main.html:27
-#: src/templates/view_self.html:4 src/templates/view_self.html:8
+#: src/templates/base_main.html:17 src/templates/view_self.html:4
+#: src/templates/view_self.html:8
 msgid "My Account"
 msgstr "Mon compte"
 

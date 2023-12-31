@@ -22,7 +22,10 @@ def create_app():
 
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
-    # app.config.from_file("config.json", load=json.load)
+    try:
+        app.config.from_file("config.json", load=json.load)
+    except:
+        pass
     app.config['LANGUAGES'] = [item[0] for item in util.language_options()]
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
     db.init_app(app)

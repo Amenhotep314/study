@@ -12,6 +12,15 @@
             <li><a href="{{ url_for('auth.signup') }}">{{ _('Sign Up') }}</a></li>
         </ul>
     </nav>
+
+    <div class="mobile-nav">
+        <ul>
+            <li style="width: 33%;"><a href="{{ url_for('auth.front_page') }}">{{ _('About Us') }}</a></li>
+            <li style="width: 33%;"><a href="{{ url_for('auth.login') }}">{{ _('Log In') }}</a></li>
+            <li style="width: 33%;"><a href="{{ url_for('auth.signup') }}">{{ _('Sign Up') }}</a></li>
+        </ul>
+    </div>
+
     <div class="contents">
         {% block body %}{% endblock %}
     </div>

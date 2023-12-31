@@ -17,6 +17,17 @@
             <li style="float: right;"><a href="{{ url_for('main.view_self') }}">{{ _('My Account') }}</a></li>
         </ul>
     </nav>
+
+    <div class="mobile-nav">
+        <ul>
+            <li><a href="{{ url_for('main.index') }}"><i class="fa-solid fa-house"></i></a></li>
+            <li><a href=""><i class="fa-solid fa-chart-column"></i></a></li>
+            <li><a href="{{ url_for('main.view_courses') }}"><i class="fa-solid fa-person-chalkboard"></i></a></li>
+            <li><a href="{{ url_for('main.view_todos') }}"><i class="fa-solid fa-list-check"></i></a></li>
+            <li><a href="{{ url_for('main.view_self') }}"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+
     <div class="contents">
         {% block body %}{% endblock %}
     </div>
