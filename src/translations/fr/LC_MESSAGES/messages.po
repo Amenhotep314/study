@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-31 14:57-0500\n"
+"POT-Creation-Date: 2023-12-31 15:06-0500\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -272,7 +272,7 @@ msgstr "Tâches"
 msgid "Semesters"
 msgstr "Semestres"
 
-#: src/templates/base_main.html:16 src/templates/view_self.html:15
+#: src/templates/base_main.html:16 src/templates/view_self.html:16
 msgid "Log Out"
 msgstr "Se déconnecter"
 
@@ -325,7 +325,7 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: src/templates/edit_self.html:4 src/templates/edit_self.html:8
-#: src/templates/view_self.html:12
+#: src/templates/view_self.html:13
 msgid "Settings"
 msgstr "Réglages"
 
@@ -463,7 +463,11 @@ msgstr "Membre depuis %(num_days)s jours."
 msgid "%(total_time)s total study time."
 msgstr "%(total_time)s temps d'étude total."
 
-#: src/templates/view_self.html:13
+#: src/templates/view_self.html:12
+msgid "See Past Semesters"
+msgstr "Regarder les semestres passés"
+
+#: src/templates/view_self.html:14
 msgid "Change Password"
 msgstr "Changer le mot de passe"
 

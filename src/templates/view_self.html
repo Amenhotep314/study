@@ -9,6 +9,7 @@
     <p style="margin-left: auto; margin-right: auto;">{{ user.firstname }} {{ user.lastname }}</p>
     <p style="margin-left: auto; margin-right: auto;">{{ _('Member for %(num_days)s days.', num_days=duration) }}</p>
     <p style="margin-left: auto; margin-right: auto;">{{ _('%(total_time)s total study time.', total_time=hours) }}</p>
+    <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.view_semesters') }}">{{ _('See Past Semesters') }}</a>
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self') }}">{{ _('Settings') }}</a>
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_self_password') }}">{{ _('Change Password') }}</a>
     <br><br>
