@@ -1,4 +1,4 @@
-# Study
+# Flux Study
 This webapp project is for everyone, including me, who wishes they could do more with their time. I'm developing this website so that I can keep track of my assignments and other to-dos, gain helpful insights into my study habits, and make the most of the time I have.
 
 ## Planned Features
