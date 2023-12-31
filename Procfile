@@ -1,1 +1,1 @@
-web: flask db upgrade; pybabel compile -d src/translations; gunicorn --chdir src __init__:app
+web: flask db upgrade; pybabel compile -d src/translations; gunicorn src:app
