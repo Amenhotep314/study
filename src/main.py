@@ -44,8 +44,8 @@ def index():
         main_message=main_message,
         overdue_assignments=overdue_assignment_dicts,
         active_assignments=active_assignment_dicts,
-        overdue_todos=overdue_todos,
-        active_todos=active_todos
+        overdue_todos=overdue_todo_dicts,
+        active_todos=active_todo_dicts
     )
 
 
