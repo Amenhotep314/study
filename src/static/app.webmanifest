@@ -1,0 +1,29 @@
+{
+    "name": "FluxStudy: Learn Differently",
+    "short_name": "FluxStudy",
+    "icons": [
+        {
+            "src": "favicon.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/home",
+    "display": "standalone",
+    "id": "https://fluxstudy-3cc38d8670a8.herokuapp.com/",
+    "background_color": "#F9F4F5",
+    "theme_color": "#0a3200",
+    "description": "A simple, elegant tool to help you manage your time and succeed in style",
+    "categories": [
+        "education",
+        "lifestyle",
+        "productivity",
+        "utilities"
+    ]
+
+}

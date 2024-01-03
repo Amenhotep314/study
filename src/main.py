@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, current_app
 from flask_login import login_required, current_user
 from flask_babel import _, lazy_gettext as _l
 from werkzeug.security import generate_password_hash
@@ -14,6 +14,13 @@ from .forms import *
 
 main = Blueprint("main", __name__)
 data = {"url": '/'}
+
+
+@main.route("/serviceworker.js")
+@login_required
+def service_worker_load():
+
+    return current_app.send_static_file('serviceworker.js')
 
 
 @main.route("/home")
@@ -106,7 +113,7 @@ def edit_self():
     )
 
 
-@main.route("/change_password", methods=['GET', 'POST'])
+@main.route("/edit_password", methods=['GET', 'POST'])
 @login_required
 def edit_self_password():
 

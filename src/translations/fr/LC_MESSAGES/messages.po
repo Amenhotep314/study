@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-31 15:06-0500\n"
+"POT-Creation-Date: 2024-01-02 23:12-0500\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -161,7 +161,7 @@ msgstr "Diminutif"
 msgid "Credits"
 msgstr "Unités de valeur"
 
-#: src/forms.py:203 src/main.py:304
+#: src/forms.py:203 src/main.py:311
 msgid "Semester"
 msgstr "Semestre"
 
@@ -173,7 +173,7 @@ msgstr "Date limite"
 msgid "Due Time"
 msgstr "Heure limite"
 
-#: src/forms.py:215 src/main.py:430
+#: src/forms.py:215 src/main.py:437
 msgid "Course"
 msgstr "Cours"
 
@@ -193,31 +193,31 @@ msgstr "Je comprends."
 msgid "You must enter \"I understand.\" to proceed."
 msgstr "Vous devez saisir \"Je comprends.\" pour continuer."
 
-#: src/main.py:35 src/templates/index.html:10
+#: src/main.py:42 src/templates/index.html:10
 msgid "Study Now"
 msgstr "Étudier maintenant"
 
-#: src/main.py:37
+#: src/main.py:44
 msgid "Create Your First Course"
 msgstr "Créer votre premier cours"
 
-#: src/main.py:39
+#: src/main.py:46
 msgid "Get Started Here"
 msgstr "Commencer ici"
 
-#: src/main.py:178
+#: src/main.py:185
 msgid "To-Do"
 msgstr "Tâche"
 
-#: src/main.py:548
+#: src/main.py:555
 msgid "Assignment"
 msgstr "Devoir"
 
-#: src/main.py:687
+#: src/main.py:694
 msgid "Stop Studying"
 msgstr "Arrêter étudier"
 
-#: src/main.py:690
+#: src/main.py:697
 msgid "Assignment Completed"
 msgstr "Devoir fini"
 
@@ -253,30 +253,30 @@ msgstr "La Sérénité Maintenant!"
 msgid "About Us"
 msgstr "À propos de nous"
 
-#: src/templates/base_main.html:12
+#: src/templates/base_main.html:19
 msgid "Home"
 msgstr "Accueil"
 
-#: src/templates/base_main.html:13 src/templates/view_courses.html:4
+#: src/templates/base_main.html:20 src/templates/view_courses.html:4
 #: src/templates/view_semester.html:12
 msgid "Courses"
 msgstr "Les cours"
 
-#: src/templates/base_main.html:14 src/templates/index.html:53
+#: src/templates/base_main.html:21 src/templates/index.html:53
 #: src/templates/view_todos.html:4 src/templates/view_todos.html:8
 msgid "To-Dos"
 msgstr "Tâches"
 
-#: src/templates/base_main.html:15 src/templates/view_semesters.html:4
+#: src/templates/base_main.html:22 src/templates/view_semesters.html:4
 #: src/templates/view_semesters.html:8
 msgid "Semesters"
 msgstr "Semestres"
 
-#: src/templates/base_main.html:16 src/templates/view_self.html:16
+#: src/templates/base_main.html:23 src/templates/view_self.html:16
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: src/templates/base_main.html:17 src/templates/view_self.html:4
+#: src/templates/base_main.html:24 src/templates/view_self.html:4
 #: src/templates/view_self.html:8
 msgid "My Account"
 msgstr "Mon compte"

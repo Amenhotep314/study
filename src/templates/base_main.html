@@ -3,6 +3,13 @@
 {% block base_head %}
     <script src="{{ url_for('static', filename='chart-4.4.1.min.js') }}"></script>
 
+    <!-- Logged-In PWA Resources -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("{{ url_for('main.service_worker_load') }}");
+        }
+    </script>
+
     {% block head %}{% endblock %}
 {% endblock %}
 
