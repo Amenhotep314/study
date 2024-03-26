@@ -10,7 +10,7 @@ from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 import json
-import secrets
+from json import JSONEncoder
 import os
 from . import util
 
@@ -48,9 +48,19 @@ def create_app():
         return request.accept_languages.best_match(app.config['LANGUAGES'])
     babel = Babel(app, locale_selector=get_locale)
 
+    class CustomJSONEncoder(JSONEncoder):
+        def default(self, obj):
+            from speaklater import is_lazy_string
+            if is_lazy_string(obj):
+                return str(obj)
+            return super(CustomJSONEncoder, self).default(obj)
+    app.json_encoder = CustomJSONEncoder
+
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
+    from .ajax import ajax as ajax_blueprint
+    app.register_blueprint(ajax_blueprint)
 
     return app

@@ -34,3 +34,12 @@ function addZeroes(i) {
 
     return i;
 }
+
+
+async function renderChart(id, arg) {
+
+    const ctx = document.getElementById(id);
+    const data = await fetch($SCRIPT_ROOT + "/" + id + "/" + arg).then(response => response.json());
+    console.log(ctx, data);
+    new Chart(ctx, data);
+}

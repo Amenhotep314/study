@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block base_head %}
-    <script src="{{ url_for('static', filename='chart-4.4.1.min.js') }}"></script>
+    <!-- Chart.js Resources -->
+    <script>
+        const $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
 
     <!-- Logged-In PWA Resources -->
     <script>

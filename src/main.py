@@ -10,6 +10,7 @@ from . import db_util
 from . import util
 from .models import *
 from .forms import *
+from . import ajax
 
 
 main = Blueprint("main", __name__)
@@ -29,6 +30,7 @@ def index():
 
     data['url'] =  url_for('main.index')
 
+    summary = ajax.chart_embed("weekly_summary", 0)
     overdue_assignments = db_util.overdue_assignments()
     active_assignments = db_util.active_assignments()
     overdue_assignment_dicts = util.local_dicts_from_naive_utc_queries(overdue_assignments)
@@ -49,6 +51,7 @@ def index():
         "index.html",
         greeting=util.social_greeting(),
         main_message=main_message,
+        summary=summary,
         overdue_assignments=overdue_assignment_dicts,
         active_assignments=active_assignment_dicts,
         overdue_todos=overdue_todo_dicts,

@@ -102,7 +102,6 @@ def social_greeting():
     afternoon = datetime.time(12, 0)
     evening = datetime.time(18, 0)
     night = datetime.time(23, 59)
-    print(user_time)
 
     if morning <= user_time < afternoon:
         return _l("Good morning, %(name)s.", name=user_name)
@@ -141,4 +140,17 @@ def color_options():
         ("#0000ff", _l("Blue")),
         ("#ff00ff", _l("Fuchsia")),
         ("#800080", _l("Purple"))
+    ]
+
+
+def weekdays():
+
+    return [
+        _l("Monday"),
+        _l("Tuesday"),
+        _l("Wednesday"),
+        _l("Thursday"),
+        _l("Friday"),
+        _l("Saturday"),
+        _l("Sunday")
     ]
