@@ -22,6 +22,12 @@ def utc_now():
     return datetime.datetime.now(tz=pytz.utc)
 
 
+def local_now():
+
+    utc = utc_now()
+    return local_datetime_from_naive_utc_datetime(utc)
+
+
 def utc_datetime_from_naive_local_date_time(date, time):
 
     tz = current_user_timezone()
@@ -79,6 +85,12 @@ def local_dicts_from_naive_utc_queries(queries):
         query_dicts.append(local_dict_from_naive_utc_query(query))
 
     return query_dicts
+
+
+def utc_days_ago(days_ago, eod=False):
+
+    date = local_now().date() - datetime.timedelta(days=days_ago)
+    return utc_datetime_from_naive_local_date(date, eod=eod)
 
 
 def social_greeting():
