@@ -63,17 +63,13 @@ def view_self():
     data['url'] =  url_for('main.view_self')
 
     duration = util.utc_now() - pytz.utc.localize(current_user.created)
-    study_time = datetime.timedelta(0)
-    study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None))
-    for session in study_sessions:
-        print(session.start_datetime, session.end_datetime, study_time)
-        study_time += session.end_datetime - session.start_datetime
+    hours = db_util.study_time()
 
     return render_template(
         "view_self.html",
         user=current_user,
         duration=duration.days,
-        hours = study_time
+        hours=hours
     )
 
 
@@ -322,12 +318,14 @@ def view_semester(semester_id):
 
     semester = db.first_or_404(Semester.query.filter_by(user_id=current_user.id, id=semester_id))
     semester_dict = util.local_dict_from_naive_utc_query(semester)
+    hours = db_util.study_time(semesters=[semester])
     courses = Course.query.filter_by(user_id=current_user.id, semester_id=semester.id).all()
     courses.sort(key=lambda x: x.name)
 
     return render_template(
         "view_semester.html",
         semester=semester_dict,
+        hours=hours,
         courses=courses
     )
 
@@ -450,6 +448,7 @@ def view_course(course_id):
     data['url'] =  url_for('main.view_course', course_id=course_id)
 
     course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
+    hours = db_util.study_time(courses=[course])
     overdue_assignments = db_util.overdue_assignments(courses=[course])
     active_assignments = db_util.active_assignments(courses=[course])
     past_assignments = db_util.current_assignments(courses=[course], past=True)
@@ -460,6 +459,7 @@ def view_course(course_id):
     return render_template(
         "view_course.html",
         course=course,
+        hours=hours,
         overdue_assignments=overdue_assignment_dicts,
         active_assignments=active_assignment_dicts,
         past_assignments=past_assignment_dicts
@@ -573,8 +573,9 @@ def view_assignment(assignment_id):
 
     assignment = db.first_or_404(Assignment.query.filter_by(user_id=current_user.id, id=assignment_id))
     assignment_dict = util.local_dict_from_naive_utc_query(assignment)
+    hours = db_util.study_time(assignments=[assignment])
 
-    return render_template("view_assignment.html", assignment=assignment_dict)
+    return render_template("view_assignment.html", assignment=assignment_dict, hours=hours)
 
 
 @main.route("/assignments/edit/<int:assignment_id>", methods=['GET', 'POST'])

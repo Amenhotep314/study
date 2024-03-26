@@ -9,6 +9,7 @@
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_course', course_id=course.id) }}">{{ _('Edit') }}</a>
     <p style="margin-left: auto; margin-right: auto;">{{ course.short_name }}</p>
     <p style="margin-left: auto; margin-right: auto;">{{ _('%(credits)s credits', credits=course.credits) }}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{ _('%(total_time)s total study time.', total_time=hours) }}</p>
     {% if (overdue_assignments|length > 0) or (active_assignments|length > 0) or (past_assignments|length > 0) %}
         <h2>{{ _('Assignments') }}</h2>
     {% endif %}

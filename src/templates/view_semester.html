@@ -8,6 +8,7 @@
     <h1>{{ semester.name }}</h1>
     <a class="link-button" style="margin-left: auto; margin-right: auto;" href="{{ url_for('main.edit_semester', semester_id=semester.id) }}">{{ _('Edit') }}</a>
     <p style="margin-left: auto; margin-right: auto;">{{ _('From %(start)s to %(finish)s', start=semester.start_datetime.strftime("%Y-%m-%d"), finish=semester.end_datetime.strftime("%Y-%m-%d")) }}</p>
+    <p style="margin-left: auto; margin-right: auto;">{{ _('%(total_time)s total study time.', total_time=hours) }}</p>
     {% if courses|length > 0 %}
         <h2>{{ _('Courses') }}</h2>
         <div class="subregion">

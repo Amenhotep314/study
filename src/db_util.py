@@ -1,5 +1,6 @@
 from flask_login import current_user
 from functools import cache
+import datetime
 
 from . import db
 from . import util
@@ -149,6 +150,34 @@ def current_study_session():
 
     study_session = StudySession.query.filter_by(user_id=current_user.id, end_datetime=None).first()
     return study_session
+
+
+def study_time(start_datetime=None, end_datetime=None, semesters=None, courses=None, assignments=None):
+
+    assert sum(bool(x) for x in [semesters, courses, assignments]) <= 1
+    if not start_datetime:
+        start_datetime = current_user.created
+        start_datetime = util.utc_datetime_from_naive_utc_datetime(start_datetime)
+    if not end_datetime:
+        end_datetime = util.utc_now()
+
+    if semesters:
+        ids = [semester.id for semester in semesters]
+        study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None) & (StudySession.start_datetime >= start_datetime) & (StudySession.start_datetime < end_datetime) & (StudySession.semester_id.in_(ids))).all()
+    elif courses:
+        ids = [course.id for course in courses]
+        study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None) & (StudySession.start_datetime >= start_datetime) & (StudySession.start_datetime < end_datetime) & (StudySession.course_id.in_(ids))).all()
+    elif assignments:
+        ids = [assignment.id for assignment in assignments]
+        study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None) & (StudySession.start_datetime >= start_datetime) & (StudySession.start_datetime < end_datetime) & (StudySession.assignment_id.in_(ids))).all()
+    else:
+        study_sessions = StudySession.query.filter((StudySession.user_id==current_user.id) & (StudySession.end_datetime!=None) & (StudySession.start_datetime >= start_datetime) & (StudySession.start_datetime < end_datetime)).all()
+
+    total = datetime.timedelta(0)
+    for study_session in study_sessions:
+        total += study_session.end_datetime - study_session.start_datetime
+
+    return total
 
 
 def deep_delete_current_user():
