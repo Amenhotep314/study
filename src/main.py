@@ -410,10 +410,12 @@ def view_courses():
 @login_required
 def create_course():
 
-    form = CourseForm()
-    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
     if not db_util.current_semester():
         return redirect(url_for('main.create_semester'))
+
+    form = CourseForm()
+    form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
+    form.color.choices = util.color_options()
 
     if form.validate_on_submit():
         new_course = Course(
@@ -422,7 +424,8 @@ def create_course():
             semester_id = form.semester.data,
             name = form.name.data,
             short_name = form.short_name.data,
-            credits = form.credits.data
+            credits = form.credits.data,
+            color = form.color.data
         )
         db.session.add(new_course)
         db.session.commit()
@@ -470,12 +473,14 @@ def edit_course(course_id):
     course = db.first_or_404(Course.query.filter_by(user_id=current_user.id, id=course_id))
     form = CourseForm()
     form.semester.choices = [(semester.id, semester.name) for semester in Semester.query.filter_by(user_id=current_user.id).all()]
+    form.color.choices = util.color_options()
 
     if form.validate_on_submit():
         course.semester_id = form.semester.data
         course.name = form.name.data
         course.short_name = form.short_name.data
         course.credits = form.credits.data
+        course.color = form.color.data
         db.session.commit()
         db_util.invalidate_caches("current_courses")
         return redirect(data['url'])
@@ -484,6 +489,8 @@ def edit_course(course_id):
     form.name.data = course.name
     form.short_name.data = course.short_name
     form.credits.data = course.credits
+    if course.color in [item[0] for item in util.color_options()]:
+        form.color.data = course.color
 
     return render_template(
         "edit.html",

@@ -54,6 +54,7 @@ class Course(db.Model):
     name = db.Column(db.String(100))
     short_name = db.Column(db.String(100))
     credits = db.Column(db.Integer)
+    color = db.Column(db.String(7))
 
 
 class Assignment(db.Model):

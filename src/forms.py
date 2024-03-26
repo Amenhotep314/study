@@ -200,6 +200,7 @@ class CourseForm(FlaskForm):
     ])
     short_name = wtforms.StringField(_l("Short Name"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
     credits = wtforms.IntegerField(_l("Credits"), validators=[InputRequired(_l('Please fill out this field.'))])
+    color = wtforms.SelectField(_l("Color"), choices=[], validate_choice=False, validators=[Optional()])
     semester = wtforms.SelectField(_l("Semester"), choices=[], coerce=int, validate_choice=False, validators=[InputRequired(_l('Please fill out this field.'))])
 
 

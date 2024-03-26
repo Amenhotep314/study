@@ -116,3 +116,17 @@ def theme_options():
         ("greensboro_winter", _l("Greensboro Winter")),
         ("serenity_now", _l("Serenity Now!")),
     ]
+
+
+def color_options():
+
+    return [
+        ("#ff0000", _l("Red")),
+        ("#ff8000", _l("Orange")),
+        ("#ffff00", _l("Yellow")),
+        ("#00ff00", _l("Green")),
+        ("#00ffff", _l("Cyan")),
+        ("#0000ff", _l("Blue")),
+        ("#ff00ff", _l("Fuchsia")),
+        ("#800080", _l("Purple"))
+    ]
