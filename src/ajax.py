@@ -36,13 +36,13 @@ def weekly_summary(week=0):
             "datasets": datasets
         },
         "options": {
-            # "plugins": {
-            #     "title": {
-            #         "display": True,
-            #         "text": util.utc_days_ago(days_since_monday).strftime("%Y-%m-%d") + " - " + util.utc_days_ago(days_since_monday + 6).strftime("%Y-%m-%d")
-            #     }
-            # },
-            # "responsive": True,
+            "plugins": {
+                "title": {
+                    "display": True,
+                    "text": util.utc_days_ago(days_since_monday).strftime("%Y-%m-%d") + " - " + util.utc_days_ago(days_since_monday - 6).strftime("%Y-%m-%d")
+                }
+            },
+            "responsive": True,
             "scales": {
                 "x": {
                     "stacked": True

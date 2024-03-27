@@ -30,7 +30,6 @@ def index():
 
     data['url'] =  url_for('main.index')
 
-    summary = ajax.chart_embed("weekly_summary", 0)
     overdue_assignments = db_util.overdue_assignments()
     active_assignments = db_util.active_assignments()
     overdue_assignment_dicts = util.local_dicts_from_naive_utc_queries(overdue_assignments)
@@ -51,7 +50,6 @@ def index():
         "index.html",
         greeting=util.social_greeting(),
         main_message=main_message,
-        summary=summary,
         overdue_assignments=overdue_assignment_dicts,
         active_assignments=active_assignment_dicts,
         overdue_todos=overdue_todo_dicts,
@@ -733,3 +731,10 @@ def stop_study_complete_assignment():
 
     db_util.stop_study_session()
     return redirect(data['url'])
+
+
+@main.route("/stats")
+@login_required
+def stats():
+
+    return render_template("stats.html")

@@ -7,6 +7,8 @@
 {% block body %}
     <h1>{{ greeting }}</h1>
     <a class="link-button thick-button" style="margin: auto" href="{{ url_for('main.study') }}">{{ main_message }}</a>
+
+    <h2>{{ _('Weekly Summary') }}</h2>
     <div><canvas id="weekly_summary"></canvas></div>
     <script>renderChart("weekly_summary", 0);</script>
     {% if main_message == _('Study Now') %}

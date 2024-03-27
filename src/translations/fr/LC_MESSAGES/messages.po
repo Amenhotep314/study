@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-26 14:32-0400\n"
+"POT-Creation-Date: 2024-03-26 20:51-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -165,7 +165,7 @@ msgstr "Unités de valeur"
 msgid "Color"
 msgstr "Coleur"
 
-#: src/forms.py:204 src/main.py:307
+#: src/forms.py:204 src/main.py:308
 msgid "Semester"
 msgstr "Semestre"
 
@@ -177,7 +177,7 @@ msgstr "Date limite"
 msgid "Due Time"
 msgstr "Heure limite"
 
-#: src/forms.py:216 src/main.py:438
+#: src/forms.py:216 src/main.py:439
 msgid "Course"
 msgstr "Cours"
 
@@ -197,125 +197,157 @@ msgstr "Je comprends."
 msgid "You must enter \"I understand.\" to proceed."
 msgstr "Vous devez saisir \"Je comprends.\" pour continuer."
 
-#: src/main.py:42 src/templates/index.html:10
+#: src/main.py:43 src/templates/index.html:14
 msgid "Study Now"
 msgstr "Étudier maintenant"
 
-#: src/main.py:44
+#: src/main.py:45
 msgid "Create Your First Course"
 msgstr "Créer votre premier cours"
 
-#: src/main.py:46
+#: src/main.py:47
 msgid "Get Started Here"
 msgstr "Commencer ici"
 
-#: src/main.py:181
+#: src/main.py:182
 msgid "To-Do"
 msgstr "Tâche"
 
-#: src/main.py:562
+#: src/main.py:563
 msgid "Assignment"
 msgstr "Devoir"
 
-#: src/main.py:702
+#: src/main.py:703
 msgid "Stop Studying"
 msgstr "Arrêter étudier"
 
-#: src/main.py:705
+#: src/main.py:706
 msgid "Assignment Completed"
 msgstr "Devoir fini"
 
-#: src/util.py:108
+#: src/util.py:107
 #, python-format
 msgid "Good morning, %(name)s."
 msgstr "Bonjour, %(name)s."
 
-#: src/util.py:110
+#: src/util.py:109
 #, python-format
 msgid "Good afternoon, %(name)s."
 msgstr "Bonjour, %(name)s."
 
-#: src/util.py:112
+#: src/util.py:111
 #, python-format
 msgid "Good evening, %(name)s."
 msgstr "Bonsoir, %(name)s."
 
-#: src/util.py:114
+#: src/util.py:113
 #, python-format
 msgid "Hello, %(name)s."
 msgstr "Salut, %(name)s."
 
-#: src/util.py:128
+#: src/util.py:127
 msgid "Greensboro Winter"
 msgstr "L'hiver à Greensboro"
 
-#: src/util.py:129
+#: src/util.py:128
 msgid "Serenity Now!"
 msgstr "La Sérénité Maintenant!"
 
-#: src/util.py:136
+#: src/util.py:135
 #, fuzzy
 msgid "Red"
 msgstr "Rouge"
 
-#: src/util.py:137
+#: src/util.py:136
 #, fuzzy
 msgid "Orange"
 msgstr "Orange"
 
-#: src/util.py:138
+#: src/util.py:137
 msgid "Yellow"
 msgstr "Jaune"
 
-#: src/util.py:139
+#: src/util.py:138
 msgid "Green"
 msgstr "Vert"
 
-#: src/util.py:140
+#: src/util.py:139
 #, fuzzy
 msgid "Cyan"
 msgstr "Cyan"
 
-#: src/util.py:141
+#: src/util.py:140
 msgid "Blue"
 msgstr "Bleu"
 
-#: src/util.py:142
+#: src/util.py:141
 msgid "Fuchsia"
 msgstr "Rose"
 
-#: src/util.py:143
+#: src/util.py:142
 msgid "Purple"
 msgstr "Violet"
+
+#: src/util.py:149
+msgid "Monday"
+msgstr "Lundi"
+
+#: src/util.py:150
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: src/util.py:151
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: src/util.py:152
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: src/util.py:153
+msgid "Friday"
+msgstr "Vendredi"
+
+#: src/util.py:154
+msgid "Saturday"
+msgstr "Samedi"
+
+#: src/util.py:155
+msgid "Sunday"
+msgstr "Dimanche"
 
 #: src/templates/base_auth.html:10 src/templates/base_auth.html:18
 msgid "About Us"
 msgstr "À propos de nous"
 
-#: src/templates/base_main.html:19
+#: src/templates/base_main.html:22
 msgid "Home"
 msgstr "Accueil"
 
-#: src/templates/base_main.html:20 src/templates/view_courses.html:4
+#: src/templates/base_main.html:23
+msgid "Stats"
+msgstr "Stats"
+
+#: src/templates/base_main.html:24 src/templates/view_courses.html:4
 #: src/templates/view_semester.html:13
 msgid "Courses"
 msgstr "Les cours"
 
-#: src/templates/base_main.html:21 src/templates/index.html:53
+#: src/templates/base_main.html:25 src/templates/index.html:57
 #: src/templates/view_todos.html:4 src/templates/view_todos.html:8
 msgid "To-Dos"
 msgstr "Tâches"
 
-#: src/templates/base_main.html:22 src/templates/view_semesters.html:4
+#: src/templates/base_main.html:26 src/templates/view_semesters.html:4
 #: src/templates/view_semesters.html:8
 msgid "Semesters"
 msgstr "Semestres"
 
-#: src/templates/base_main.html:23 src/templates/view_self.html:16
+#: src/templates/base_main.html:27 src/templates/view_self.html:16
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: src/templates/base_main.html:24 src/templates/view_self.html:4
+#: src/templates/base_main.html:28 src/templates/view_self.html:4
 #: src/templates/view_self.html:8
 msgid "My Account"
 msgstr "Mon compte"
@@ -390,28 +422,32 @@ msgstr ""
 msgid "Join Today"
 msgstr "S'inscrire aujourd'hui"
 
-#: src/templates/index.html:12 src/templates/view_course.html:14
+#: src/templates/index.html:11 src/templates/stats.html:9
+msgid "Weekly Summary"
+msgstr "Résumé de la semaine"
+
+#: src/templates/index.html:16 src/templates/view_course.html:14
 msgid "Assignments"
 msgstr "Devoirs"
 
-#: src/templates/index.html:13
+#: src/templates/index.html:17
 msgid "New Assignment"
 msgstr "Nouveau devoir"
 
-#: src/templates/index.html:17 src/templates/index.html:58
+#: src/templates/index.html:21 src/templates/index.html:62
 #: src/templates/view_course.html:18 src/templates/view_todos.html:13
 msgid "Past Due"
 msgstr "En retard"
 
-#: src/templates/index.html:22 src/templates/index.html:41
+#: src/templates/index.html:26 src/templates/index.html:45
 #: src/templates/view_assignment.html:10 src/templates/view_course.html:23
 #: src/templates/view_course.html:41 src/templates/view_course.html:59
 #, python-format
 msgid "Due by %(due_date)s"
 msgstr "À rendre d'ici le %(due_date)s"
 
-#: src/templates/index.html:25 src/templates/index.html:44
-#: src/templates/index.html:71 src/templates/index.html:95
+#: src/templates/index.html:29 src/templates/index.html:48
+#: src/templates/index.html:75 src/templates/index.html:99
 #: src/templates/view_course.html:26 src/templates/view_course.html:44
 #: src/templates/view_course.html:62 src/templates/view_courses.html:22
 #: src/templates/view_semester.html:23 src/templates/view_semesters.html:21
@@ -420,8 +456,8 @@ msgstr "À rendre d'ici le %(due_date)s"
 msgid "View"
 msgstr "Regarder"
 
-#: src/templates/index.html:26 src/templates/index.html:45
-#: src/templates/index.html:72 src/templates/index.html:96
+#: src/templates/index.html:30 src/templates/index.html:49
+#: src/templates/index.html:76 src/templates/index.html:100
 #: src/templates/view_assignment.html:9 src/templates/view_course.html:9
 #: src/templates/view_course.html:27 src/templates/view_course.html:45
 #: src/templates/view_course.html:63 src/templates/view_courses.html:23
@@ -432,23 +468,23 @@ msgstr "Regarder"
 msgid "Edit"
 msgstr "Modifier"
 
-#: src/templates/index.html:27 src/templates/index.html:46
-#: src/templates/index.html:73 src/templates/index.html:97
+#: src/templates/index.html:31 src/templates/index.html:50
+#: src/templates/index.html:77 src/templates/index.html:101
 #: src/templates/view_course.html:28 src/templates/view_course.html:46
 #: src/templates/view_todos.html:28 src/templates/view_todos.html:52
 msgid "Done"
 msgstr "Fini"
 
-#: src/templates/index.html:36 src/templates/index.html:82
+#: src/templates/index.html:40 src/templates/index.html:86
 #: src/templates/view_course.html:36 src/templates/view_todos.html:37
 msgid "Current"
 msgstr "En cours"
 
-#: src/templates/index.html:54 src/templates/view_todos.html:9
+#: src/templates/index.html:58 src/templates/view_todos.html:9
 msgid "New To-Do"
 msgstr "Nouveau tâche"
 
-#: src/templates/index.html:64 src/templates/index.html:88
+#: src/templates/index.html:68 src/templates/index.html:92
 #, python-format
 msgid "Finish by %(due_date)s"
 msgstr "À finir d'ici le %(due_date)s"
@@ -464,6 +500,10 @@ msgstr "Choisir l'étude"
 #: src/templates/select_study.html:20
 msgid "Start Studying"
 msgstr "Commencer étudier"
+
+#: src/templates/stats.html:4 src/templates/stats.html:8
+msgid "Statistics"
+msgstr "Statistiques"
 
 #: src/templates/study.html:4 src/templates/study.html:9
 #, python-format
