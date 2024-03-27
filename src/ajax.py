@@ -43,6 +43,7 @@ def weekly_summary(week=0):
                 }
             },
             "responsive": True,
+            "maintainAspectRatio": False,
             "scales": {
                 "x": {
                     "stacked": True
