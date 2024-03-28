@@ -7,8 +7,14 @@
 {% block body %}
     <h1>{{ _("Statistics") }}</h1>
     <h2>{{ _("Weekly Summary") }}</h2>
-    <div class="subregion"></div>
+    <div class="subregion">
         <div style="height: 500px;"><canvas id="weekly_summary"></canvas></div>
         <script>renderChart("weekly_summary", 0);</script>
+    </div>
+
+    <h2>{{ _("Work per Course") }}</h2>
+    <div class="subregion">
+        <div><canvas id="work_distribution"></canvas></div>
+        <script>renderChart("work_distribution", 0);</script>
     </div>
 {% endblock %}

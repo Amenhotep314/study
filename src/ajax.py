@@ -58,8 +58,51 @@ def weekly_summary(week=0):
     return jsonify(config)
 
 
-def chart_embed(id, arg):
+@login_required
+@ajax.route("/work_distribution/<int:range>", methods=["GET"])
+def work_distribution(range=0):
 
-    return f"""<canvas id="{id}"></canvas><script>renderChart({id}, {arg})</script>"""
+    datasets = [
+        {
+            "label": _l("Study Time"),
+            "data": [],
+            "backgroundColor": [course.color for course in db_util.current_courses()]
+        }
+    ]
+
+    for course in db_util.current_courses():
+        if range:
+            start_datetime = util.utc_days_ago(range)
+            delta = db_util.study_time(start_datetime=start_datetime, courses=[course])
+            title = _l("Last %(days)s days", days=range)
+        else:
+            delta = db_util.study_time(courses=[course])
+            title = _l("All Time")
+        hours = delta.total_seconds() / 3600
+        datasets[0]["data"].append(hours)
+
+    config = {
+        "type": "doughnut",
+        "data": {
+            "labels": [course.name for course in db_util.current_courses()],
+            "datasets": datasets
+        },
+        "options": {
+            "plugins": {
+                "title": {
+                    "display": True,
+                    "text": title
+                },
+                "legend": {
+                    "position": "top"
+                }
+            },
+            "responsive": True,
+            "maintainAspectRatio": True,
+        }
+    }
+
+    return jsonify(config)
+
 
 
