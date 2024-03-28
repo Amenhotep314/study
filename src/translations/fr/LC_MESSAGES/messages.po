@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-28 00:52-0400\n"
+"POT-Creation-Date: 2024-03-28 00:59-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -25,7 +25,7 @@ msgstr "Temps d'étude"
 #: src/ajax.py:77
 #, python-format
 msgid "Last %(days)s days"
-msgstr "Dernier %(days)s jours"
+msgstr "Les %(days)s derniers jours"
 
 #: src/ajax.py:80
 msgid "All Time"
