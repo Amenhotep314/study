@@ -49,7 +49,7 @@ export SECRET_KEY = "YOUR_GENERATED_VALUE_FROM_ABOVE"
 chmod a+x babel_actions.sh
 ./babel_actions.sh
 ```
-4. Run the test server.
+5. Run the test server.
 ```bash
 flask --app src run
 ```

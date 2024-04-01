@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-28 00:59-0400\n"
+"POT-Creation-Date: 2024-04-01 10:04-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -348,16 +348,11 @@ msgstr "Les cours"
 msgid "To-Dos"
 msgstr "Tâches"
 
-#: src/templates/base_main.html:26 src/templates/view_semesters.html:4
-#: src/templates/view_semesters.html:8
-msgid "Semesters"
-msgstr "Semestres"
-
-#: src/templates/base_main.html:27 src/templates/view_self.html:16
+#: src/templates/base_main.html:26 src/templates/view_self.html:16
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: src/templates/base_main.html:28 src/templates/view_self.html:4
+#: src/templates/base_main.html:27 src/templates/view_self.html:4
 #: src/templates/view_self.html:8
 msgid "My Account"
 msgstr "Mon compte"
@@ -569,6 +564,10 @@ msgstr "Changer le mot de passe"
 #, python-format
 msgid "From %(start)s to %(finish)s"
 msgstr "Du %(start)s au %(finish)s"
+
+#: src/templates/view_semesters.html:4 src/templates/view_semesters.html:8
+msgid "Semesters"
+msgstr "Semestres"
 
 #: src/templates/view_semesters.html:10
 msgid "Add a Semester"
