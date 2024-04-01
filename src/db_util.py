@@ -53,16 +53,17 @@ def current_semester():
     semesters = Semester.query.filter_by(user_id=current_user.id).all()
     if not semesters:
         return None
+
     now = util.utc_now()
-    semesters.sort(reverse=True, key = lambda x: x.start_datetime)
+    semesters.sort(reverse=True, key = lambda x: x.end_datetime)
+    if util.utc_datetime_from_naive_utc_datetime(semesters[0].end_datetime) < now:
+        return None
 
     for semester in semesters:
         start = util.utc_datetime_from_naive_utc_datetime(semester.start_datetime)
         end = util.utc_datetime_from_naive_utc_datetime(semester.end_datetime)
         if (start <= now) and (now <= end):
             return semester
-
-    return semesters[0]
 
 
 # @cache
