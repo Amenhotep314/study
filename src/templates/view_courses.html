@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ _('Current Courses') }}</h1>
     <div>
-        <a class="link-button" href="{{ url_for('main.create_course') }}">{{ _('Add a Course') }}</a>
+        <a class="link-button" style="margin: auto;" href="{{ url_for('main.create_course') }}">{{ _('Add a Course') }}</a>
     </div>
     {% if courses|length > 0 %}
         <div class="subregion">

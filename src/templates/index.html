@@ -15,94 +15,114 @@
         <script>renderChart("weekly_summary", 0);</script>
 
         <h2>{{ _('Assignments') }}</h2>
-        <a class="link-button" href="{{ url_for('main.create_assignment') }}">{{ _('New Assignment') }}</a>
+        <a class="link-button" style="margin: auto;" href="{{ url_for('main.create_assignment') }}">{{ _('New Assignment') }}</a>
 
         {% if (overdue_assignments|length > 0) %}
             <div class="subregion">
                 <h3>{{ _('Past Due') }}</h3>
-                {% for assignment in overdue_assignments %}
-                    <div class="subelement">
-                        <div style="display: block;">
-                            <strong>{{ assignment.name }}</strong>
-                            <p>{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
+                <div class="minimalregion">
+                    {% for assignment in overdue_assignments %}
+                        <div class="minimalelement">
+                            <div style="display: block;">
+                                <strong>{{ assignment.name }}</strong>
+                                <p>{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
+                            </div>
+                            <div style="margin-left: auto; display: flex;">
+                                <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">{{ _('View') }}</a>
+                                <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">{{ _('Edit') }}</a>
+                                <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">{{ _('Done') }}</a>
+                            </div>
                         </div>
-                        <div style="margin-left: auto; display: flex;">
-                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">{{ _('View') }}</a>
-                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">{{ _('Edit') }}</a>
-                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">{{ _('Done') }}</a>
-                        </div>
-                    </div>
-                {% endfor %}
+                        {% if not loop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
 
         {% if (active_assignments|length > 0) %}
             <div class="subregion">
                 <h3>{{ _('Current') }}</h3>
-                {% for assignment in active_assignments %}
-                    <div class="subelement">
-                        <div style="display: block;">
-                            <strong>{{ assignment.name }}</strong>
-                            <p>{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
+                <div class="minimalregion">
+                    {% for assignment in active_assignments %}
+                        <div class="minimalelement">
+                            <div style="display: block;">
+                                <strong>{{ assignment.name }}</strong>
+                                <p>{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
+                            </div>
+                            <div style="margin-left: auto; display: flex;">
+                                <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">{{ _('View') }}</a>
+                                <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">{{ _('Edit') }}</a>
+                                <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">{{ _('Done') }}</a>
+                            </div>
                         </div>
-                        <div style="margin-left: auto; display: flex;">
-                            <a class="link-button" href="{{ url_for('main.view_assignment', assignment_id=assignment.id) }}">{{ _('View') }}</a>
-                            <a class="link-button" href="{{ url_for('main.edit_assignment', assignment_id=assignment.id) }}">{{ _('Edit') }}</a>
-                            <a class="link-button" href="{{ url_for('main.complete_assignment', assignment_id=assignment.id) }}">{{ _('Done') }}</a>
-                        </div>
-                    </div>
-                {% endfor %}
+                        {% if not loop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
 
         <h2>{{ _('To-Dos') }}</h2>
-        <a class="link-button" href="{{ url_for('main.create_todo') }}">{{ _('New To-Do') }}</a>
+        <a class="link-button" style="margin: auto;" href="{{ url_for('main.create_todo') }}">{{ _('New To-Do') }}</a>
 
         {% if (overdue_todos|length > 0) %}
             <div class="subregion">
                 <h3>{{ _('Past Due') }}</h3>
-                {% for todo in overdue_todos %}
-                    <div class="subelement">
-                        <div style="display: block;">
-                            <strong>{{ todo.name }}</strong>
-                            {% if todo.finish_datetime %}
-                                <p>{{ _('Finish by %(due_date)s', due_date=todo.finish_datetime.strftime("%Y-%m-%d")) }}</p>
-                            {% endif %}
-                            {% if todo.description %}
-                                <p>{{ todo.description }}</p>
-                            {% endif %}
+                <div class="minimalregion">
+                    {% for todo in overdue_todos %}
+                        <div class="minimalelement">
+                            <div style="display: block;">
+                                <strong>{{ todo.name }}</strong>
+                                {% if todo.finish_datetime %}
+                                    <p>{{ _('Finish by %(due_date)s', due_date=todo.finish_datetime.strftime("%Y-%m-%d")) }}</p>
+                                {% endif %}
+                                {% if todo.description %}
+                                    <p>{{ todo.description }}</p>
+                                {% endif %}
+                            </div>
+                            <div style="margin-left: auto; display: flex;">
+                                <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
+                                <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
+                                <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">{{ _('Done') }}</a>
+                            </div>
                         </div>
-                        <div style="margin-left: auto; display: flex;">
-                            <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
-                            <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
-                            <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">{{ _('Done') }}</a>
-                        </div>
-                    </div>
-                {% endfor %}
+                        {% if not loop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
 
         {% if (active_todos|length > 0) %}
             <div class="subregion">
                 <h3>{{ _('Current') }}</h3>
-                {% for todo in active_todos %}
-                    <div class="subelement">
-                        <div style="display: block;">
-                            <strong>{{ todo.name }}</strong>
-                            {% if todo.finish_datetime %}
-                                <p>{{ _('Finish by %(due_date)s', due_date=todo.finish_datetime.strftime("%Y-%m-%d")) }}</p>
-                            {% endif %}
-                            {% if todo.description %}
-                                <p>{{ todo.description }}</p>
-                            {% endif %}
+                <div class="minimalregion">
+                    {% for todo in active_todos %}
+                        <div class="minimalelement">
+                            <div style="display: block;">
+                                <strong>{{ todo.name }}</strong>
+                                {% if todo.finish_datetime %}
+                                    <p>{{ _('Finish by %(due_date)s', due_date=todo.finish_datetime.strftime("%Y-%m-%d")) }}</p>
+                                {% endif %}
+                                {% if todo.description %}
+                                    <p>{{ todo.description }}</p>
+                                {% endif %}
+                            </div>
+                            <div style="margin-left: auto; display: flex;">
+                                <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
+                                <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
+                                <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">{{ _('Done') }}</a>
+                            </div>
                         </div>
-                        <div style="margin-left: auto; display: flex;">
-                            <a class="link-button" href="{{ url_for('main.view_todo', todo_id=todo.id) }}">{{ _('View') }}</a>
-                            <a class="link-button" href="{{ url_for('main.edit_todo', todo_id=todo.id) }}">{{ _('Edit') }}</a>
-                            <a class="link-button" href="{{ url_for('main.complete_todo', todo_id=todo.id) }}">{{ _('Done') }}</a>
-                        </div>
-                    </div>
-                {% endfor %}
+                        {% if not loop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
     {% endif %}

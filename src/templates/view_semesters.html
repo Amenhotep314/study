@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ _('Semesters') }}</h1>
     <div>
-        <a class="link-button" href="{{ url_for('main.create_semester') }}">{{ _('Add a Semester') }}</a>
+        <a class="link-button" style="margin: auto;" href="{{ url_for('main.create_semester') }}">{{ _('Add a Semester') }}</a>
     </div>
     {% if semesters|length > 0 %}
         <div class="subregion">

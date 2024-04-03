@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>{{ _('To-Dos') }}</h1>
-    <a class="link-button" href="{{ url_for('main.create_todo') }}">{{ _('New To-Do') }}</a>
+    <a class="link-button" style="margin: auto;" href="{{ url_for('main.create_todo') }}">{{ _('New To-Do') }}</a>
 
     {% if (overdue_todos|length > 0) %}
         <div class="subregion">
