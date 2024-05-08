@@ -58,12 +58,8 @@ def current_semester():
     semesters.sort(reverse=True, key = lambda x: x.end_datetime)
     if util.utc_datetime_from_naive_utc_datetime(semesters[0].end_datetime) < now:
         return None
-
-    for semester in semesters:
-        start = util.utc_datetime_from_naive_utc_datetime(semester.start_datetime)
-        end = util.utc_datetime_from_naive_utc_datetime(semester.end_datetime)
-        if (start <= now) and (now <= end):
-            return semester
+    else:
+        return semesters[0]
 
 
 # @cache
