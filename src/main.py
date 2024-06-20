@@ -595,6 +595,9 @@ def edit_assignment(assignment_id):
         else:
             due_datetime = util.utc_datetime_from_naive_local_date(form.due_date.data)
 
+        if assignment.course_id != form.course.data:
+            db_util.fix_assignment_study_sessions(assignment)
+
         assignment.course_id = form.course.data
         assignment.name = form.name.data
         assignment.due_datetime = due_datetime

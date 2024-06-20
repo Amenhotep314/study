@@ -110,6 +110,14 @@ def overdue_assignments(courses=None):
     return ans
 
 
+def fix_assignment_study_sessions(assignment):
+
+    study_sessions = StudySession.query.filter_by(user_id=current_user.id, assignment_id=assignment.id).all()
+    for study_session in study_sessions:
+        study_session.course_id = assignment.course_id
+    db.session.commit()
+
+
 def start_study_session(course, assignment=None):
 
     stop_study_session()
