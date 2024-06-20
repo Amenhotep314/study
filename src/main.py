@@ -1,16 +1,14 @@
-from flask import Blueprint, render_template, redirect, url_for, current_app
+from flask import Blueprint, render_template, redirect, url_for, current_app, abort
 from flask_login import login_required, current_user
 from flask_babel import _, lazy_gettext as _l
 from werkzeug.security import generate_password_hash
 import pytz
-import datetime
 
 from . import db
 from . import db_util
 from . import util
 from .models import *
 from .forms import *
-from . import ajax
 
 
 main = Blueprint("main", __name__)
@@ -744,3 +742,40 @@ def stop_study_complete_assignment():
 def stats():
 
     return render_template("stats.html")
+
+
+@main.route("/admin")
+@login_required
+def admin():
+
+    from . import ADMIN_USER_IDS
+    if current_user.id not in ADMIN_USER_IDS:
+        abort(403)
+
+    import os
+    import sys
+
+    with open(os.path.join('requirements.txt')) as requirements_file:
+        requirements = [line.strip() for line in requirements_file.readlines()]
+    python_version = sys.version
+
+    users = User.query.all()
+    semesters = Semester.query.all()
+    courses = Course.query.all()
+    assignments = Assignment.query.all()
+    study_sessions = StudySession.query.all()
+    todos = ToDo.query.all()
+
+    return render_template(
+        "admin.html",
+        python_version=python_version,
+        requirements=requirements,
+        users=users,
+        semesters=semesters,
+        courses=courses,
+        assignments=assignments,
+        study_sessions=study_sessions,
+        todos=todos
+    )
+
+

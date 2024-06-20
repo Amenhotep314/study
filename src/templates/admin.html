@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block base_head %}
+    <title>Admin</title>
+{% endblock %}
+
+{% block base_body %}
+    <h1>Admin</h1>
+    <h2>Python Environment</h2>
+    <p>Python Version: {{ python_version }}</p>
+    <p>requirements.txt:</p>
+    {% for line in requirements%}
+        {{ line }}<br>
+    {% endfor %}
+
+    <h2>Databases</h2>
+    <h3>Users</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Created</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Timezone</th>
+            <th>Language</th>
+            <th>Theme</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.created.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.timezone }}</td>
+                <td>{{ user.language }}</td>
+                <td>{{ user.theme }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Semesters</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Created</th>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+        {% for semester in semesters %}
+            <tr>
+                <td>{{ semester.id }}</td>
+                <td>{{ semester.created.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ semester.user_id }}</td>
+                <td>{{ semester.name }}</td>
+                <td>{{ semester.start_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ semester.end_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Courses</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Created</th>
+            <th>User ID</th>
+            <th>Semester ID</th>
+            <th>Name</th>
+            <th>Short Name</th>
+            <th>Credits</th>
+            <th>Color</th>
+        </tr>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.id }}</td>
+                <td>{{ course.created.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ course.user_id }}</td>
+                <td>{{ course.semester_id }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.short_name }}</td>
+                <td>{{ course.credits }}</td>
+                <td>{{ course.color }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Assignments</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Created</th>
+            <th>User ID</th>
+            <th>Course ID</th>
+            <th>Name</th>
+            <th>Due</th>
+            <th>Completed</th>
+        </tr>
+        {% for assignment in assignments %}
+            <tr>
+                <td>{{ assignment.id }}</td>
+                <td>{{ assignment.created.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ assignment.user_id }}</td>
+                <td>{{ assignment.course_id }}</td>
+                <td>{{ assignment.name }}</td>
+                <td>{{ assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S") if assignment.due_datetime else "None"}}</td>
+                <td>{{ assignment.completed }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Study Sessions</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Created</th>
+            <th>User ID</th>
+            <th>Semester ID</th>
+            <th>Course ID</th>
+            <th>Assignment ID</th>
+            <th>Name</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+        {% for study_session in study_sessions %}
+            <tr>
+                <td>{{ study_session.id }}</td>
+                <td>{{ study_session.created.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ study_session.user_id }}</td>
+                <td>{{ study_session.semester_id }}</td>
+                <td>{{ study_session.course_id }}</td>
+                <td>{{ study_session.assignment_id }}</td>
+                <td>{{ study_session.name }}</td>
+                <td>{{ study_session.start_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ study_session.end_datetime.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3>ToDos</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Created</th>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Finish</th>
+            <th>Completed</th>
+        </tr>
+        {% for todo in todos %}
+            <tr>
+                <td>{{ todo.id }}</td>
+                <td>{{ todo.created.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                <td>{{ todo.user_id }}</td>
+                <td>{{ todo.name }}</td>
+                <td>{{ todo.description }}</td>
+                <td>{{ todo.finish_datetime.strftime("%Y-%m-%d %H:%M:%S") if todo.finish_datetime else "None" }}</td>
+                <td>{{ todo.completed }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+

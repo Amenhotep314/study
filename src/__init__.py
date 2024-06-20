@@ -16,6 +16,7 @@ from . import util
 
 
 db = SQLAlchemy()
+ADMIN_USER_IDS = [1]
 
 
 def create_app():
