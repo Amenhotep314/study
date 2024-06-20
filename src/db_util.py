@@ -118,6 +118,14 @@ def fix_assignment_study_sessions(assignment):
     db.session.commit()
 
 
+def fix_course_study_sessions(course):
+
+    study_sessions = StudySession.query.filter_by(user_id=current_user.id, course_id=course.id).all()
+    for study_session in study_sessions:
+        study_session.semester_id = course.semester_id
+    db.session.commit()
+
+
 def start_study_session(course, assignment=None):
 
     stop_study_session()

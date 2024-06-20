@@ -477,6 +477,9 @@ def edit_course(course_id):
     form.color.choices = util.color_options()
 
     if form.validate_on_submit():
+        if course.semester_id != form.semester.data:
+            db_util.fix_course_study_sessions(course)
+
         course.semester_id = form.semester.data
         course.name = form.name.data
         course.short_name = form.short_name.data
