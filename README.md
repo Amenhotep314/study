@@ -26,9 +26,10 @@ Over the next several months, I plan to develop:
 - And more, as beta testing shows the need
 
 ## Setting Up a Development Environment
-### Flask and Basics
 Backend code is written in Python 3, and HTML Jinja2 templates are rendered and filled by the Flask framework. Postgres is used on the server, but SQLite works out of the box if you don't have Postgres. SQLAlchemy is the database software. All requirements are listed and can be pipped to build a full development environment. To run a local site, do the following:
-1. Install [the latest Python](https://www.python.org/downloads/). I also use [VSCode](https://code.visualstudio.com) with the Python extensions, [Postgres](https://www.postgresql.org), [Homebrew](https://brew.sh) and the [Xcode Command Line Tools](https://mac.install.guide/commandlinetools/)
+
+### Flask and Basics
+1. Install [the latest Python](https://www.python.org/downloads/). I also use [VSCode](https://code.visualstudio.com) with the Python extensions, [Homebrew](https://brew.sh) and the [Xcode Command Line Tools](https://mac.install.guide/commandlinetools/).
 2. Clone this repository.
 ```bash
 git clone https://github.com/Amenhotep314/study.git
@@ -91,9 +92,13 @@ psql postgres -U your_username
 CREATE DATABASE study;
 GRANT ALL PRIVILEGES ON DATABASE study TO your_username;
 ```
-6. In src/config.json, below your secret key, add this line:
+6. Edit src/config.json so that it looks like this:
 ```json
-"SQLALCHEMY_DATABASE_URI": "postgresql://your_username:your_password@localhost/study"
+{
+    "SECRET_KEY": "YOUR_SECRET_KEY_FROM_ABOVE",
+    "SQLALCHEMY_DATABASE_URI": "postgresql://your_username:your_password@localhost/study"
+}
+
 ```
 
 ## Project Structure Overview
