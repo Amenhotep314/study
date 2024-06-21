@@ -13,6 +13,7 @@ from . import db
 from .models import *
 from .forms import *
 from . import db_util
+from . import util
 
 
 auth = Blueprint("auth", __name__)
