@@ -7,10 +7,10 @@
 # User authentication guide: https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
 
 
-from flask import Flask, request
+from flask import Flask, request, render_template, url_for
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
-from flask_babel import Babel
+from flask_babel import Babel, _, lazy_gettext as _l
 import json
 from json import JSONEncoder
 import os
@@ -20,6 +20,26 @@ from . import util
 db = SQLAlchemy()
 # Tuple of user ids with access to the admin page
 ADMIN_USER_IDS = 1,
+
+
+def page_not_found(e):
+    error_description = _("The page you are looking for does not exist.")
+    template = "error_main.html" if current_user.is_authenticated else "error_auth.html"
+    return render_template(
+        template,
+        error_description=error_description,
+        button_link=url_for('main.index')
+    ), 404
+
+
+def internal_server_error(e):
+    error_description = _("An error occured in a Python script, so we weren't able to complete your request.")
+    template = "error_main.html" if current_user.is_authenticated else "error_auth.html"
+    return render_template(
+        template,
+        error_description=error_description,
+        button_link=url_for('main.index')
+    ), 500
 
 
 def create_app():
@@ -78,5 +98,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
     from .ajax import ajax as ajax_blueprint
     app.register_blueprint(ajax_blueprint)
+
+    app.register_error_handler(404, page_not_found)
 
     return app

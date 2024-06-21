@@ -1,0 +1,11 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>{{ _('Offline') }}</title>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ _("You're Offline") }}</h1>
+    <p>{{ _("There's no internet connection right now, so we can't get this information. You can still see your most visited pages, but you won't be able to save your changes until you reconnect.") }}</p>
+    <a class="link-button thick-button" href="{{ url_for('main.index') }}" style="margin: auto;">{{ _("Get me outta here!") }}</a>
+{% endblock %}

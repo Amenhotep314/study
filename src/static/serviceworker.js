@@ -11,7 +11,8 @@ const OFFLINE_URLS = [
     "courses",
     "static/favicon.png",
     "static/icon.png",
-    "static/app.webmanifest"
+    "static/app.webmanifest",
+    "offline"
 ]
 
 self.addEventListener("install", (event) => {
@@ -46,6 +47,7 @@ self.addEventListener("fetch", (event) => {
             try {
 
                 // Try to respond from navigation preload
+                console.log("Trying to respond from navigation preload")
                 const preloadResponse = await event.preloadResponse;
                 if (preloadResponse) {
                     clone = preloadResponse.clone();
@@ -54,16 +56,20 @@ self.addEventListener("fetch", (event) => {
                 }
 
                 // Try to respond from network
+                console.log("Trying to respond from network")
                 const networkResponse = await fetch(event.request);
                 clone = networkResponse.clone();
                 cache.put(event.request, clone);
                 return networkResponse;
 
             } catch (error) {
-
                 // Try to respond from the cache
-                const cache = await caches.open(CACHE_NAME);
-                const cachedResponse = await cache.match(event.request);
+                console.log("Trying to respond from cache")
+                let cachedResponse = await cache.match(event.request);
+                if(!cachedResponse){
+                    console.log("Trying to show offline page");
+                    cachedResponse = await cache.match("offline");
+                }
                 return cachedResponse;
             }
         })()

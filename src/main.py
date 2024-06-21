@@ -735,38 +735,43 @@ def stats():
     return render_template("stats.html")
 
 
+@main.route("/offline")
+def offline():
+    return render_template("offline.html")
+
+
 @main.route("/admin")
 @login_required
 def admin():
     # Forbid any non-admin user from accessing this page.
     from . import ADMIN_USER_IDS
     if current_user.id not in ADMIN_USER_IDS:
-        abort(403)
+        abort(418)
+    else:
+        import os
+        import sys
 
-    import os
-    import sys
+        # Get env information
+        with open(os.path.join('requirements.txt')) as requirements_file:
+            requirements = [line.strip() for line in requirements_file.readlines()]
+        python_version = sys.version
 
-    # Get env information
-    with open(os.path.join('requirements.txt')) as requirements_file:
-        requirements = [line.strip() for line in requirements_file.readlines()]
-    python_version = sys.version
+        # And print db contents. Update this when new dbs are added
+        users = User.query.all()
+        semesters = Semester.query.all()
+        courses = Course.query.all()
+        assignments = Assignment.query.all()
+        study_sessions = StudySession.query.all()
+        todos = ToDo.query.all()
 
-    # And print db contents. Update this when new dbs are added
-    users = User.query.all()
-    semesters = Semester.query.all()
-    courses = Course.query.all()
-    assignments = Assignment.query.all()
-    study_sessions = StudySession.query.all()
-    todos = ToDo.query.all()
-
-    return render_template(
-        "admin.html",
-        python_version=python_version,
-        requirements=requirements,
-        users=users,
-        semesters=semesters,
-        courses=courses,
-        assignments=assignments,
-        study_sessions=study_sessions,
-        todos=todos
-    )
+        return render_template(
+            "admin.html",
+            python_version=python_version,
+            requirements=requirements,
+            users=users,
+            semesters=semesters,
+            courses=courses,
+            assignments=assignments,
+            study_sessions=study_sessions,
+            todos=todos
+        )

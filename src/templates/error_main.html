@@ -1,0 +1,13 @@
+{% extends "base_main.html" %}
+
+{% block head %}
+    <title>{{ _('Error') }}</title>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ _("Something Went Wrong") }}</h1>
+    <p>{{ error_description }}</p>
+    <p>{{ _("If this is a recurring issue, please reach out to us on Github: ") }}</p><a href="https://github.com/Amenhotep314/study/issues">https://github.com/Amenhotep314/study/issues</a>
+    <br>
+    <a class="link-button thick-button" href="{{ button_link }}" style="margin: auto;">{{ _("Get me outta here!") }}</a>
+{% endblock %}
