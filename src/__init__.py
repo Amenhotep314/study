@@ -1,3 +1,5 @@
+""""Constructs the Flask object for a session and configures the app."""
+
 # Useful links
 # Flask docs: https://flask.palletsprojects.com/en/2.3.x/
 # SQLAlchemy docs: https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/
@@ -16,25 +18,35 @@ from . import util
 
 
 db = SQLAlchemy()
-ADMIN_USER_IDS = [1]
+# Tuple of user ids with access to the admin page
+ADMIN_USER_IDS = 1,
 
 
 def create_app():
+    """Creates and configures a Flask object. Called at the start of any new session.
+
+    Returns:
+        A Flask object
+    """
 
     app = Flask(__name__)
+
+    # Try to load configuration from environment variables and config.json
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
     try:
         app.config.from_file("config.json", load=json.load)
     except:
         pass
     app.config['LANGUAGES'] = [item[0] for item in util.language_options()]
+
+    # Set up the database. Right now, postgres is on the server but sqlite is used locally. This is bad.
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
     db.init_app(app)
 
+    # User authentication
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-
     from .models import User
     @login_manager.user_loader
     def load_user(user_id):
@@ -43,12 +55,14 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    # Try to get language from the database, otherwise ask the browser
     def get_locale():
         if current_user.is_authenticated:
             return current_user.language
         return request.accept_languages.best_match(app.config['LANGUAGES'])
     babel = Babel(app, locale_selector=get_locale)
 
+    # Custom encoder necessary to deal with translatable strings in async JSON responses
     class CustomJSONEncoder(JSONEncoder):
         def default(self, obj):
             from speaklater import is_lazy_string

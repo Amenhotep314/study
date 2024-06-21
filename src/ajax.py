@@ -1,3 +1,5 @@
+"""Handles all asynchronous requests from client-side JavaScript."""
+
 from flask import Blueprint, jsonify
 from flask_login import login_required
 from flask_babel import _, lazy_gettext as _l
@@ -10,9 +12,18 @@ ajax = Blueprint("ajax", __name__)
 @login_required
 @ajax.route("/weekly_summary/<int:week>", methods=["GET"])
 def weekly_summary(week=0):
+    """Builds a bar chart representation of study time by course since Monday.
 
+    Args:
+        week: An integer representing the number of weeks after the current week. Default 0
+
+    Returns:
+        A JSON object containing the chart configuration.
+    """
+
+    # One dataset for every course, each containing a value for every day of the week
     datasets = []
-    days_since_monday = util.local_now().weekday() + 7 * week
+    days_since_monday = util.local_now().weekday() + 7 * week   # Find Monday
 
     for course in db_util.current_courses():
         dataset = {
@@ -21,6 +32,7 @@ def weekly_summary(week=0):
             "data": []
         }
         for i in range(7):
+            # Query the db for each weekday, and convert values from seconds to hours
             start_datetime = util.utc_days_ago(days_since_monday - i)
             end_datetime = util.utc_days_ago(days_since_monday - i , eod=True)
             delta = db_util.study_time(start_datetime=start_datetime, end_datetime=end_datetime, courses=[course])
@@ -29,6 +41,7 @@ def weekly_summary(week=0):
 
         datasets.append(dataset)
 
+    # See Chart.js documentation
     config = {
         "type": "bar",
         "data": {
@@ -61,6 +74,14 @@ def weekly_summary(week=0):
 @login_required
 @ajax.route("/work_distribution/<int:range>", methods=["GET"])
 def work_distribution(range=0):
+    """Builds a pie chart representation of study time by course.
+
+    Args:
+        range: An integer representing the number of past days to include. Default 0, which includes all time.
+
+    Returns:
+        A JSON object containing the chart configuration.
+    """
 
     datasets = [
         {
@@ -103,6 +124,3 @@ def work_distribution(range=0):
     }
 
     return jsonify(config)
-
-
-

@@ -1,7 +1,11 @@
+"""Implements classes that represent database tables. SQLAlchemy lets us work with these without ever
+making direct queries. Everything is tagged with the UTC timestamp of its creation. Everything except
+the user is tagged with a user id as a security measure.
+"""
+
 from flask_login import UserMixin
 
 from . import db
-from . import util
 
 
 class User(UserMixin, db.Model):
