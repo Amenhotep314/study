@@ -3,6 +3,7 @@ Now live in beta, as [FluxStudy on Heroku](https://fluxstudy-3cc38d8670a8.heroku
 This webapp project is for everyone, including me, who wishes they could do more with their time. I'm developing this website so that I can keep track of my assignments and other to-dos and gain helpful insights into my study habits.
 
 ## Features
+### Current
 This app is in beta testing, and has the following features:
 - Tracking for semesters, courses, assignments, and study sessions
 - To-do list functionality
@@ -10,7 +11,7 @@ This app is in beta testing, and has the following features:
 - Graphs
 - Customizable course colors
 
-## Planned Features
+### Planned
 Over the next several months, I plan to develop:
 - Calendar/agenda tracking, maybe with Google Calendar integration
 - More graphs
@@ -25,36 +26,74 @@ Over the next several months, I plan to develop:
 - And more, as beta testing shows the need
 
 ## Setting Up a Development Environment
+### Flask and Basics
 Backend code is written in Python 3, and HTML Jinja2 templates are rendered and filled by the Flask framework. Postgres is used on the server, but SQLite works out of the box if you don't have Postgres. SQLAlchemy is the database software. All requirements are listed and can be pipped to build a full development environment. To run a local site, do the following:
-1. Install [the latest Python](https://www.python.org/downloads/). I also use [VSCode](https://code.visualstudio.com) with the Python extensions, [Postgres](https://www.postgresql.org), and the [Xcode Command Line Tools](https://mac.install.guide/commandlinetools/)
-1. Clone this repository.
+1. Install [the latest Python](https://www.python.org/downloads/). I also use [VSCode](https://code.visualstudio.com) with the Python extensions, [Postgres](https://www.postgresql.org), [Homebrew](https://brew.sh) and the [Xcode Command Line Tools](https://mac.install.guide/commandlinetools/)
+2. Clone this repository.
 ```bash
 git clone https://github.com/Amenhotep314/study.git
 ```
-2. Prepare the Python environment.
+3. Prepare the Python environment.
 ```bash
 cd study
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
-3. Generate a secret key. In a python shell:
+4. Create a config file.
+```bash
+touch src/config.json
+```
+5. Generate a secret key. In a python shell:
 ```python
 import secrets
 secrets.token_hex(64)
 ```
-3. Now use that key as an environment variable.
-```bash
-export SECRET_KEY = "YOUR_GENERATED_VALUE_FROM_ABOVE"
+6. Now use that key as an environment variable. In config.json, write
+```json
+{
+    "SECRET_KEY": "YOUR_SECRET_KEY_FROM_ABOVE"
+}
 ```
-4. Compile the translations.
+7. Compile the translations.
 ```bash
 chmod a+x babel_actions.sh
 ./babel_actions.sh
 ```
-5. Run the test server.
+8. Run the test server.
 ```bash
 flask --app src run
+```
+
+### Postgres
+If you want to configure Postgres, do the following:
+1. Install it using Homebrew (link to Homebrew is above).
+```bash
+brew install postgresql
+```
+2. Initialize a db and start the server. You may need to replace 14 with the version you have installed.
+```bash
+initdb /opt/homebrew/var/postgresql@14/
+brew services start postgresql@14
+psql postgres
+```
+3. Create the user and database. Your username and password can be anything, just remember them.
+```sql
+CREATE ROLE your_username WITH LOGIN PASSWORD 'your_password';
+ALTER ROLE your_username CREATEDB;
+```
+4. Log out, then back in to the database from your new role.
+```bash
+psql postgres -U your_username
+```
+5. Create the database
+```sql
+CREATE DATABASE study;
+GRANT ALL PRIVILEGES ON DATABASE study TO your_username;
+```
+6. In src/config.json, below your secret key, add this line:
+```json
+"SQLALCHEMY_DATABASE_URI": "postgresql://your_username:your_password@localhost/study"
 ```
 
 ## Project Structure Overview
