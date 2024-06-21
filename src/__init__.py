@@ -100,5 +100,6 @@ def create_app():
     app.register_blueprint(ajax_blueprint)
 
     app.register_error_handler(404, page_not_found)
+    app.register_error_handler(500, internal_server_error)
 
     return app

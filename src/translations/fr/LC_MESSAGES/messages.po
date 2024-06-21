@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-21 12:29-0400\n"
+"POT-Creation-Date: 2024-06-21 14:58-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -17,6 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
+
+#: src/__init__.py:26
+msgid "The page you are looking for does not exist."
+msgstr "La page que vous recherchez n'existe pas."
+
+#: src/__init__.py:36
+msgid ""
+"An error occured in a Python script, so we weren't able to complete your "
+"request."
+msgstr ""
+"Une erreur s'est presentée dans un script Python, alors nous ne pouvons "
+"pas répondre à votre requête."
 
 #: src/ajax.py:88
 msgid "Study Time"
@@ -31,12 +43,12 @@ msgstr "Les %(days)s derniers jours"
 msgid "All Time"
 msgstr "Toujours"
 
-#: src/auth.py:38 src/templates/base_auth.html:11
+#: src/auth.py:39 src/templates/base_auth.html:11
 #: src/templates/base_auth.html:19
 msgid "Log In"
 msgstr "Se connecter"
 
-#: src/auth.py:83 src/templates/base_auth.html:12
+#: src/auth.py:84 src/templates/base_auth.html:12
 #: src/templates/base_auth.html:20
 msgid "Sign Up"
 msgstr "S'inscrire"
@@ -405,6 +417,23 @@ msgstr "Enregistrer"
 msgid "Settings"
 msgstr "Réglages"
 
+#: src/templates/error_auth.html:4 src/templates/error_main.html:4
+msgid "Error"
+msgstr "Erreur"
+
+#: src/templates/error_auth.html:8 src/templates/error_main.html:8
+msgid "Something Went Wrong"
+msgstr "Quelque chose ne marche pas"
+
+#: src/templates/error_auth.html:10 src/templates/error_main.html:10
+msgid "If this is a recurring issue, please reach out to us on Github: "
+msgstr "Si ce problème se reproduit, veuille contactez nous sur Github: "
+
+#: src/templates/error_auth.html:12 src/templates/error_main.html:12
+#: src/templates/offline.html:10
+msgid "Get me outta here!"
+msgstr "Déguerpir!"
+
 #: src/templates/front_page.html:4 src/templates/index.html:4
 msgid "FluxStudy: Learn Differently"
 msgstr "FluxStudy: Apprendrez Différemment"
@@ -493,6 +522,25 @@ msgstr "Nouveau tâche"
 #, python-format
 msgid "Finish by %(due_date)s"
 msgstr "À finir d'ici le %(due_date)s"
+
+#: src/templates/offline.html:4
+msgid "Offline"
+msgstr "Hors connexion"
+
+#: src/templates/offline.html:8
+msgid "You're Offline"
+msgstr "Vous n'avez pas de connexion"
+
+#: src/templates/offline.html:9
+msgid ""
+"There's no internet connection right now, so we can't get this "
+"information. You can still see your most visited pages, but you won't be "
+"able to save your changes until you reconnect."
+msgstr ""
+"Il n'y a aucune un connexion maintenant, alors nous ne pouvons pas "
+"répondre à votre requête. Vous pouvez toujours regarder vos pages les "
+"plus visitées, mais vous ne pourrez pas sauvegarder vos changements avant"
+" de reconnecter à l'Internet."
 
 #: src/templates/select_study.html:4
 msgid "New Study Session"
