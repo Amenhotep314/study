@@ -31,16 +31,17 @@ def create_app():
 
     app = Flask(__name__)
 
-    # Try to load configuration from environment variables and config.json
+    # Configure the app. Look for environment variables first.
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
+
+    # After that, look for a config file
     try:
         app.config.from_file("config.json", load=json.load)
     except:
         pass
-    app.config['LANGUAGES'] = [item[0] for item in util.language_options()]
 
-    # Set up the database. Right now, postgres is on the server but sqlite is used locally. This is bad.
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('postgres://', 'postgresql://') or 'sqlite:///db.sqlite'
+    app.config['LANGUAGES'] = [item[0] for item in util.language_options()]
     db.init_app(app)
 
     # User authentication
