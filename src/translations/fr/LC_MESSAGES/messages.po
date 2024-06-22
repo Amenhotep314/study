@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-21 14:58-0400\n"
+"POT-Creation-Date: 2024-06-22 17:12-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -55,15 +55,15 @@ msgstr "S'inscrire"
 
 #: src/forms.py:27 src/forms.py:43
 msgid "A user with that email already exists."
-msgstr "Un utilisateur avec cette adresse email existe déjà."
+msgstr "Un utilisateur/une utilisatrice avec cette adresse email existe déjà."
 
 #: src/forms.py:56
 msgid "Please check your email address and try again."
-msgstr "Merci de verifier l'adresse email et réessayer."
+msgstr "Veuillez verifier l'adresse email et réessayer."
 
 #: src/forms.py:70
 msgid "Invalid password. Please try again."
-msgstr "Mot de passe invalide. Merci de réessayer."
+msgstr "Mot de passe invalide. Veuillez réessayer."
 
 #: src/forms.py:84
 #, python-format
@@ -90,13 +90,14 @@ msgstr "Adresse Email"
 #: src/forms.py:174 src/forms.py:177 src/forms.py:184 src/forms.py:188
 #: src/forms.py:197 src/forms.py:213 src/forms.py:218 src/forms.py:219
 #: src/forms.py:226 src/forms.py:230 src/forms.py:234 src/forms.py:241
-#: src/forms.py:244 src/forms.py:251 src/forms.py:257 src/forms.py:264
+#: src/forms.py:244 src/forms.py:251 src/forms.py:258 src/forms.py:267
+#: src/forms.py:274
 msgid "Please fill out this field."
-msgstr "Merci de remplir ce champ."
+msgstr "Veuillez remplir ce champ."
 
 #: src/forms.py:121 src/forms.py:162
 msgid "Please enter an email."
-msgstr "Merci de saisir une adresse email."
+msgstr "Veuillez saisir une adresse email."
 
 #: src/forms.py:124 src/forms.py:165
 msgid "First Name"
@@ -104,9 +105,9 @@ msgstr "Prénom"
 
 #: src/forms.py:126 src/forms.py:130 src/forms.py:167 src/forms.py:171
 #: src/forms.py:198 src/forms.py:202 src/forms.py:214 src/forms.py:227
-#: src/forms.py:229 src/forms.py:242
+#: src/forms.py:229 src/forms.py:242 src/forms.py:259
 msgid "Please enter something shorter."
-msgstr "Merce de saisir quelque chose de plus court."
+msgstr "Veuillez saisir quelque chose de plus court."
 
 #: src/forms.py:128 src/forms.py:169
 msgid "Last Name"
@@ -119,7 +120,7 @@ msgstr "Mot de passe"
 #: src/forms.py:136 src/forms.py:185
 #, python-format
 msgid "Please enter a value between %(min)d and %(max)d characters long."
-msgstr "Merce de saisir une expression entre %(min)d et %(max)d caractère de long."
+msgstr "Veuillez saisir une expression entre %(min)d et %(max)d caractère de long."
 
 #: src/forms.py:139
 msgid "Confirm Password"
@@ -154,21 +155,23 @@ msgid "Confirm New Password"
 msgstr "Confirmer le nouveau mot de passe"
 
 #: src/forms.py:196 src/forms.py:212 src/forms.py:225 src/forms.py:240
+#: src/forms.py:257
 msgid "Name"
 msgstr "Nom"
 
 #: src/forms.py:202
-msgid "Description"
-msgstr "Description"
+#, fuzzy
+msgid "Description (optional)"
+msgstr "Description (optionnelle)"
 
 #: src/forms.py:203
-msgid "Finish by Date"
-msgstr "Finir d'ici à"
+#, fuzzy
+msgid "Finish by Date (optional)"
+msgstr "Finir d'ici à (optionnelle)"
 
-#: src/forms.py:206 src/forms.py:248 src/templates/view_assignment.html:11
-#: src/templates/view_todo.html:16
-msgid "Complete"
-msgstr "Fini"
+#: src/forms.py:206 src/forms.py:248
+msgid "Complete?"
+msgstr "Fini ?"
 
 #: src/forms.py:218
 msgid "Start Date"
@@ -179,8 +182,9 @@ msgid "End Date"
 msgstr "Date de fin"
 
 #: src/forms.py:229
-msgid "Short Name"
-msgstr "Diminutif"
+#, fuzzy
+msgid "Short Name (optional)"
+msgstr "Diminutif (optionnel)"
 
 #: src/forms.py:230
 msgid "Credits"
@@ -199,26 +203,26 @@ msgid "Due Date"
 msgstr "Date limite"
 
 #: src/forms.py:247
-msgid "Due Time"
-msgstr "Heure limite"
+msgid "Due Time (optional)"
+msgstr "Heure limite (optionnelle)"
 
 #: src/forms.py:251 src/main.py:431
 msgid "Course"
 msgstr "Cours"
 
-#: src/forms.py:257
+#: src/forms.py:267
 msgid "Choice"
 msgstr "Choix"
 
-#: src/forms.py:263
+#: src/forms.py:273
 msgid "Confirmation"
 msgstr "Confirmation"
 
-#: src/forms.py:265
+#: src/forms.py:275
 msgid "I understand."
 msgstr "Je comprends."
 
-#: src/forms.py:265
+#: src/forms.py:275
 msgid "You must enter \"I understand.\" to proceed."
 msgstr "Vous devez saisir \"Je comprends.\" pour continuer."
 
@@ -410,7 +414,7 @@ msgstr "Modifier %(name)s"
 
 #: src/templates/edit.html:20 src/templates/edit_self.html:20
 msgid "Save"
-msgstr "Enregistrer"
+msgstr "Sauvegarder"
 
 #: src/templates/edit_self.html:4 src/templates/edit_self.html:8
 #: src/templates/view_self.html:13
@@ -427,7 +431,7 @@ msgstr "Quelque chose ne marche pas"
 
 #: src/templates/error_auth.html:10 src/templates/error_main.html:10
 msgid "If this is a recurring issue, please reach out to us on Github: "
-msgstr "Si ce problème se reproduit, veuille contactez nous sur Github: "
+msgstr "Si ce problème se reproduit, veuillez contacter nous sur Github: "
 
 #: src/templates/error_auth.html:12 src/templates/error_main.html:12
 #: src/templates/offline.html:10
@@ -537,7 +541,7 @@ msgid ""
 "information. You can still see your most visited pages, but you won't be "
 "able to save your changes until you reconnect."
 msgstr ""
-"Il n'y a aucune un connexion maintenant, alors nous ne pouvons pas "
+"Il n'y a aucune connexion maintenant, alors nous ne pouvons pas "
 "répondre à votre requête. Vous pouvez toujours regarder vos pages les "
 "plus visitées, mais vous ne pourrez pas sauvegarder vos changements avant"
 " de reconnecter à l'Internet."
@@ -566,6 +570,10 @@ msgstr "Temps d'étude par cours"
 #, python-format
 msgid "Study %(name)s"
 msgstr "Étudier %(name)s"
+
+#: src/templates/view_assignment.html:11 src/templates/view_todo.html:16
+msgid "Complete"
+msgstr "Fini"
 
 #: src/templates/view_assignment.html:11 src/templates/view_todo.html:16
 msgid "Incomplete"
@@ -645,4 +653,7 @@ msgstr "À finir d'ici le %(finish)s"
 
 #~ msgid "New"
 #~ msgstr ""
+
+#~ msgid "Due Time"
+#~ msgstr "Heure limite"
 

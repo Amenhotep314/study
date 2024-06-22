@@ -199,11 +199,11 @@ class ToDoForm(FlaskForm):
     ])
 
     # Optional fields, description and due date
-    description = wtforms.StringField(_l("Description"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
-    finish_datetime = wtforms.DateField(_l("Finish by Date"), validators=[Optional()])
+    description = wtforms.StringField(_l("Description (optional)"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
+    finish_datetime = wtforms.DateField(_l("Finish by Date (optional)"), validators=[Optional()])
 
     # For users to mark if the todo is already done
-    completed = wtforms.BooleanField(_l("Complete"))
+    completed = wtforms.BooleanField(_l("Complete?"))
 
 
 class SemesterForm(FlaskForm):
@@ -226,7 +226,7 @@ class CourseForm(FlaskForm):
         InputRequired(_l('Please fill out this field.')),
         Length(max=100, message=_l('Please enter something shorter.'))
     ])
-    short_name = wtforms.StringField(_l("Short Name"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
+    short_name = wtforms.StringField(_l("Short Name (optional)"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
     credits = wtforms.IntegerField(_l("Credits"), validators=[InputRequired(_l('Please fill out this field.'))])
 
     # Optional color from a list of choices found in util.py. If left blank, will be set to default server-side.
@@ -244,8 +244,8 @@ class AssignmentForm(FlaskForm):
     due_date = wtforms.DateField(_l("Due Date"), validators=[InputRequired(_l('Please fill out this field.'))])
 
     # Due date is optional
-    due_time = wtforms.TimeField(_l("Due Time"), validators=[Optional()])
-    completed = wtforms.BooleanField(_l("Complete"))
+    due_time = wtforms.TimeField(_l("Due Time (optional)"), validators=[Optional()])
+    completed = wtforms.BooleanField(_l("Complete?"))
 
     # Course id must be an integer
     course = wtforms.SelectField(_l("Course"), choices=[], coerce=int, validate_choice=False, validators=[InputRequired(_l('Please fill out this field.'))])
