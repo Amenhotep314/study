@@ -76,6 +76,18 @@ class Assignment(db.Model):
     completed = db.Column(db.Boolean)
 
 
+class CalendarEvent(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    created = db.Column(db.DateTime)
+
+    user_id = db.Column(db.Integer)
+
+    name = db.Column(db.String(100))
+    description = db.Column(db.String(100))
+    datetime = db.Column(db.DateTime)
+
+
 class StudySession(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)

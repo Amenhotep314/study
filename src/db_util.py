@@ -366,6 +366,11 @@ def deep_delete_assignment(assignment):
     invalidate_caches("current_assignments")
 
 
+def deep_delete_calendar_event(calendar_event):
+    db.session.delete(calendar_event)
+    db.session.commit()
+
+
 def deep_delete_study_session(study_session):
     db.session.delete(study_session)
     db.session.commit()

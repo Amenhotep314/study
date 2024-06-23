@@ -646,6 +646,113 @@ def complete_assignment(assignment_id):
     return redirect(data['url'])
 
 
+@main.route("/calendar")
+@login_required
+def view_calendar_events():
+    return render_template("view_calendar_events.html")
+
+
+@main.route("/create_calendar_event", methods=['GET', 'POST'])
+@login_required
+def create_calendar_event():
+    form = CalendarEventForm()()
+
+    if form.validate_on_submit():
+        # See the note on timezones in util.py. Convert immediately to UTC.
+        if form.time.data:
+            event_datetime = util.utc_datetime_from_naive_local_date_time(form.date.data, form.time.data)
+        else:
+            event_datetime = util.utc_datetime_from_naive_local_date(form.date.data, eod=False)
+
+        new_calendar_event = CalendarEvent(
+            created = util.utc_now(),
+            user_id = current_user.id,
+            name = form.name.data,
+            description = form.description.data,
+            datetime = event_datetime
+        )
+        db.session.add(new_calendar_event)
+        db.session.commit()
+        return redirect(data['url'])
+
+    # Creating now uses the same html file, because the basic skeleton is the same for all objects.
+    return render_template(
+        "create.html",
+        form=form,
+        title=_("Calendar Event"),
+        action=url_for('main.create_calendar_event'),
+        methods=['GET', 'POST']
+    )
+
+
+@main.route("/calendar_events/<int:calendar_event_id>")
+@login_required
+def view_calendar_event(calendar_event_id):
+    data['url'] =  url_for('main.view_calendar_event', calendar_event_id=calendar_event_id)
+
+    # Always include user_id in db requests to ensure there is never any unsecure access.
+    event = db.first_or_404(CalendarEvent.query.filter_by(user_id=current_user.id, id=calendar_event_id))
+    event_dict = util.local_dict_from_naive_utc_query(event)
+
+    return render_template(
+        "view_calendar_event.html",
+        event=event_dict
+    )
+
+
+@main.route("/calendar_events/edit/<int:calendar_event_id>", methods=['GET', 'POST'])
+@login_required
+def edit_calendar_event(calendar_event_id):
+    event = db.first_or_404(CalendarEvent.query.filter_by(user_id=current_user.id, id=calendar_event_id))
+    form = CalendarEventForm()
+
+    if form.validate_on_submit():
+        if form.time.data:
+            event_datetime = util.utc_datetime_from_naive_local_date_time(form.date.data, form.time.data)
+        else:
+            event_datetime = util.utc_datetime_from_naive_local_date(form.date.data, eod=False)
+
+        event.name = form.name.data
+        event.description = form.description.data
+        event.datetime = event_datetime
+        db.session.commit()
+        return redirect(data['url'])
+
+    form.name.data = event.name
+    form.description.data = event.description
+    form.date.data = util.local_datetime_from_naive_utc_datetime(event.datetime).date()
+    form.time.data = util.local_datetime_from_naive_utc_datetime(event.datetime).time()
+
+    return render_template(
+        "edit.html",
+        form=form,
+        action=url_for('main.edit_calendar_event', calendar_event_id=event.id),
+        delete_action=url_for('main.delete_calendar_event', event_id=event.id),
+        methods=['GET', 'POST']
+    )
+
+
+@main.route("/calendar_events/delete/<int:calendar_event_id>", methods=['GET', 'POST'])
+@login_required
+def delete_calendar_event(calendar_event_id):
+    event = db.first_or_404(CalendarEvent.query.filter_by(user_id=current_user.id, id=calendar_event_id))
+
+    # Ask before deleting. This is good for big things like semesters, but maybe annoying for todos
+    form = ConfirmDelete()
+
+    if form.validate_on_submit():
+        db_util.deep_delete_calendar_event(event)
+        return redirect(url_for('main.index'))
+
+    return render_template(
+        "delete.html",
+        form=form,
+        target=event,
+        action=url_for('main.delete_calendar_event', calendar_event_id=event.id),
+        methods=['GET', 'POST']
+    )
+
+
 @main.route("/select_study", methods=['GET', 'POST'])
 @login_required
 def select_study():

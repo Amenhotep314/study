@@ -251,6 +251,18 @@ class AssignmentForm(FlaskForm):
     course = wtforms.SelectField(_l("Course"), choices=[], coerce=int, validate_choice=False, validators=[InputRequired(_l('Please fill out this field.'))])
 
 
+class CalendarEventForm(FlaskForm):
+    """Form to create and edit calendar events."""
+
+    name = wtforms.StringField(_l("Name"), validators=[
+        InputRequired(_l('Please fill out this field.')),
+        Length(max=100, message=_l('Please enter something shorter.'))
+    ])
+    description = wtforms.StringField(_l("Description (optional)"), validators=[Length(max=100, message=_l('Please enter something shorter.'))])
+    date = wtforms.DateField(_l("Date"), validators=[InputRequired(_l('Please fill out this field.'))])
+    time = wtforms.TimeField(_l("Time (optional)"), validators=[Optional()])
+
+
 class SelectStudyForm(FlaskForm):
     """Form to select a course or assignment to study."""
 
