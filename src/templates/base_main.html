@@ -28,6 +28,20 @@
         </ul>
     </nav>
 
+    <div class="notification-window">
+        <span id="notification-banner" style="display: none;">
+            <i class="fa-solid fa-bell" aria-hidden="true" style="display: inline;"></i>
+            <p id="notification-text" style="display: inline;"></p>
+        </span>
+    </div>
+    <script>
+        checkNotifications();
+        setInterval(
+            checkNotifications,
+            15000
+        );
+    </script>
+
     <div class="mobile-nav">
         <ul>
             <li><a href="{{ url_for('main.index') }}"><i class="fa-solid fa-house"></i></a></li>

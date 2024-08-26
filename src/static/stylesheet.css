@@ -142,6 +142,19 @@ nav a:hover {
     color: var(--primary-color);
 }
 
+/* Notification styles */
+.notification-window {
+    text-align: center;
+}
+#notification-banner {
+    max-width: 80%;
+    padding: 1%;
+    margin-top: 1%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+}
+
 /* Text styles */
 h1, h2 {
     text-align: center;

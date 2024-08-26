@@ -40,6 +40,21 @@ async function renderChart(id, arg) {
 
     const ctx = document.getElementById(id);
     const data = await fetch($SCRIPT_ROOT + "/" + id + "/" + arg).then(response => response.json());
-    console.log(ctx, data);
+    console.log("Built chart", id);
     new Chart(ctx, data);
+}
+
+
+async function checkNotifications() {
+    const notification = await fetch($SCRIPT_ROOT + "/check_notifications").then(response => response.json());
+    let notificationText = document.getElementById("notification-text");
+    let notificationBanner = document.getElementById("notification-banner");
+
+    if(notification == "") {
+        notificationBanner.style.display = "none";
+    } else {
+        notificationBanner.style.display = "inline-block";
+        notificationText.innerHTML = notification;
+        console.log("Retrieved notifications", notification);
+    }
 }

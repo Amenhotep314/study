@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
 from flask_babel import _, lazy_gettext as _l
+from datetime import timedelta
 
 from . import db_util
 from . import util
@@ -124,3 +125,35 @@ def work_distribution(range=0):
     }
 
     return jsonify(config)
+
+
+@login_required
+@ajax.route("/check_notifications", methods=["GET"])
+def check_notifications():
+    """Gets the most relevant notification
+
+    Returns:
+        A JSON object containing the notification
+    """
+    relevant_horizon = timedelta(hours=1)
+    possible_assignments = db_util.active_assignments()
+
+    if possible_assignments and possible_assignments[0].due_datetime:
+        utc_date = util.utc_datetime_from_naive_utc_datetime(possible_assignments[0].due_datetime)
+        until_time = utc_date - util.utc_now()
+
+        if until_time < relevant_horizon:
+            notification = _l("Assignment <em>%(name)s</em> due in %(time)s minutes", name=possible_assignments[0].name, time=until_time.seconds//60)
+            return jsonify(notification)
+
+    relevant_horizon = timedelta(hours=8)
+    possible_todos = db_util.active_todos()
+    if possible_todos and possible_todos[0].finish_datetime:
+        utc_date = util.utc_datetime_from_naive_utc_datetime(possible_todos[0].finish_datetime)
+        until_time = utc_date - util.utc_now()
+
+        if until_time < relevant_horizon:
+            notification = _l("Todo <em>%(name)s</em> must be done in %(time)s hours", name=possible_todos[0].name, time=until_time.seconds//3600)
+            return jsonify(notification)
+
+    return jsonify("")

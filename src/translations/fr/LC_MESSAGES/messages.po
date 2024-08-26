@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-22 17:12-0400\n"
+"POT-Creation-Date: 2024-08-26 16:14-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -30,18 +30,28 @@ msgstr ""
 "Une erreur s'est presentée dans un script Python, alors nous ne pouvons "
 "pas répondre à votre requête."
 
-#: src/ajax.py:88
+#: src/ajax.py:89
 msgid "Study Time"
 msgstr "Temps d'étude"
 
-#: src/ajax.py:98
+#: src/ajax.py:99
 #, python-format
 msgid "Last %(days)s days"
 msgstr "Les %(days)s derniers jours"
 
-#: src/ajax.py:101
+#: src/ajax.py:102
 msgid "All Time"
 msgstr "Toujours"
+
+#: src/ajax.py:146
+#, python-format
+msgid "Assignment <em>%(name)s</em> due in %(time)s minutes"
+msgstr "Le devoir <em>%(name)s</em> doit être fini en %(time)s minutes"
+
+#: src/ajax.py:156
+#, python-format
+msgid "Todo <em>%(name)s</em> must be done in %(time)s hours"
+msgstr "La tâche <em>%(name)s</em> doit être fini en %(time)s heures"
 
 #: src/auth.py:39 src/templates/base_auth.html:11
 #: src/templates/base_auth.html:19
@@ -90,8 +100,8 @@ msgstr "Adresse Email"
 #: src/forms.py:174 src/forms.py:177 src/forms.py:184 src/forms.py:188
 #: src/forms.py:197 src/forms.py:213 src/forms.py:218 src/forms.py:219
 #: src/forms.py:226 src/forms.py:230 src/forms.py:234 src/forms.py:241
-#: src/forms.py:244 src/forms.py:251 src/forms.py:258 src/forms.py:267
-#: src/forms.py:274
+#: src/forms.py:244 src/forms.py:251 src/forms.py:258 src/forms.py:262
+#: src/forms.py:269 src/forms.py:276
 msgid "Please fill out this field."
 msgstr "Veuillez remplir ce champ."
 
@@ -105,7 +115,7 @@ msgstr "Prénom"
 
 #: src/forms.py:126 src/forms.py:130 src/forms.py:167 src/forms.py:171
 #: src/forms.py:198 src/forms.py:202 src/forms.py:214 src/forms.py:227
-#: src/forms.py:229 src/forms.py:242 src/forms.py:259
+#: src/forms.py:229 src/forms.py:242 src/forms.py:259 src/forms.py:261
 msgid "Please enter something shorter."
 msgstr "Veuillez saisir quelque chose de plus court."
 
@@ -159,7 +169,7 @@ msgstr "Confirmer le nouveau mot de passe"
 msgid "Name"
 msgstr "Nom"
 
-#: src/forms.py:202
+#: src/forms.py:202 src/forms.py:261
 #, fuzzy
 msgid "Description (optional)"
 msgstr "Description (optionnelle)"
@@ -210,19 +220,27 @@ msgstr "Heure limite (optionnelle)"
 msgid "Course"
 msgstr "Cours"
 
-#: src/forms.py:267
+#: src/forms.py:262
+msgid "Date"
+msgstr "Date"
+
+#: src/forms.py:263
+msgid "Time (optional)"
+msgstr "Heure (optionnelle)"
+
+#: src/forms.py:269
 msgid "Choice"
 msgstr "Choix"
 
-#: src/forms.py:273
+#: src/forms.py:275
 msgid "Confirmation"
 msgstr "Confirmation"
 
-#: src/forms.py:275
+#: src/forms.py:277
 msgid "I understand."
 msgstr "Je comprends."
 
-#: src/forms.py:275
+#: src/forms.py:277
 msgid "You must enter \"I understand.\" to proceed."
 msgstr "Vous devez saisir \"Je comprends.\" pour continuer."
 
@@ -246,11 +264,15 @@ msgstr "Tâche"
 msgid "Assignment"
 msgstr "Devoir"
 
-#: src/main.py:701
+#: src/main.py:682
+msgid "Calendar Event"
+msgstr "Événement du calendrier"
+
+#: src/main.py:808
 msgid "Stop Studying"
 msgstr "Arrêter étudier"
 
-#: src/main.py:704
+#: src/main.py:811
 msgid "Assignment Completed"
 msgstr "Devoir fini"
 
@@ -496,7 +518,8 @@ msgstr "Regarder"
 
 #: src/templates/index.html:32 src/templates/index.html:56
 #: src/templates/index.html:88 src/templates/index.html:117
-#: src/templates/view_assignment.html:9 src/templates/view_course.html:9
+#: src/templates/view_assignment.html:9
+#: src/templates/view_calendar_event.html:9 src/templates/view_course.html:9
 #: src/templates/view_course.html:27 src/templates/view_course.html:45
 #: src/templates/view_course.html:63 src/templates/view_courses.html:23
 #: src/templates/view_semester.html:9 src/templates/view_semester.html:24
@@ -541,10 +564,10 @@ msgid ""
 "information. You can still see your most visited pages, but you won't be "
 "able to save your changes until you reconnect."
 msgstr ""
-"Il n'y a aucune connexion maintenant, alors nous ne pouvons pas "
-"répondre à votre requête. Vous pouvez toujours regarder vos pages les "
-"plus visitées, mais vous ne pourrez pas sauvegarder vos changements avant"
-" de reconnecter à l'Internet."
+"Il n'y a aucune connexion maintenant, alors nous ne pouvons pas répondre "
+"à votre requête. Vous pouvez toujours regarder vos pages les plus "
+"visitées, mais vous ne pourrez pas sauvegarder vos changements avant de "
+"reconnecter à l'Internet."
 
 #: src/templates/select_study.html:4
 msgid "New Study Session"
