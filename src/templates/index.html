@@ -12,7 +12,7 @@
 
         <h2>{{ _('Weekly Summary') }}</h2>
         <div style="height: 350px;"><canvas id="weekly_summary"></canvas></div>
-        <script>renderChart("weekly_summary", 0);</script>
+        <script>renderWeeklySummaryChart();</script>
 
         <h2>{{ _('Assignments') }}</h2>
         <a class="link-button" style="margin: auto;" href="{{ url_for('main.create_assignment') }}">{{ _('New Assignment') }}</a>

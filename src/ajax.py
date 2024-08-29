@@ -1,6 +1,6 @@
 """Handles all asynchronous requests from client-side JavaScript."""
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, abort
 from flask_login import login_required
 from flask_babel import _, lazy_gettext as _l
 from datetime import timedelta
@@ -11,8 +11,8 @@ from . import util
 ajax = Blueprint("ajax", __name__)
 
 @login_required
-@ajax.route("/weekly_summary/<int:week>", methods=["GET"])
-def weekly_summary(week=0):
+@ajax.route("/weekly_summary/<string:week>", methods=["GET"])
+def weekly_summary(week="0"):
     """Builds a bar chart representation of study time by course since Monday.
 
     Args:
@@ -23,8 +23,12 @@ def weekly_summary(week=0):
     """
 
     # One dataset for every course, each containing a value for every day of the week
+    try:
+        week = int(week)
+    except:
+        abort(404)
     datasets = []
-    days_since_monday = util.local_now().weekday() + 7 * week   # Find Monday
+    days_since_monday = util.local_now().weekday() - 7 * week   # Find Monday
 
     for course in db_util.current_courses():
         dataset = {

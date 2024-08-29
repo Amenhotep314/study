@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-26 16:14-0400\n"
+"POT-Creation-Date: 2024-08-29 12:52-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -30,25 +30,25 @@ msgstr ""
 "Une erreur s'est presentée dans un script Python, alors nous ne pouvons "
 "pas répondre à votre requête."
 
-#: src/ajax.py:89
+#: src/ajax.py:93
 msgid "Study Time"
 msgstr "Temps d'étude"
 
-#: src/ajax.py:99
+#: src/ajax.py:103
 #, python-format
 msgid "Last %(days)s days"
 msgstr "Les %(days)s derniers jours"
 
-#: src/ajax.py:102
+#: src/ajax.py:106
 msgid "All Time"
 msgstr "Toujours"
 
-#: src/ajax.py:146
+#: src/ajax.py:150
 #, python-format
 msgid "Assignment <em>%(name)s</em> due in %(time)s minutes"
 msgstr "Le devoir <em>%(name)s</em> doit être fini en %(time)s minutes"
 
-#: src/ajax.py:156
+#: src/ajax.py:160
 #, python-format
 msgid "Todo <em>%(name)s</em> must be done in %(time)s hours"
 msgstr "La tâche <em>%(name)s</em> doit être fini en %(time)s heures"
@@ -585,7 +585,15 @@ msgstr "Commencer étudier"
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: src/templates/stats.html:15
+#: src/templates/stats.html:12
+msgid "Last Week"
+msgstr "La semaine précédente"
+
+#: src/templates/stats.html:13
+msgid "Next Week"
+msgstr "La semaine prochaine"
+
+#: src/templates/stats.html:19
 msgid "Work per Course"
 msgstr "Temps d'étude par cours"
 

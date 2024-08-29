@@ -35,13 +35,35 @@ function addZeroes(i) {
     return i;
 }
 
+let weeklySummaryChart = null;
+let weeklySummaryPosition = 0;
+
+async function incrementWeeklySummaryChart(nextWeek) {
+
+    if (nextWeek) {
+        weeklySummaryPosition += 1;
+    } else {
+        weeklySummaryPosition -= 1;
+    }
+    renderWeeklySummaryChart()
+}
+
+async function renderWeeklySummaryChart() {
+
+    if (weeklySummaryChart) {
+        console.log(weeklySummaryChart);
+        weeklySummaryChart.destroy();
+    }
+    weeklySummaryChart = await renderChart("weekly_summary", weeklySummaryPosition);
+}
 
 async function renderChart(id, arg) {
 
     const ctx = document.getElementById(id);
     const data = await fetch($SCRIPT_ROOT + "/" + id + "/" + arg).then(response => response.json());
     console.log("Built chart", id);
-    new Chart(ctx, data);
+    let chart = new Chart(ctx, data);
+    return chart;
 }
 
 

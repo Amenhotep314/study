@@ -8,8 +8,12 @@
     <h1>{{ _("Statistics") }}</h1>
     <h2>{{ _("Weekly Summary") }}</h2>
     <div class="subregion">
+        <div style="display: flex; justify-content: space-between;">
+            <button style="margin-right: auto;" class="link-button" onclick="incrementWeeklySummaryChart(false);">{{ _("Last Week") }}</button>
+            <button style="margin-left: auto;" class="link-button" onclick="incrementWeeklySummaryChart(true);">{{ _("Next Week") }}</button>
+        </div>
         <div style="height: 500px;"><canvas id="weekly_summary"></canvas></div>
-        <script>renderChart("weekly_summary", 0);</script>
+        <script>renderWeeklySummaryChart();</script>
     </div>
 
     <h2>{{ _("Work per Course") }}</h2>
