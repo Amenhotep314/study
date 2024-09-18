@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-29 12:52-0400\n"
+"POT-Creation-Date: 2024-09-18 16:27-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -462,7 +462,7 @@ msgstr "Déguerpir!"
 
 #: src/templates/front_page.html:4 src/templates/index.html:4
 msgid "FluxStudy: Learn Differently"
-msgstr "FluxStudy: Apprendrez Différemment"
+msgstr "FluxStudy: Apprenez Différemment"
 
 #: src/templates/front_page.html:8
 msgid "Welcome to FluxStudy."
@@ -543,7 +543,7 @@ msgstr "En cours"
 
 #: src/templates/index.html:69 src/templates/view_todos.html:9
 msgid "New To-Do"
-msgstr "Nouveau tâche"
+msgstr "Nouvelle tâche"
 
 #: src/templates/index.html:80 src/templates/index.html:109
 #, python-format
@@ -579,7 +579,7 @@ msgstr "Choisir l'étude"
 
 #: src/templates/select_study.html:20
 msgid "Start Studying"
-msgstr "Commencer étudier"
+msgstr "Commencer à étudier"
 
 #: src/templates/stats.html:4 src/templates/stats.html:8
 msgid "Statistics"

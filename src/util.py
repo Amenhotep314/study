@@ -215,14 +215,14 @@ def theme_options():
 def color_options():
     # Possible course colors and their hex codes. Could always add more here.
     return [
-        ("#ff0000", _l("Red")),
-        ("#ff8000", _l("Orange")),
-        ("#ffff00", _l("Yellow")),
-        ("#00ff00", _l("Green")),
-        ("#00ffff", _l("Cyan")),
-        ("#0000ff", _l("Blue")),
-        ("#ff00ff", _l("Fuchsia")),
-        ("#800080", _l("Purple"))
+        ("#cf0000", _l("Red")),
+        ("#cf8000", _l("Orange")),
+        ("#cfcf00", _l("Yellow")),
+        ("#00cf00", _l("Green")),
+        ("#00cfcf", _l("Cyan")),
+        ("#0000cf", _l("Blue")),
+        ("#cf00cf", _l("Fuchsia")),
+        ("#400080", _l("Purple"))
     ]
 
 
