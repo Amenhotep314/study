@@ -4,17 +4,41 @@
     "icons": [
         {
             "src": "favicon.png",
-            "sizes": "32x32",
-            "type": "image/png"
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
             "src": "icon.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshot_homescreen.png",
+            "sizes": "750x1294",
+            "type": "image/png",
+            "label": "Homescreen & weekly summary"
+        },
+        {
+            "src": "screenshot_stats.png",
+            "sizes": "750x1294",
+            "type": "image/png",
+            "label": "Statistics & insights"
         }
     ],
     "start_url": "/home",
-    "display": "standalone",
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    },
+    "display_override": [
+        "fullscreen",
+        "standalone",
+        "minimal-ui"
+    ],
+    "display": "fullscreen",
     "id": "https://fluxstudy-3cc38d8670a8.herokuapp.com/",
     "background_color": "#F9F4F5",
     "theme_color": "#0a3200",
@@ -24,6 +48,22 @@
         "lifestyle",
         "productivity",
         "utilities"
+    ],
+    "shortcuts": [
+        {
+            "name": "Study Now",
+            "url": "/study",
+            "description": "Jump right in!"
+        },
+        {
+            "name": "New Assignment",
+            "url": "/assignments/create",
+            "description": "Create a new assignment"
+        },
+        {
+            "name": "New To-Do",
+            "url": "/todos/create",
+            "description": "Create a new to-do"
+        }
     ]
-
 }
