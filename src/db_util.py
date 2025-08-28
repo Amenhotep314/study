@@ -174,6 +174,24 @@ def overdue_assignments(courses=None):
     return ans
 
 
+def get_assignment_colors(assignments):
+    """Gets the course colors associated with a list of assignment objects. Useful for helpful swatches and such.
+
+    Args:
+        assignments: A list of Assignment objects whose colors must be looked up.
+
+    Returns:
+        A tuple of color strings corresponding to the courses of the assignments.
+    """
+
+    colors = []
+    for assignment in assignments:
+        course = Course.query.filter_by(user_id=current_user.id, id=assignment.course_id).first()
+        colors.append(course.color)
+
+    return tuple(colors)
+
+
 def fix_assignment_study_sessions(assignment):
     """Adjusts the courses to which study sessions belong to align them with the assignments to which
     study sessions belong.

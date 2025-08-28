@@ -44,6 +44,16 @@ def index():
     overdue_todo_dicts = util.local_dicts_from_naive_utc_queries(overdue_todos)
     active_todo_dicts = util.local_dicts_from_naive_utc_queries(active_todos)
 
+    # This feels gross, but I can't think of a better way to do it that doesn't involve a database-level rewrite
+    overdue_colors = db_util.get_assignment_colors(overdue_assignments)
+    active_colors = db_util.get_assignment_colors(active_assignments)
+
+    for i in range(len(active_assignment_dicts)):
+        active_assignment_dicts[i]['color'] = active_colors[i]
+
+    for i in range(len(overdue_assignment_dicts)):
+        overdue_assignment_dicts[i]['color'] = overdue_colors[i]
+
     # Choose a button for the user to see based on their current state.
     # Redirect logic ensures that this button always points somewhere logical.
     # At some point, there should be a tutorial that happens here.

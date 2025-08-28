@@ -24,7 +24,7 @@
                     {% for assignment in overdue_assignments %}
                         <div class="minimalelement">
                             <div style="display: block;">
-                                <strong>{{ assignment.name }}</strong>
+                                <strong><span style="color: {{ assignment.color }}; font-size: 200%;">■ </span>{{ assignment.name }}</strong>
                                 <p>{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
                             </div>
                             <div style="margin-left: auto; display: flex;">
@@ -48,7 +48,7 @@
                     {% for assignment in active_assignments %}
                         <div class="minimalelement">
                             <div style="display: block;">
-                                <strong>{{ assignment.name }}</strong>
+                                <strong><span style="color: {{ assignment.color }}; font-size: 200%;">■ </span>{{ assignment.name }}</strong>
                                 <p>{{ _('Due by %(due_date)s', due_date=assignment.due_datetime.strftime("%Y-%m-%d %H:%M:%S")) }}</p>
                             </div>
                             <div style="margin-left: auto; display: flex;">
