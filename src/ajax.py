@@ -132,6 +132,80 @@ def work_distribution(range=0):
 
 
 @login_required
+@ajax.route("/semester_summary/<int:_>", methods=["GET"])
+def semester_summary(_=0):
+    """Generate a Chart.js object to visualize study time distribution across the entire semester.
+
+    Returns:
+        A JSON object containing the chart configuration.
+    """
+    semester = db_util.current_semester()
+    if semester is None:
+        return jsonify("")
+
+    # The semester start and end dates in the user's time
+    start_datetime = util.utc_datetime_from_naive_utc_datetime(semester.start_datetime)
+    end_datetime = util.utc_datetime_from_naive_utc_datetime(semester.end_datetime)
+    now = util.utc_now()
+
+    datasets = []
+
+    for course in db_util.current_courses():
+        dataset = {
+            "label": course.name,
+            "backgroundColor": course.color,
+            "data": []
+        }
+        week_start = start_datetime - timedelta(days=start_datetime.weekday())
+        week_end = week_start + timedelta(days=6)
+        while week_start <= end_datetime:
+            if week_start <= now:
+                week_data = db_util.study_time(start_datetime=week_start, end_datetime=week_end, courses=[course])
+                week_data = week_data.total_seconds() / 3600
+            else:
+                week_data = 0
+
+            dataset["data"].append(week_data)
+            week_start += timedelta(days=7)
+            week_end += timedelta(days=7)
+
+        datasets.append(dataset)
+
+    week_start = start_datetime - timedelta(days=start_datetime.weekday())
+    week_starts = [start_datetime + timedelta(days=i*7) for i in range(len(datasets[0]["data"]))]
+    week_labels = [week_start.strftime("%Y-%m-%d") for week_start in week_starts]
+
+    config = {
+        "type": "bar",
+        "data": {
+            "labels": week_labels,
+            "datasets": datasets
+        },
+        "options": {
+            "plugins": {
+                "title": {
+                    "display": True,
+                    "text": semester.name
+                }
+            },
+            "responsive": True,
+            "maintainAspectRatio": False,
+            "scales": {
+                "x": {
+                    "stacked": True
+                },
+                "y": {
+                    "stacked": True
+                }
+            }
+        }
+    }
+
+    return jsonify(config)
+
+
+
+@login_required
 @ajax.route("/check_notifications", methods=["GET"])
 def check_notifications():
     """Gets the most relevant notification

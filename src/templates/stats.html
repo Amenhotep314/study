@@ -12,7 +12,7 @@
             <button style="margin-right: auto;" class="link-button" onclick="incrementWeeklySummaryChart(false);">{{ _("Last Week") }}</button>
             <button style="margin-left: auto;" class="link-button" onclick="incrementWeeklySummaryChart(true);">{{ _("Next Week") }}</button>
         </div>
-        <div style="height: 500px;"><canvas id="weekly_summary"></canvas></div>
+        <div style="height: 350px;"><canvas id="weekly_summary"></canvas></div>
         <script>renderWeeklySummaryChart();</script>
     </div>
 
@@ -20,5 +20,11 @@
     <div class="subregion">
         <div><canvas id="work_distribution"></canvas></div>
         <script>renderChart("work_distribution", 0);</script>
+    </div>
+
+    <h2>{{ _("Semester Summary") }}</h2>
+    <div class="subregion">
+        <div style="height: 350px;"><canvas id="semester_summary"></canvas></div>
+        <script>renderChart("semester_summary", 0);</script>
     </div>
 {% endblock %}
