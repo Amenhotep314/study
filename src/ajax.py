@@ -172,8 +172,8 @@ def semester_summary(_=0):
         datasets.append(dataset)
 
     week_start = start_datetime - timedelta(days=start_datetime.weekday())
-    week_starts = [start_datetime + timedelta(days=i*7) for i in range(len(datasets[0]["data"]))]
-    week_labels = [week_start.strftime("%Y-%m-%d") for week_start in week_starts]
+    week_starts = [week_start + timedelta(days=i*7) for i in range(len(datasets[0]["data"]))]
+    week_labels = [start.strftime("%m-%d") for start in week_starts]
 
     config = {
         "type": "bar",

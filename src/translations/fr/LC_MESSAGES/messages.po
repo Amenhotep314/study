@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-18 16:27-0400\n"
+"POT-Creation-Date: 2025-08-29 23:42-0400\n"
 "PO-Revision-Date: 2023-12-30 14:31-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.15.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 #: src/__init__.py:26
 msgid "The page you are looking for does not exist."
@@ -43,12 +43,12 @@ msgstr "Les %(days)s derniers jours"
 msgid "All Time"
 msgstr "Toujours"
 
-#: src/ajax.py:150
+#: src/ajax.py:224
 #, python-format
 msgid "Assignment <em>%(name)s</em> due in %(time)s minutes"
 msgstr "Le devoir <em>%(name)s</em> doit être fini en %(time)s minutes"
 
-#: src/ajax.py:160
+#: src/ajax.py:234
 #, python-format
 msgid "Todo <em>%(name)s</em> must be done in %(time)s hours"
 msgstr "La tâche <em>%(name)s</em> doit être fini en %(time)s heures"
@@ -204,7 +204,7 @@ msgstr "Unités de valeur"
 msgid "Color"
 msgstr "Coleur"
 
-#: src/forms.py:234 src/main.py:307
+#: src/forms.py:234 src/main.py:317
 msgid "Semester"
 msgstr "Semestre"
 
@@ -216,7 +216,7 @@ msgstr "Date limite"
 msgid "Due Time (optional)"
 msgstr "Heure limite (optionnelle)"
 
-#: src/forms.py:251 src/main.py:431
+#: src/forms.py:251 src/main.py:441
 msgid "Course"
 msgstr "Cours"
 
@@ -244,35 +244,35 @@ msgstr "Je comprends."
 msgid "You must enter \"I understand.\" to proceed."
 msgstr "Vous devez saisir \"Je comprends.\" pour continuer."
 
-#: src/main.py:51 src/templates/index.html:11
+#: src/main.py:61 src/templates/index.html:11
 msgid "Study Now"
 msgstr "Étudier maintenant"
 
-#: src/main.py:53
+#: src/main.py:63
 msgid "Create Your First Course"
 msgstr "Créer votre premier cours"
 
-#: src/main.py:55
+#: src/main.py:65
 msgid "Get Started Here"
 msgstr "Commencer ici"
 
-#: src/main.py:185
+#: src/main.py:195
 msgid "To-Do"
 msgstr "Tâche"
 
-#: src/main.py:556
+#: src/main.py:566
 msgid "Assignment"
 msgstr "Devoir"
 
-#: src/main.py:682
+#: src/main.py:692
 msgid "Calendar Event"
 msgstr "Événement du calendrier"
 
-#: src/main.py:808
+#: src/main.py:818
 msgid "Stop Studying"
 msgstr "Arrêter étudier"
 
-#: src/main.py:811
+#: src/main.py:821
 msgid "Assignment Completed"
 msgstr "Devoir fini"
 
@@ -518,8 +518,7 @@ msgstr "Regarder"
 
 #: src/templates/index.html:32 src/templates/index.html:56
 #: src/templates/index.html:88 src/templates/index.html:117
-#: src/templates/view_assignment.html:9
-#: src/templates/view_calendar_event.html:9 src/templates/view_course.html:9
+#: src/templates/view_assignment.html:9 src/templates/view_course.html:9
 #: src/templates/view_course.html:27 src/templates/view_course.html:45
 #: src/templates/view_course.html:63 src/templates/view_courses.html:23
 #: src/templates/view_semester.html:9 src/templates/view_semester.html:24
@@ -596,6 +595,11 @@ msgstr "La semaine prochaine"
 #: src/templates/stats.html:19
 msgid "Work per Course"
 msgstr "Temps d'étude par cours"
+
+#: src/templates/stats.html:25
+#, fuzzy
+msgid "Semester Summary"
+msgstr "Résumé de le semestre"
 
 #: src/templates/study.html:4 src/templates/study.html:9
 #, python-format
