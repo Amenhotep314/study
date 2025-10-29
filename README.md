@@ -2,6 +2,8 @@
 Now live in beta, as [FluxStudy on Heroku](https://fluxstudy-3cc38d8670a8.herokuapp.com)!
 This webapp project is for everyone, including me, who wishes they could do more with their time. I'm developing this website so that I can keep track of my assignments and other to-dos and gain helpful insights into my study habits.
 
+<img width="375" height="647" alt="screenshot_homescreen" src="https://github.com/user-attachments/assets/2eebf59a-efc5-4155-ba6a-7e7c374116c2" />
+
 ## Features
 ### Current
 This app is in beta testing, and has the following features:
